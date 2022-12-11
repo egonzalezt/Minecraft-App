@@ -8,6 +8,12 @@ To install this application you need to install docker.
 
 ## Run 
 
+Before running your application if you are working on linux you need to give the propertly permissions to docker to read and write the zip folder where the mods packs are going to be allocated
+
+```bash
+sudo chmod a+rwx <zipfile location>
+```
+
 The application will run on LocalHost:3000 Execute 
 
 ```bash
