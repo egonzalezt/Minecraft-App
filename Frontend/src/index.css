@@ -1,0 +1,35 @@
+@font-face {
+  font-family: 'Minecrafter';
+  src: local('Minecrafter'), url(./fonts/Minecrafter_Reg.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Minecraft';
+  src: local('Minecraft'), url(./fonts/Minecraft.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+h1{
+  font-family: Minecrafter;
+  letter-spacing: 0.18em;
+}
+
+body {
+  background-image: url('img/grass.jpg');
+  font-family: Minecrafter;
+  color:black;
+  text-align: center;
+}
+
+header {
+  font-family: Minecrafter;
+  color:#ffffff;
+  text-align: center;
+  margin-top: 15px;
+  letter-spacing: 0.10em;
+  text-shadow: 3px 3px black;
+}
