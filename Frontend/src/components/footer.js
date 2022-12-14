@@ -7,7 +7,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 
 function Footer() {
     return (
-        <Stack sx={{ bgcolor: "#5575ba", backgroundImage: `url(${"../img/stones.jpg"})`}}
+        <Stack sx={{ backgroundImage: `url(${"../img/stones.jpg"})`}}
             direction="row"
             justifyContent="space-between"
             alignItems="center" padding={2}>

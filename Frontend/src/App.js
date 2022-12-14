@@ -10,9 +10,16 @@ import NavBar from './components/navBar';
 
 const theme = createTheme({
   typography: {
-    "fontFamily": 'Minecraft',
+    fontFamily: 'Minecraft',
     h1: {
-      "fontFamily": 'Minecrafter',
+      fontFamily: 'Minecrafter',
+      fontSize: "80px",
+      color: "white"
+    },
+    h2: {
+      fontFamily: 'Minecrafter',
+      fontSize: "30px",
+      color: "white"
     },
   },
   components: {

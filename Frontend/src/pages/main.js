@@ -4,7 +4,7 @@ function Main() {
         <div id="text" style={{
             backgroundImage: `url(${"../img/book.png"})`,
             backgroundRepeat: "no-repeat",
-            backgroundSize: "100% 100%",
+            backgroundSize: "50% 100%",
             backgroundPosition: "center",
         }}>
             <div style={{ padding: 10 }}>

@@ -22,14 +22,4 @@ body {
   background-image: url('img/grass.jpg');
   font-family: Minecrafter;
   color:black;
-  text-align: center;
-}
-
-header {
-  font-family: Minecrafter;
-  color:#ffffff;
-  text-align: center;
-  margin-top: 15px;
-  letter-spacing: 0.10em;
-  text-shadow: 3px 3px black;
 }

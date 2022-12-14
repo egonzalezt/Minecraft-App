@@ -14,7 +14,7 @@ function NavBar() {
         <Stack direction="row" width="100%" spacing={2} padding={2} justifyContent="space-between" alignItems="center">
           <Stack direction={{ xs: 'column', sm: 'row' }} alignItems="center" spacing={2}>
             <Link to={"/"}>
-              <Logo width="150" height="150" />
+              <Logo width="125" height="125" />
             </Link>
             <Link to={"/"} style={{ textDecoration: 'none', color: "white" }}>
               <Typography variant='h1'>
