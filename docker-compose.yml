@@ -20,6 +20,10 @@ services:
       MODSPATH : /usr/src/app/modspath/
       ZIPPATH : /usr/src/app/zippath/
       ZIPNAMEWITHEXT : modsitos.zip
+      MONGOURL : 
+      SALT:
+      ACCESS_TOKEN_PRIVATE_KEY:
+      REFRESH_TOKEN_PRIVATE_KEY:
       PORT : 8000
     ports:
       - 8000:8000

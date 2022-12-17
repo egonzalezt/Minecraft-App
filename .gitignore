@@ -1,2 +1,4 @@
 upload_data
 zipfiles
+.env
+node_modules
