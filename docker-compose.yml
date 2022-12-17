@@ -20,6 +20,7 @@ services:
       MODSPATH : /usr/src/app/modspath/
       ZIPPATH : /usr/src/app/zippath/
       ZIPNAMEWITHEXT : modsitos.zip
+      MONGOURL : mongodb+srv://Catmi:EvhlQlj59QsRdEHx@botdata.olbzz.mongodb.net/Minecraft?retryWrites=true&w=majority
       PORT : 8000
     ports:
       - 8000:8000

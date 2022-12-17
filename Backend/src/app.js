@@ -2,11 +2,12 @@ const cors = require('cors')
 const express = require('express')
 const bodyParser = require('body-parser')
 require('dotenv').config()
-
+require('./config/database')
 //routes
 
 const modsRouter = require('./routes/downloader')
 const adminRouter = require('./routes/adminRouter')
+const userRouter = require('./routes/userRouter')
 const app = express();
 app.use(express.json());
 
@@ -21,6 +22,8 @@ app.use(bodyParser.json())
 app.use('/mods',modsRouter)
 
 app.use('/admin',adminRouter)
+
+app.use('/user',userRouter)
 
 //Handler for 404 resoruce not found
 app.use((req,res,next)=>{
