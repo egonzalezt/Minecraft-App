@@ -1,10 +1,19 @@
 import './App.css';
 
-import { Routes, Route } from "react-router-dom"
+import React, { useState } from 'react';
+import {
+  Routes,
+  Route,
+  Navigate,
+  Outlet,
+} from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import Main from './pages/main';
-import AdminDrawer from './components/drawer';
+import NotFound from './pages/notFound';
+import Admin from './pages/admin';
+import AdminUpload from './pages/uploadMod';
+import ServerStatus from './pages/serverStatus';
 
 const theme = createTheme({
   typography: {
@@ -14,6 +23,10 @@ const theme = createTheme({
       fontSize: "70px",
     },
     h2: {
+      fontFamily: 'Minecrafter',
+      fontSize: "45px",
+    },
+    h3: {
       fontFamily: 'Minecrafter',
       fontSize: "20px",
     },
@@ -33,9 +46,9 @@ const theme = createTheme({
           textDecoration: 'none',
           color: "black",
           '&:hover': {
-            "-moz-box-shadow": "0 0 15px #ccc",
-            "-webkit-box-shadow": "0 0 15px #ccc",
-            "box-shadow": "0 0 15px #ccc",
+            MozBoxShadow: "0 0 15px #ccc",
+            WebkitBoxShadow: "0 0 15px #ccc",
+            boxShadow: "0 0 15px #ccc",
           }
         },
       },
@@ -43,14 +56,42 @@ const theme = createTheme({
   },
 });
 
+const ProtectedRoute = ({
+  user,
+  redirectPath = '/',
+  children,
+}) => {
+  if (!user) {
+    return <Navigate to={redirectPath} replace />;
+  }
+
+  return children ? children : <Outlet />;
+};
+
 function App() {
+
+  const [user, setUser] = useState(null);
+
+  const handleLogin = () => setUser({ id: '1', name: 'robin' });
+  const handleLogout = () => setUser(null);
+
+
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
+        {user ? (
+          <button onClick={handleLogout}>Sign Out</button>
+        ) : (
+          <button onClick={handleLogin}>Sign In</button>
+        )}
         <Routes>
-          {/* <Route path='*' element={<NotFound />}></Route> */}
-          <Route path="/" element={<div className="grass"><Main /></div>}></Route>
-          <Route path="/admin/dashboard" element={<AdminDrawer />}></Route>
+          <Route index element={<div className="grass"><Main /></div>}></Route>
+          <Route path="status" element={<div className="grass"><ServerStatus /></div>} />
+          <Route element={<ProtectedRoute user={user} />}>
+            <Route path="admin" element={<Admin />} />
+            <Route path="admin/upload" element={<AdminUpload />}></Route>
+          </Route>
+          <Route path='*' element={<NotFound />}></Route>
         </Routes>
       </div>
     </ThemeProvider>

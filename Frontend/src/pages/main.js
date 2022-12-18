@@ -9,7 +9,7 @@ function Main() {
             <div id="text" style={{
                 backgroundImage: `url(${"../img/book.png"})`,
                 backgroundRepeat: "no-repeat",
-                backgroundSize: "50% 100%",
+                backgroundSize: "60% 100%",
                 backgroundPosition: "center",
             }}>
                 <Header />
@@ -46,6 +46,9 @@ function Main() {
                     </p>
                     <p className="normal">
                         Almowolf (UI) Designer
+                    </p>
+                    <p className="normal">
+                        Ima24 Tester
                     </p>
                     <p className="normal">
                         Turip Ip Ip

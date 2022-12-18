@@ -10,7 +10,7 @@ function Header() {
     const [hidden, setHidden] = useState(true);
     const iframeRef = useRef(null);
 
-    function troll(){
+    function troll() {
         setHidden(false);
         const rickRoll = iframeRef.current;
         rickRoll.setAttribute('src', `https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1`);
@@ -20,7 +20,7 @@ function Header() {
     return (
         <Stack direction="column" spacing={2} padding={2} justifyContent="space-between" alignItems="center">
             <Typography variant='h1'>
-               Minecraft
+                Minecraft
             </Typography>
             <Typography variant='h2'>
                 Vamo a jugar Arequipet
