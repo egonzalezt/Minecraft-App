@@ -10,7 +10,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 import SendIcon from '@mui/icons-material/Send';
 
 import AdminDrawer from "./drawer";
-
+import axios from "axios";
 
 function UploadMod() {
     const [file, setFile] = useState(null);
@@ -26,14 +26,25 @@ function UploadMod() {
     };
 
     const submitMod = () => {
-        const request = {
-            file: file,
-            name: name,
-            fileName: fileName,
-            version: version,
-            type: { client: client, server: server }
+        let formData = new FormData();
+        formData.append('fileName', fileName);
+        formData.append('version', version);
+        formData.append('client', client);
+        formData.append('server', server);
+        formData.append('file', file);
+        formData.append('name', name);
+
+        const config = {
+            headers: { 'content-type': 'multipart/form-data' }
         }
-        console.log(request)
+        console.log(formData)
+        // axios.post("/mods/upload", formData, config)
+        //     .then(response => {
+        //         console.log(response);
+        //     })
+        //     .catch(error => {
+        //         console.log(error);
+        //     });
     };
 
     const handleChange = (e) => {

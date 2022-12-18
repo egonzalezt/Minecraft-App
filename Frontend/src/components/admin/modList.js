@@ -13,15 +13,9 @@ import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AdminApi from '../../services/admin';
 
+import { DataGrid } from '@mui/x-data-grid';
 import AdminDrawer from "./drawer.js";
 
-function generate(element) {
-    return [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11].map((value) =>
-        React.cloneElement(element, {
-            key: value,
-        }),
-    );
-}
 
 const Demo = styled('div')(({ theme }) => ({
     backgroundColor: theme.palette.background.paper,
@@ -29,7 +23,7 @@ const Demo = styled('div')(({ theme }) => ({
 
 export default function ModList() {
 
-    // const [mods, setMods] = useState([]);
+    const [mods, setMods] = useState([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
 
     // useEffect(() => {
     //     AdminApi.mods().then(response => {
@@ -44,13 +38,14 @@ export default function ModList() {
         <AdminDrawer>
             <Box sx={{ flexGrow: 1, width: "80%" }}>
                 <Grid item xs={12} md={6}>
-                    <Typography sx={{ mt: 4, mb: 2 }} variant="h2" component="div">
+                    <Typography sx={{ mb: 2 }} variant="h2" component="div">
                         Lista de Mods
                     </Typography>
                     <Demo>
                         <List>
-                            {generate(
-                                <ListItem
+                            {mods.map((mod, index) => {
+                                return <ListItem
+                                    key={index}
                                     secondaryAction={
                                         <IconButton edge="end" aria-label="delete">
                                             <DeleteIcon />
@@ -63,10 +58,10 @@ export default function ModList() {
                                         </Avatar>
                                     </ListItemAvatar>
                                     <ListItemText
-                                        primary="Single-line item"
+                                        primary={mod}
                                     />
-                                </ListItem>,
-                            )}
+                                </ListItem>
+                            })}
                         </List>
                     </Demo>
                 </Grid>

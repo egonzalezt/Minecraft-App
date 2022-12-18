@@ -1,6 +1,12 @@
 import './App.css';
 
-import { Routes, Route } from "react-router-dom"
+import React, { useState } from 'react';
+import {
+  Routes,
+  Route,
+  Navigate,
+  Outlet,
+} from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import Main from './pages/main';
@@ -50,15 +56,41 @@ const theme = createTheme({
   },
 });
 
+const ProtectedRoute = ({
+  user,
+  redirectPath = '/',
+  children,
+}) => {
+  if (!user) {
+    return <Navigate to={redirectPath} replace />;
+  }
+
+  return children ? children : <Outlet />;
+};
+
 function App() {
+
+  const [user, setUser] = useState(null);
+
+  const handleLogin = () => setUser({ id: '1', name: 'robin' });
+  const handleLogout = () => setUser(null);
+
+
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
+        {user ? (
+          <button onClick={handleLogout}>Sign Out</button>
+        ) : (
+          <button onClick={handleLogin}>Sign In</button>
+        )}
         <Routes>
           <Route index element={<div className="grass"><Main /></div>}></Route>
           <Route path="status" element={<div className="grass"><ServerStatus /></div>} />
-          <Route path="admin" element={<Admin />} />
-          <Route path="admin/upload" element={<AdminUpload />}></Route>
+          <Route element={<ProtectedRoute user={user} />}>
+            <Route path="admin" element={<Admin />} />
+            <Route path="admin/upload" element={<AdminUpload />}></Route>
+          </Route>
           <Route path='*' element={<NotFound />}></Route>
         </Routes>
       </div>

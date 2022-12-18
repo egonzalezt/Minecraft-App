@@ -26,7 +26,7 @@ function Status() {
         axios.get("https://api.mcsrvstat.us/2/desmadra.arequipet.ga").then(response => {
             console.log(response.data);
             setImage(response.data.icon)
-            setPlayers(response.data.players.list)
+            setPlayers(response.data.players.list ? response.data.players.list : ["Sin jugadores"])
             setMax(response.data.players.max)
             setOnline(response.data.players.online)
             setMods(response.data.mods.names)
