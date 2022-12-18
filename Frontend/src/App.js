@@ -4,7 +4,10 @@ import { Routes, Route } from "react-router-dom"
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import Main from './pages/main';
-import AdminDrawer from './components/drawer';
+import NotFound from './pages/notFound';
+import Admin from './pages/admin';
+import AdminUpload from './pages/uploadMod';
+import ServerStatus from './pages/serverStatus';
 
 const theme = createTheme({
   typography: {
@@ -14,6 +17,10 @@ const theme = createTheme({
       fontSize: "70px",
     },
     h2: {
+      fontFamily: 'Minecrafter',
+      fontSize: "45px",
+    },
+    h3: {
       fontFamily: 'Minecrafter',
       fontSize: "20px",
     },
@@ -33,9 +40,9 @@ const theme = createTheme({
           textDecoration: 'none',
           color: "black",
           '&:hover': {
-            "-moz-box-shadow": "0 0 15px #ccc",
-            "-webkit-box-shadow": "0 0 15px #ccc",
-            "box-shadow": "0 0 15px #ccc",
+            MozBoxShadow: "0 0 15px #ccc",
+            WebkitBoxShadow: "0 0 15px #ccc",
+            boxShadow: "0 0 15px #ccc",
           }
         },
       },
@@ -48,9 +55,11 @@ function App() {
     <ThemeProvider theme={theme}>
       <div className="App">
         <Routes>
-          {/* <Route path='*' element={<NotFound />}></Route> */}
-          <Route path="/" element={<div className="grass"><Main /></div>}></Route>
-          <Route path="/admin/dashboard" element={<AdminDrawer />}></Route>
+          <Route index element={<div className="grass"><Main /></div>}></Route>
+          <Route path="status" element={<div className="grass"><ServerStatus /></div>} />
+          <Route path="admin" element={<Admin />} />
+          <Route path="admin/upload" element={<AdminUpload />}></Route>
+          <Route path='*' element={<NotFound />}></Route>
         </Routes>
       </div>
     </ThemeProvider>
