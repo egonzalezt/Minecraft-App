@@ -1,12 +1,12 @@
-const schema = require('../database/schemas/userToken')
+const schema = require('../../schemas/userToken')
 
 /**
  * @param {string} token
  */
-function findUser(token)
+function removeToken(token)
 {
     let result = new Promise((resolve, reject) => {
-        schema.remove({ token: token },function(err,result){
+        schema.deleteOne({ token: token },function(err,result){
             if (err){
                 reject(err);
             }
@@ -18,4 +18,4 @@ function findUser(token)
     return result;
 }
 
-module.exports = findUser
+module.exports = removeToken

@@ -1,7 +1,7 @@
 const {refreshTokenBodyValidation} = require('../utils/validationSchema');
 
 async function verifyRefreshToken(req,res,next){  
-    const { error } = refreshTokenBodyValidation({"refreshToken":req.body.refreshToken});
+    const { error } = refreshTokenBodyValidation({"refreshToken":req.headers["refreshtoken"]});
     if (error) {
         return res
                 .status(400)

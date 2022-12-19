@@ -5,16 +5,7 @@ const schema = require('../../schemas/user')
  */
 function findUser(email)
 {
-    let result = new Promise((resolve, reject) => {
-        schema.findOne({ email: email },function(err,result){
-            if (err){
-                reject(err);
-            }
-            else{
-                resolve(result);
-            }
-        })
-    });
+    let result = schema.findOne({ email: email });
     return result;
 }
 
