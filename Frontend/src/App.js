@@ -14,6 +14,9 @@ import NotFound from './pages/notFound';
 import Admin from './pages/admin';
 import AdminUpload from './pages/uploadMod';
 import ServerStatus from './pages/serverStatus';
+import Login from './pages/login'
+import SignUp from './pages/signup'
+import { storeData } from './states/stores';
 
 const theme = createTheme({
   typography: {
@@ -63,31 +66,27 @@ const ProtectedRoute = ({
 }) => {
   if (!user) {
     return <Navigate to={redirectPath} replace />;
+  }else if(user.roles !== undefined){
+    if(user.roles.find(role => role === "super_admin")){
+      return children ? children : <Outlet />;
+    }
   }
+  return <Navigate to={redirectPath} replace />;
 
-  return children ? children : <Outlet />;
 };
 
 function App() {
-
-  const [user, setUser] = useState(null);
-
-  const handleLogin = () => setUser({ id: '1', name: 'robin' });
-  const handleLogout = () => setUser(null);
-
+  const getUser = storeData(state => state.user);
 
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-        {user ? (
-          <button onClick={handleLogout}>Sign Out</button>
-        ) : (
-          <button onClick={handleLogin}>Sign In</button>
-        )}
         <Routes>
           <Route index element={<div className="grass"><Main /></div>}></Route>
           <Route path="status" element={<div className="grass"><ServerStatus /></div>} />
-          <Route element={<ProtectedRoute user={user} />}>
+          <Route path="login" element={<div className="grass"><Login /></div>} />
+          <Route path="signup" element={<div className="grass"><SignUp /></div>} />
+          <Route element={<ProtectedRoute user={getUser} />}>
             <Route path="admin" element={<Admin />} />
             <Route path="admin/upload" element={<AdminUpload />}></Route>
           </Route>

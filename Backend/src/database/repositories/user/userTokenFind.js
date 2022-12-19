@@ -1,9 +1,9 @@
-const schema = require('../../schemas/user')
+const schema = require('../../schemas/userToken')
 
 /**
  * @param {string} token
  */
-function findUser(token)
+function findToken(token)
 {
     let result = new Promise((resolve, reject) => {
         schema.findOne({ token: token },function(err,result){
@@ -18,4 +18,4 @@ function findUser(token)
     return result;
 }
 
-module.exports = findUser
+module.exports = findToken

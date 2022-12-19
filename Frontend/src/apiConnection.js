@@ -1,8 +1,9 @@
 import axios from "axios";
 
 export default axios.create({
-  baseURL: "/admin/",
+  baseURL: "http://localhost:8000/",
   headers: {
     "Content-type": "application/json",
+    "Authorization":`Bearer ${localStorage.getItem("accessToken")}`,
   }
 });

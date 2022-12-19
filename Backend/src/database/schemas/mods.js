@@ -13,6 +13,7 @@ const modsSchema  = new Schema({
     fileName:{
         type:String,
         require:true,
+        unique:true
     },
     version:{
         type:String,

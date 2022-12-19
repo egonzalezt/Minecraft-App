@@ -16,23 +16,51 @@ import AdminApi from '../../services/admin';
 import { DataGrid } from '@mui/x-data-grid';
 import AdminDrawer from "./drawer.js";
 
-
-const Demo = styled('div')(({ theme }) => ({
-    backgroundColor: theme.palette.background.paper,
-}));
+const columns = [
+    { field: 'id', headerName: 'ID', width: 90 },
+    {
+      field: 'name',
+      headerName: 'Nombre',
+      width: 300,
+      editable: false,
+    },
+    {
+      field: 'version',
+      headerName: 'Version',
+      width: 150,
+      editable: false,
+    },
+    {
+      field: 'fileName',
+      headerName: 'Archivo',
+      width: 300,
+      editable: false,
+    },
+    {
+      field: 'type',
+      headerName: 'Tipo Mod',
+      editable: false,
+      width: 200,
+      valueGetter: (params) =>
+      params.row.type.reduce((type, text) => `${type}${text} `, ""),
+    },
+  ];
 
 export default function ModList() {
 
-    const [mods, setMods] = useState([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
-
-    // useEffect(() => {
-    //     AdminApi.mods().then(response => {
-    //         console.log(response.data);
-    //         setMods(response.data.mods)
-    //     }).catch(e => {
-    //         console.log(e.response.data.message)
-    //     });
-    // }, []);
+    const [mods, setMods] = useState([]);
+    const pageSize = 10;
+    useEffect(() => {
+        AdminApi.mods(0,pageSize).then(response => {
+            const modsTemp = response.data.mods
+            for (let i = 0; i < modsTemp.length; i++) {
+                modsTemp[i]["id"]=i+1;
+            }
+            setMods(modsTemp)
+        }).catch(e => {
+            console.log(e.response.data.message)
+        });
+    }, []);
 
     return (
         <AdminDrawer>
@@ -41,29 +69,17 @@ export default function ModList() {
                     <Typography sx={{ mb: 2 }} variant="h2" component="div">
                         Lista de Mods
                     </Typography>
-                    <Demo>
-                        <List>
-                            {mods.map((mod, index) => {
-                                return <ListItem
-                                    key={index}
-                                    secondaryAction={
-                                        <IconButton edge="end" aria-label="delete">
-                                            <DeleteIcon />
-                                        </IconButton>
-                                    }
-                                >
-                                    <ListItemAvatar>
-                                        <Avatar>
-                                            <ArchiveOutlinedIcon />
-                                        </Avatar>
-                                    </ListItemAvatar>
-                                    <ListItemText
-                                        primary={mod}
-                                    />
-                                </ListItem>
-                            })}
-                        </List>
-                    </Demo>
+                    <Box sx={{ height: 400, width: '100%' }}>
+                        <DataGrid
+                            rows={mods}
+                            columns={columns}
+                            pageSize={5}
+                            rowsPerPageOptions={[5]}
+                            checkboxSelection
+                            disableSelectionOnClick
+                            experimentalFeatures={{ newEditingApi: true }}
+                        />
+                    </Box>
                 </Grid>
             </Box>
         </AdminDrawer>
