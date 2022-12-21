@@ -29,11 +29,11 @@ app.use(cors(corsOptions))
 app.use(bodyParser.json())
 
 
-app.use('/mods', modsRouter)
+app.use('/api/v1/mods', modsRouter)
 
-app.use('/admin', adminRouter)
+app.use('/api/v1/admin', adminRouter)
 
-app.use('/user', userRouter)
+app.use('/api/v1/user', userRouter)
 
 app.use((err, req, res, next) => {
     console.error(err.stack)
