@@ -8,6 +8,7 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 
 import axios from "axios";
 
@@ -30,7 +31,7 @@ function Status() {
             setMax(response.data.players.max)
             setOnline(response.data.players.online)
             setMods(response.data.mods.names)
-            
+
             setStatus(response.data.online)
             const temp = response.data.motd.html.reduce((motd, text) => `${motd}${text}<br>`, "")
             setMotd(temp)
@@ -60,12 +61,19 @@ function Status() {
                     />
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
+                            <FiberManualRecordIcon
+                                fontSize="small"
+                                sx={{
+                                    mr: 1,
+                                    color: status ? '#4caf50' : '#d9182e',
+                                }}
+                            />
                             {status ? "Prendido" : "Apagado"}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
                             {online}/{max}
                         </Typography>
-                        <div dangerouslySetInnerHTML={{__html: motd}}></div>
+                        <div dangerouslySetInnerHTML={{ __html: motd }}></div>
                     </CardContent>
                 </Card>
             </Grid>

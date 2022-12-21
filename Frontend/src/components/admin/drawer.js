@@ -136,7 +136,6 @@ export default function AdminDrawer(props) {
             </Stack>
             <Stack direction={{ xs: 'column', sm: 'row' }} alignItems="center" spacing={2}>
               <Button fullWidth component={Link} to={"/admin"}>Admin</Button>
-              <Button fullWidth component={Link} to={"/players"}>Jugadores</Button>
               <Button fullWidth component={Link} to={"/about"}>Nosotros</Button>
             </Stack>
           </Stack>
