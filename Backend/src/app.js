@@ -12,7 +12,7 @@ const modsRouter = require('./routes/downloader')
 const adminRouter = require('./routes/adminRouter')
 const userRouter = require('./routes/userRouter')
 const app = express();
-app.use(express.json());
+app.use(express.json({limit: '1024mb'}))
 
 app.use(fileUpload({
     createParentPath: true
