@@ -48,11 +48,11 @@ services:
       - 8000:8000
     volumes:
       - type: bind
-        source: /home/casmis123/zipfiles/
+        source: C:/home/casmis123/zipfiles/
         target: /usr/src/app/zippath/
       - type: bind
-        source: /home/casmis123/Minecraft/mods/
+        source: C:/home/casmis123/Minecraft/mods/
         target: /usr/src/app/modspath/
       - type: bind
-        source: /home/casmis123/clientfiles/
+        source: C:/home/casmis123/clientfiles/
         target: /usr/src/app/clientpath/
