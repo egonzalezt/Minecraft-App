@@ -3,22 +3,41 @@ version: '3.4'
 services:
   maincra:
     image: maincra
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 2G
+        reservations:
+          cpus: '1'
+          memory: 2G
     build:
       context: Frontend
       dockerfile: ./Dockerfile
+    restart: always
     environment:
       NODE_ENV: production
     ports:
       - 80:80
   modsdownloader:
     image: modsdownloader
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 2G
+        reservations:
+          cpus: '1'
+          memory: 2G
     build:
       context: Backend
       dockerfile: ./Dockerfile
+    restart: always
     environment:
       NODE_ENV: production
       MODSPATH : /usr/src/app/modspath/
       ZIPPATH : /usr/src/app/zippath/
+      CLIENTMODSPATH: /usr/src/app/clientpath/
       ZIPNAMEWITHEXT : modsitos.zip
       MONGOURL : 
       SALT:
@@ -29,8 +48,11 @@ services:
       - 8000:8000
     volumes:
       - type: bind
-        source: ./zipFiles/
+        source: /home/casmis123/zipfiles/
         target: /usr/src/app/zippath/
       - type: bind
-        source: ./upload_data/
+        source: /home/casmis123/Minecraft/mods/
         target: /usr/src/app/modspath/
+      - type: bind
+        source: /home/casmis123/clientfiles/
+        target: /usr/src/app/clientpath/
