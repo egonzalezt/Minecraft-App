@@ -1,83 +1,127 @@
 import React, { useState, useEffect } from 'react';
-import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemText from '@mui/material/ListItemText';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
-import DeleteIcon from '@mui/icons-material/Delete';
 import AdminApi from '../../services/admin';
+import Button from '@mui/material/Button';
+import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
 import AdminDrawer from "./drawer.js";
 
 const columns = [
-    { field: 'id', headerName: 'ID', width: 90 },
     {
-      field: 'name',
-      headerName: 'Nombre',
-      width: 300,
-      editable: false,
+        field: 'name',
+        headerName: 'Nombre',
+        width: 300,
+        editable: false,
     },
     {
-      field: 'version',
-      headerName: 'Version',
-      width: 150,
-      editable: false,
+        field: 'version',
+        headerName: 'Version',
+        width: 150,
+        editable: false,
     },
     {
-      field: 'fileName',
-      headerName: 'Archivo',
-      width: 300,
-      editable: false,
+        field: 'fileName',
+        headerName: 'Archivo',
+        width: 300,
+        editable: false,
     },
     {
-      field: 'type',
-      headerName: 'Tipo Mod',
-      editable: false,
-      width: 200,
-      valueGetter: (params) =>
-      params.row.type.reduce((type, text) => `${type}${text} `, ""),
+        field: 'type',
+        headerName: 'Tipo Mod',
+        editable: false,
+        width: 200,
+        valueGetter: (params) =>
+            params.row.type.join(", "),
     },
-  ];
+];
 
 export default function ModList() {
 
     const [mods, setMods] = useState([]);
-    const pageSize = 10;
-    useEffect(() => {
-        AdminApi.mods(0,pageSize).then(response => {
+    const [totalMods, setTotalMods] = useState(0);
+    const [pageSize, setPageSize] = useState(5);
+    const [isLoading, setIsLoading] = useState(true);
+    const [selectedMods, setSelectedMods] = useState([]);
+
+    function searchData(page) {
+        setIsLoading(true)
+        AdminApi.mods(page + 1, pageSize).then(response => {
+            console.log(response.data)
             const modsTemp = response.data.mods
             for (let i = 0; i < modsTemp.length; i++) {
-                modsTemp[i]["id"]=i+1;
+                modsTemp[i]["id"] = modsTemp[i]._id;
             }
+            setIsLoading(false)
+            setTotalMods(response.data.total)
             setMods(modsTemp)
         }).catch(e => {
             console.log(e.response.data.message)
         });
-    }, []);
+    }
+
+    useEffect(() => {
+        AdminApi.mods(0, pageSize).then(response => {
+            console.log(response.data)
+            const modsTemp = response.data.mods
+            for (let i = 0; i < modsTemp.length; i++) {
+                modsTemp[i]["id"] = modsTemp[i]._id;
+            }
+            setIsLoading(false)
+            setTotalMods(response.data.total)
+            setMods(modsTemp)
+        }).catch(e => {
+            console.log(e.response.data.message)
+        });
+    }, [pageSize]);
+
+    function deleteMods() {
+        alert(selectedMods.join(" | "))
+    }
+
+    function CustomToolbar() {
+        return (
+            <GridToolbarContainer sx={{ justifyContent: "space-between" }}>
+                <Button disabled={ selectedMods.length <= 0 } sx={{ width: "5%" }} onClick={deleteMods}>
+                    <DeleteRoundedIcon />
+                </Button>
+                <GridToolbarExport printOptions={{ disableToolbarButton: true }} />
+            </GridToolbarContainer>
+        );
+    }
 
     return (
         <AdminDrawer>
-            <Box sx={{ flexGrow: 1, width: "80%" }}>
+            <Box sx={{ flexGrow: 1, width: "85%" }}>
                 <Grid item xs={12} md={6}>
                     <Typography sx={{ mb: 2 }} variant="h2" component="div">
                         Lista de Mods
                     </Typography>
-                    <Box sx={{ height: 400, width: '100%' }}>
+                    <Box sx={{ height: 450, width: '100%' }}>
                         <DataGrid
+                            // autoHeight
+                            pagination
+                            loading={isLoading}
                             rows={mods}
                             columns={columns}
-                            pageSize={5}
-                            rowsPerPageOptions={[5]}
+                            pageSize={pageSize}
+                            rowsPerPageOptions={[3, 5, 8, 15, 30]}
+                            onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+                            rowCount={totalMods}
+                            paginationMode="server"
+                            onPageChange={searchData}
                             checkboxSelection
                             disableSelectionOnClick
-                            experimentalFeatures={{ newEditingApi: true }}
+                            onSelectionModelChange={(newSelectionMod) => {
+                                setSelectedMods(newSelectionMod);
+                            }}
+                            selectionModel={selectedMods}
+                            keepNonExistentRowsSelected
+                            components={{
+                                Toolbar: CustomToolbar,
+                            }}
                         />
                     </Box>
                 </Grid>

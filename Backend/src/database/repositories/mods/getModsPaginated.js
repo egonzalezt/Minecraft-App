@@ -24,7 +24,8 @@ async function getModsPaginate(page,limit)
     return {
         data,
         totalPages: Math.ceil(count / limit),
-        currentPage: page
+        currentPage: page,
+        totalMods: count
     }
 }
 

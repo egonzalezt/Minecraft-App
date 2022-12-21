@@ -1,8 +1,13 @@
 import axios from "../apiConnection.js"
 
 class AdminApi {
-    uploadMod(data) {
-        return axios.post("/admin/downloadAudio", data, { responseType: 'blob' })
+    upload(data) {
+        return axios.post("/admin/mods", data, {
+            headers: { 
+                "Authorization":`Bearer ${localStorage.getItem("accessToken")}`,
+                'Content-Type': 'multipart/form-data'
+            }
+        })
     }
 
     mods(page, pageSize) {

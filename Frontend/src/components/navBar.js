@@ -47,7 +47,7 @@ function NavBar() {
       addUser(null);
       setRoles([]);
     })
-  }, []);
+  }, [addUser]);
 
   return (
     <AppBar position="static" style={{ background: 'transparent', boxShadow: 'none' }}>

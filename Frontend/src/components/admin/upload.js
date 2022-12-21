@@ -8,11 +8,15 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Unstable_Grid2';
 import SendIcon from '@mui/icons-material/Send';
+import Swal from 'sweetalert2'
+import { useNavigate } from "react-router-dom";
 
 import AdminDrawer from "./drawer";
-import axios from "axios";
+import AdminApi from '../../services/admin';
 
 function UploadMod() {
+    const navigate = useNavigate();
+
     const [file, setFile] = useState(null);
     const [name, setName] = useState("");
     const [version, setVersion] = useState("");
@@ -26,6 +30,7 @@ function UploadMod() {
     };
 
     const submitMod = () => {
+        
         let formData = new FormData();
         formData.append('fileName', fileName);
         formData.append('version', version);
@@ -34,17 +39,25 @@ function UploadMod() {
         formData.append('file', file);
         formData.append('name', name);
 
-        const config = {
-            headers: { 'content-type': 'multipart/form-data' }
-        }
-        console.log(formData)
-        // axios.post("/mods/upload", formData, config)
-        //     .then(response => {
-        //         console.log(response);
-        //     })
-        //     .catch(error => {
-        //         console.log(error);
-        //     });
+        AdminApi.upload(formData).then(res => {
+            console.log(res);
+            Swal.fire({
+                timer: 3000,
+                timerProgressBar: true,
+                icon: 'success',
+                title: `Mod creado`,
+                text: `El mod  ${name}  se a creado correctamente`,
+            }).then(()=> navigate("/admin"));
+        }).catch(err => {
+            Swal.fire({
+                timer: 3000,
+                timerProgressBar: true,           
+                icon: 'error',    
+                title: 'Error', 
+                text: err.response.data.message,          
+            })
+        });
+
     };
 
     const handleChange = (e) => {

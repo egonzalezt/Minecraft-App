@@ -41,7 +41,7 @@ async function getMods(req, res) {
     res.append('TotalPages', result.totalPages);
     res.append('CurrentPage', result.currentPage);
     res.append('Content-Type', 'application/json')
-    return res.status(200).json({ error: false, mods: result.data });
+    return res.status(200).json({ error: false, mods: result.data, total: result.totalMods });
 }
 
 async function addMods(req, res) {

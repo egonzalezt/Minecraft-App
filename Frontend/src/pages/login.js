@@ -41,6 +41,7 @@ function Login() {
                 timerProgressBar: true,
                 icon: 'error',
                 title: 'Error',
+                text: err.response.data.message,
             })
         });
     }
