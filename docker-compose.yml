@@ -18,7 +18,7 @@ services:
     environment:
       NODE_ENV: production
     ports:
-      - 80:80
+      - 3000:80
   modsdownloader:
     image: modsdownloader
     deploy:
@@ -39,10 +39,10 @@ services:
       ZIPPATH : /usr/src/app/zippath/
       CLIENTMODSPATH: /usr/src/app/clientpath/
       ZIPNAMEWITHEXT : modsitos.zip
-      MONGOURL : 
-      SALT:
-      ACCESS_TOKEN_PRIVATE_KEY:
-      REFRESH_TOKEN_PRIVATE_KEY:
+      #MONGOURL: 
+      #SALT:
+      #ACCESS_TOKEN_PRIVATE_KEY:
+      #REFRESH_TOKEN_PRIVATE_KEY:
       PORT : 8000
     ports:
       - 8000:8000
