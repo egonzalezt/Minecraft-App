@@ -1,15 +1,16 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Unstable_Grid2';
-import SendIcon from '@mui/icons-material/Send';
 import Swal from 'sweetalert2'
 import { useNavigate } from "react-router-dom";
+
+import LoadingButton from '@mui/lab/LoadingButton';
+import SaveIcon from '@mui/icons-material/Save';
 
 import AdminDrawer from "./drawer";
 import AdminApi from '../../services/admin';
@@ -22,15 +23,17 @@ function UploadMod() {
     const [version, setVersion] = useState("");
     const [client, setClient] = useState(false);
     const [server, setServer] = useState(false);
+    const [isValidFile, setIsValidFile] = useState();
     const [fileName, setFileName] = useState("Cargar mod");
-    const inputRef = useRef(null);
+    const [loading, setLoading] = useState(false);
 
+    const inputRef = useRef(null);
     const onButtonClick = () => {
         inputRef.current.click();
     };
 
     const submitMod = () => {
-        
+
         let formData = new FormData();
         formData.append('fileName', fileName);
         formData.append('version', version);
@@ -40,34 +43,53 @@ function UploadMod() {
         formData.append('name', name);
 
         AdminApi.upload(formData).then(res => {
-            console.log(res);
+            setLoading(false);
             Swal.fire({
                 timer: 3000,
                 timerProgressBar: true,
                 icon: 'success',
                 title: `Mod creado`,
                 text: `El mod  ${name}  se a creado correctamente`,
-            }).then(()=> navigate("/admin"));
+            }).then(() => navigate("/admin"));
         }).catch(err => {
+            setLoading(false);
             Swal.fire({
                 timer: 3000,
-                timerProgressBar: true,           
-                icon: 'error',    
-                title: 'Error', 
-                text: err.response.data.message,          
+                timerProgressBar: true,
+                icon: 'error',
+                title: 'Error',
+                text: err.response.data.message,
             })
         });
 
     };
 
     const handleChange = (e) => {
-        e.preventDefault();
-        if (e.target.files && e.target.files[0]) {
-            setFileName(e.target.files[0].name);
-            setFile(e.target.files[0])
+        const fileName = e.target.files[0].name;
+        if (fileName.endsWith('.jar')) {
+            setIsValidFile(true);
+            e.preventDefault();
+            if (e.target.files && e.target.files[0]) {
+                setFileName(e.target.files[0].name);
+                setFile(e.target.files[0])
+            }
+        } else {
+            setIsValidFile(false);
+            Swal.fire({
+                timer: 3000,
+                timerProgressBar: true,
+                icon: 'warning',
+                title: `Cargue un archivo valido`,
+                text: `Rectifique que haya seleccionado el mod y no otro archivo`,
+            })
         }
     };
 
+    useEffect(() => {
+        if (!isValidFile) {
+
+        }
+    }, [isValidFile]);
     return (
         <AdminDrawer>
             <Typography margin={3} variant="h2" gutterBottom>
@@ -118,9 +140,16 @@ function UploadMod() {
                     </Typography>
                 </Grid>
                 <Grid xs={12}>
-                    <Button variant="contained" endIcon={<SendIcon />} onClick={submitMod}>
+                    <LoadingButton
+                        color="secondary"
+                        onClick={submitMod}
+                        loading={loading}
+                        loadingPosition="start"
+                        startIcon={<SaveIcon />}
+                        variant="contained"
+                    >
                         Subir
-                    </Button>
+                    </LoadingButton>
                 </Grid>
             </Grid>
         </AdminDrawer>

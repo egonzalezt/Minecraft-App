@@ -5,7 +5,10 @@ import Typography from '@mui/material/Typography';
 import AdminApi from '../../services/admin';
 import Button from '@mui/material/Button';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
+import Swal from 'sweetalert2'
 
+import LoadingButton from '@mui/lab/LoadingButton';
+import SaveIcon from '@mui/icons-material/Save'; 
 import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
 import AdminDrawer from "./drawer.js";
 
@@ -45,6 +48,27 @@ export default function ModList() {
     const [pageSize, setPageSize] = useState(5);
     const [isLoading, setIsLoading] = useState(true);
     const [selectedMods, setSelectedMods] = useState([]);
+    const [loadingZipCreation, setLoadingZipCreation] = useState(false);
+
+    const createZipRequest = () => {
+        setLoadingZipCreation(true)
+        AdminApi.createZip().then(response => {
+            setLoadingZipCreation(false)
+            Swal.fire({
+                icon: 'success',
+                title: 'Completado',
+                text: 'Se han creado los mods en un archivo .Zip',
+                footer: '<a href="/api/v1/mods/download">Descargar zip generado</a>'
+            })  
+        }).catch(err => {
+            setLoadingZipCreation(false)
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Ha ocurrido un error',
+            })
+        })
+    }
 
     function searchData(page) {
         setIsLoading(true)
@@ -125,6 +149,17 @@ export default function ModList() {
                         />
                     </Box>
                 </Grid>
+                <LoadingButton
+                        color="secondary"
+                        onClick={createZipRequest}
+                        loading={loadingZipCreation}
+                        loadingPosition="start"
+                        startIcon={<SaveIcon />}
+                        variant="contained"
+                        sx={{marginTop:"5%", width:"20%"}}
+                    >
+                        Crear .ZIP
+                </LoadingButton>
             </Box>
         </AdminDrawer>
     );

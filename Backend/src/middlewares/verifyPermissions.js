@@ -8,7 +8,7 @@ async function verifyPermissions(req, res, next) {
         if (roles && roles.find(rol => rol === "super_admin")) {
             return next();
         } else {
-            return res.status(401).json({ error: false, message: "Sorry you don't have permissions" });
+            return res.status(403).json({ error: false, message: "Sorry you don't have permissions" });
         }
     })
 
