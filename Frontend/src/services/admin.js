@@ -18,6 +18,14 @@ class AdminApi {
         })
     }
 
+    createZip(){
+        return axios.get('/admin/mods/create',{
+            headers: {
+                "Authorization":`Bearer ${localStorage.getItem("accessToken")}`,
+            }
+        })
+    }
+
 }
 
 export default new AdminApi();
