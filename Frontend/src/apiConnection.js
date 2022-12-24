@@ -36,7 +36,7 @@ axiosInstance.interceptors.response.use((response) => {
       return axiosInstance(config);
     } catch (err) {
       const refresh_token = localStorage.getItem('refreshToken');
-      if(refresh_token !== ""){
+      if(refresh_token !== "" && refresh_token !== undefined && refresh_token !== null){
         Swal.fire({
           icon: 'error',
           title: 'La sesion se ha cerrado',
