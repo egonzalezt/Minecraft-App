@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -26,6 +26,8 @@ function UploadMod() {
     const [isValidFile, setIsValidFile] = useState();
     const [fileName, setFileName] = useState("Cargar mod");
     const [loading, setLoading] = useState(false);
+    const [isInvalidName, setIsInvalidName] = useState(true);
+    const [isInvalidVersion, setIsInvalidVersion] = useState(true);
 
     const inputRef = useRef(null);
     const onButtonClick = () => {
@@ -33,7 +35,32 @@ function UploadMod() {
     };
 
     const submitMod = () => {
+        let errors = []
+        if(!client && !server){
+            errors.push("<li>Seleccione el tipo de mod Server/Client</li>");
+        }
+        if(isInvalidName){
+            errors.push("<li>Revise el nombre del mod</li>");
+        }
+        if(isInvalidVersion){
+            errors.push("<li>Revise la version del mod</li>");
+        }
+        if(!isValidFile){
+            errors.push("<li>Revise el archivo</li>");
+        }
 
+
+        if(errors.length > 0){
+            Swal.fire({
+                icon: 'warning',
+                title: 'Hey te falto algo en el formulario',
+                footer: `<ul>${errors.join("")}</ul>`
+            })
+            return
+        }
+
+
+        setLoading(true);
         let formData = new FormData();
         formData.append('fileName', fileName);
         formData.append('version', version);
@@ -61,7 +88,6 @@ function UploadMod() {
                 text: err.response.data.message,
             })
         });
-
     };
 
     const handleChange = (e) => {
@@ -85,11 +111,6 @@ function UploadMod() {
         }
     };
 
-    useEffect(() => {
-        if (!isValidFile) {
-
-        }
-    }, [isValidFile]);
     return (
         <AdminDrawer>
             <Typography margin={3} variant="h2" gutterBottom>
@@ -98,22 +119,40 @@ function UploadMod() {
             <Grid container justifyContent="center" spacing={5}>
                 <Grid xs={12} sm={6}>
                     <TextField
+                        error = {isInvalidName}
+                        helperText ={isInvalidName&& "Nombre es invalido"}
                         required
                         label="Nombre del mod"
                         fullWidth
                         variant="standard"
                         value={name}
-                        onChange={(event) => setName(event.target.value)}
+                        onChange={(event) => {
+                            if(event.target.value.length<1){
+                                setIsInvalidName(true)
+                            }else{
+                                setIsInvalidName(false)
+                            }
+                            setName(event.target.value) 
+                        }}
                     />
                 </Grid>
                 <Grid xs={12} sm={6}>
                     <TextField
+                        error = {isInvalidVersion}
+                        helperText ={isInvalidVersion && "La version es invalido"}
                         required
-                        label="version del mod"
+                        label="Version del mod"
                         fullWidth
                         variant="standard"
                         value={version}
-                        onChange={(event) => setVersion(event.target.value)}
+                        onChange={(event) => {
+                            if(event.target.value.length<1){
+                                setIsInvalidVersion(true)
+                            }else{
+                                setIsInvalidVersion(false)
+                            }
+                            setVersion(event.target.value) 
+                        }}
                     />
                 </Grid>
                 <Grid xs={12}>

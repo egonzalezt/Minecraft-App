@@ -1,10 +1,21 @@
 function downloadModsToUser(req, res) {
-    console.log(`Getting file from: ${process.env.ZIPPATH}${process.env.ZIPNAMEWITHEXT}`)
-    return res.download(`${process.env.ZIPPATH}${process.env.ZIPNAMEWITHEXT}`, function (err) {
-        if (err) {
-            console.log(err);
+    var status = global.isModsFileAvailable;
+    if(status){
+        const filePath = `${process.env.ZIPPATH}${process.env.ZIPNAMEWITHEXT}`;
+        if(file_system.existsSync(filePath)){
+            console.log(`Getting file from: ${process.env.ZIPPATH}${process.env.ZIPNAMEWITHEXT}`)
+            return res.download(filePath, function (err) {
+                if (err) {
+                    console.log(err);
+                }
+            }) 
+        }else{
+            return res.status(410).json({ error: false, message: "Mods file is currently unavailable try again later" });
         }
-    })
+    }
+    else{
+        return res.status(410).json({ error: false, message: "Mods file is currently unavailable try again later" });
+    }
 }
 
 module.exports = {
