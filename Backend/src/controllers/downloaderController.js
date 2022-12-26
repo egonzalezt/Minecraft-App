@@ -1,9 +1,11 @@
+const file_system = require('fs');
+
 function downloadModsToUser(req, res) {
     var status = global.isModsFileAvailable;
     if(status){
         const filePath = `${process.env.ZIPPATH}${process.env.ZIPNAMEWITHEXT}`;
         if(file_system.existsSync(filePath)){
-            console.log(`Getting file from: ${process.env.ZIPPATH}${process.env.ZIPNAMEWITHEXT}`)
+            console.log(`Getting file from: ${filePath}`)
             return res.download(filePath, function (err) {
                 if (err) {
                     console.log(err);
