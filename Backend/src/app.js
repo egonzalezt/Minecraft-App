@@ -5,7 +5,7 @@ const fileUpload = require('express-fileupload');
 require('express-async-errors');
 require('dotenv').config()
 require('./config/database')
-
+global.isModsFileAvailable = true;
 //routes
 
 const modsRouter = require('./routes/downloader')

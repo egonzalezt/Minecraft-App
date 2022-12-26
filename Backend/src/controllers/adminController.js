@@ -6,10 +6,23 @@ const findModFileNameById = require('../database/repositories/mods/findModFileNa
 const getModsPaginate = require('../database/repositories/mods/getModsPaginated');
 const saveMod = require('../database/repositories/mods/addMod');
 const findModByFileName = require('../database/repositories/mods/findModByFileName')
-const {modType} = require('../database/schemas/modEnum')
+const { modType } = require('../database/schemas/modEnum');
 
-function createModsFile(req, res) {
-    var output = file_system.createWriteStream(`${process.env.ZIPPATH}${process.env.ZIPNAMEWITHEXT}`);
+async function createModsFile(req, res) {
+    const filePath = `${process.env.ZIPPATH}${process.env.ZIPNAMEWITHEXT}`;
+    global.isModsFileAvailable = false;
+    if (file_system.existsSync(filePath)) {
+        file_system.unlink(filePath, async (err) => {
+            if (err) {
+                global.isModsFileAvailable = true;
+                return res.status(500)
+                    .json({ error: true, message: "Internal server error" });
+            }
+        });
+        console.log("File deleted")
+    }
+    console.log("Creating file")
+    var output = file_system.createWriteStream(filePath);
     var archive = archiver('zip');
     output.on('close', function () {
         console.log(archive.pointer() + ' total bytes');
@@ -27,11 +40,11 @@ function createModsFile(req, res) {
     archive.directory(`${process.env.MODSPATH}`, false);
     archive.directory(`${process.env.CLIENTMODSPATH}`, false);
     archive.finalize().then(() => {
+        global.isModsFileAvailable = true;
         return res.status(200).json({ error: false, message: "Mods Compressed successfully" });
     }).catch(() => {
         return res.status(500).json({ error: true, message: "Fail compressing mods" });
     });
-
 }
 
 async function getMods(req, res) {
@@ -85,27 +98,53 @@ async function addMods(req, res) {
 }
 
 async function removeMod(req, res) {
-    var id = req.params.id;
-    var mod = await findModFileNameById(id);
-    let modPath = ""
-    if(mod.type.find(data => data === 'server')){
-        modPath = process.env.MODSPATH
-    }else{
-        modPath = process.env.CLIENTMODSPATH
+    var mods = req.body["mods[]"]
+    var failedToDeleteSomeMods = false;
+    var modsNotFound = false;
+    if (!Array.isArray(mods)) {
+        mods = [mods];
     }
-    if (file_system.existsSync(modPath + mod.fileName)) {
-        await file_system.unlink(modPath + mod.fileName, async (err) => {
-            if (err) {
-                return res.status(500)
-                    .json({ error: true, message: "Internal server error" });
-            } else {
-                await deleteMod(id);
-                return res.status(200)
-                    .json({ error: false, message: "Mod deleted successfully" });
+    try {
+        for (let i = 0; i < mods.length; i++) {
+            const modId = mods[i];
+            var mod = await findModFileNameById(modId);
+            if (mod) {
+                let modPath = ""
+                if (mod.type.find(data => data === 'server')) {
+                    modPath = process.env.MODSPATH
+                } else {
+                    modPath = process.env.CLIENTMODSPATH
+                }
+                const modFullPath = modPath + mod.fileName
+                if (file_system.existsSync(modFullPath)) {
+                    file_system.unlink(modFullPath, async (err) => {
+                        if (err) {
+                            failedToDeleteSomeMods = true;
+                        } else {
+                            await deleteMod(modId);
+                        }
+                    });
+                } else {
+                    modsNotFound = true;
+                }
             }
-        });
-    } else {
-        return res.status(404).json({ error: false, message: "Mod not found, please check the mod spell"});
+        }
+
+        if(modsNotFound){
+            return res.status(200)
+                .json({ error: false, message: "Some mods could not be removed because .Jar file not found" });
+        }
+        else if (failedToDeleteSomeMods) {
+            return res.status(200)
+                .json({ error: false, message: "Some mods could not be removed" });
+        } else {
+            return res.status(200)
+                .json({ error: false, message: "Mod deleted successfully" });
+        }
+    }
+    catch {
+        return res.status(500)
+            .json({ error: true, message: "Internal server error" });
     }
 }
 

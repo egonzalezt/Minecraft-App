@@ -3,9 +3,9 @@ const schema = require('../../schemas/mods')
 /**
  * @param {string} id
  */
-async function saveUser(id)
+async function deleteModById(id)
 {
-    return await schema.deleteOne({_id:id})
+    return await schema.findByIdAndDelete(id);
 }
 
-module.exports = saveUser
+module.exports = deleteModById
