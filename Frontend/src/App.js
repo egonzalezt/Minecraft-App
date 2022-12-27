@@ -7,7 +7,7 @@ import {
   Navigate,
   Outlet,
 } from 'react-router-dom';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider, createTheme, responsiveFontSizes} from '@mui/material/styles';
 
 import Main from './pages/main';
 import NotFound from './pages/notFound';
@@ -18,16 +18,16 @@ import Login from './pages/login'
 import SignUp from './pages/signup'
 import { storeData } from './states/stores';
 
-const theme = createTheme({
+let theme = createTheme({
   typography: {
     fontFamily: 'Minecraft',
     h1: {
       fontFamily: 'Minecrafter',
-      fontSize: "70px",
+      fontSize: "60px",
     },
     h2: {
       fontFamily: 'Minecrafter',
-      fontSize: "45px",
+      fontSize: "40px",
     },
     h3: {
       fontFamily: 'Minecrafter',
@@ -58,6 +58,8 @@ const theme = createTheme({
     },
   },
 });
+
+theme = responsiveFontSizes(theme);
 
 const ProtectedRoute = ({
   user,

@@ -19,6 +19,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import PrecisionManufacturingRoundedIcon from '@mui/icons-material/PrecisionManufacturingRounded';
@@ -97,6 +98,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default function AdminDrawer(props) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
+  const matches = useMediaQuery('(min-width:1100px)');
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -111,8 +113,8 @@ export default function AdminDrawer(props) {
       <CssBaseline />
       <AppBar position="fixed" open={open} sx={{ backgroundImage: `url(${"../img/stones.jpg"})` }}>
         <Toolbar>
-          <Stack direction="row" width="100%" spacing={2} justifyContent="space-between" alignItems="center">
-            <Stack direction={{ xs: 'column', sm: 'row' }} alignItems="center" spacing={2}>
+          <Stack direction={{ xs: 'column', sm: 'row' }} width="100%" spacing={2} justifyContent="space-between" alignItems="center">
+            <Stack direction={{ sm: 'column', md: 'row' }} alignItems="center" spacing={2}>
               <IconButton
                 color="inherit"
                 aria-label="open drawer"
@@ -129,8 +131,8 @@ export default function AdminDrawer(props) {
                 <Logo width="75" height="75" />
               </Link>
               <Link to={"/"} style={{ textDecoration: 'none', color: "white" }}>
-                <Typography variant='h2'>
-                  aREQUIPET
+                <Typography variant={matches ? 'h2' : 'h3'}>
+                  arequipet
                 </Typography>
               </Link>
             </Stack>
@@ -149,7 +151,7 @@ export default function AdminDrawer(props) {
         </DrawerHeader>
         <Divider />
         <List>
-        <ListItem disablePadding sx={{ display: 'block' }}>
+          <ListItem disablePadding sx={{ display: 'block' }}>
             <ListItemButton
               sx={{
                 minHeight: 48,

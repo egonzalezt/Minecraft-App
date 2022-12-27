@@ -7,17 +7,23 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import Avatar from '@mui/material/Avatar';
+import useMediaQuery from '@mui/material/useMediaQuery';
+
 import { Link } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
+
 import { ReactComponent as Logo } from '../kirb.svg';
 import { storeData } from '../states/stores';
 import UserApi from '../services/users';
 import logo from '../img/minecraft_logo.png';
+
+
 function NavBar() {
   const getUser = storeData(state => state.user);
   const addUser = storeData(state => state.addUser);
   const [roles, setRoles] = useState([]);
-  const [anchorEl, setAnchorEl] =useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const matches = useMediaQuery('(min-width:1100px)');
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -33,9 +39,9 @@ function NavBar() {
     setAnchorEl(null);
   }
   const handleLogOut = () => {
-    UserApi.logOut().then((res)=>{
+    UserApi.logOut().then((res) => {
       deleteTokens()
-    }).catch(()=>{
+    }).catch(() => {
       deleteTokens()
     });
   };
@@ -52,14 +58,14 @@ function NavBar() {
   return (
     <AppBar position="static" style={{ background: 'transparent', boxShadow: 'none' }}>
       <Toolbar>
-        <Stack direction="row" width="100%" spacing={2} padding={2} justifyContent="space-between" alignItems="center">
-          <Stack direction={{ xs: 'column', sm: 'row' }} alignItems="center" spacing={2}>
+        <Stack direction={{ xs: 'column', sm: 'row' }} width="100%" spacing={2} justifyContent="space-between" alignItems="center">
+          <Stack direction={{ sm: 'column', md: 'row' }} alignItems="center" spacing={2}>
             <Link to={"/"}>
               <Logo width="125" height="125" />
             </Link>
             <Link to={"/"} style={{ textDecoration: 'none', color: "white" }}>
-              <Typography variant='h1'>
-                AREQUIPET
+              <Typography variant={matches ? 'h1' : 'h2'}>
+                arequipet
               </Typography>
             </Link>
           </Stack>
@@ -72,7 +78,7 @@ function NavBar() {
                 {roles.find(role => role === "super_admin") ?
                   <Button fullWidth component={Link} to={"/admin"}>Admin</Button>
                   :
-                  <></>
+                  null
                 }
                 <IconButton
                   size="large"

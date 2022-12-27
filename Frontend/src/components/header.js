@@ -5,10 +5,13 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
+import useMediaQuery from '@mui/material/useMediaQuery';
+
 function Header() {
 
     const [hidden, setHidden] = useState(true);
     const iframeRef = useRef(null);
+    const matches = useMediaQuery('(min-width:700px)');
 
     function troll() {
         setHidden(false);
@@ -19,10 +22,10 @@ function Header() {
 
     return (
         <Stack direction="column" spacing={2} padding={2} justifyContent="space-between" alignItems="center">
-            <Typography variant='h1'>
+            <Typography variant={matches ? 'h1' : 'h2'}>
                 Minecraft
             </Typography>
-            <Typography variant='h2'>
+            <Typography margin={2} variant={matches ? 'h2' : 'h3'}>
                 Vamo a jugar Arequipet
             </Typography>
             <Stack direction={{ xs: 'column', sm: 'row' }} alignItems="center" spacing={2}>
