@@ -5,7 +5,11 @@ import '../styles/login.css'
 import UserApi from '../services/users'
 import Swal from 'sweetalert2'
 import { useNavigate } from "react-router-dom";
-import {storeData} from '../states/stores'
+import { storeData } from '../states/stores'
+import { Link } from 'react-router-dom';
+import IconButton from '@mui/material/IconButton';
+import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
+
 const schema = Yup.object().shape({
     email: Yup.string()
         .required("El correo es requerido")
@@ -24,18 +28,19 @@ function Login() {
         UserApi.login(data).then(res => {
             localStorage.setItem('accessToken', res.data.accessToken);
             localStorage.setItem('refreshToken', res.data.refreshToken);
-            UserApi.verify().then(res =>{
+            UserApi.verify().then(res => {
                 addUser(res.data);
-            }).then(()=>{
+            }).then(() => {
                 Swal.fire({
                     timer: 1000,
                     timerProgressBar: true,
                     icon: 'success',
                     title: `Inicio de sesion exitoso`,
                     text: `Bienvenido ${res.data.userNickName} a arequipet.ga`,
-                }).then(()=> navigate("/"));
+                }).then(() => navigate("/"));
             })
         }).catch(err => {
+            console.log(err)
             Swal.fire({
                 timer: 2000,
                 timerProgressBar: true,
@@ -64,10 +69,12 @@ function Login() {
                     }) => (
                         <div className="login">
                             <div className="form">
-                                {/* Passing handleSubmit parameter tohtml form onSubmit property */}
                                 <form noValidate onSubmit={handleSubmit}>
-                                    <span>Ingresar</span>
-                                    {/* Our input html with passing formik parameters like handleChange, values, handleBlur to input properties */}
+                                    <span>
+                                        <IconButton component={Link} to={"/"}>
+                                            <ArrowBackRoundedIcon />
+                                        </IconButton>Ingresar
+                                    </span>
                                     <input
                                         type="email"
                                         name="email"
@@ -78,11 +85,9 @@ function Login() {
                                         className="form-control inp_text"
                                         id="email"
                                     />
-                                    {/* If validation is not passed show errors */}
                                     <p className="error">
                                         {errors.email && touched.email && errors.email}
                                     </p>
-                                    {/* Our input html with passing formik parameters like handleChange, values, handleBlur to input properties */}
                                     <input
                                         type="password"
                                         name="password"
@@ -92,13 +97,13 @@ function Login() {
                                         placeholder="Contraseña"
                                         className="form-control"
                                     />
-                                    {/* If validation is not passed show errors */}
                                     <p className="error">
                                         {errors.password && touched.password && errors.password}
                                     </p>
-                                    {/* Click on submit button to submit the form */}
                                     <button type="submit">Ingresar</button>
                                 </form>
+                                <br />
+                                <Link style={{ textDecoration: "underline", color: "blue" }} to="/signup">¿No tienes cuenta? Registrate</Link>
                             </div>
                         </div>
                     )}

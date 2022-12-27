@@ -75,6 +75,11 @@ function NavBar() {
               <Button fullWidth component={Link} to={"/login"}>Login</Button>
               :
               <>
+                {roles.find(role => role === "user") ?
+                  <Button fullWidth component={Link} to={"/user"}>User</Button>
+                  :
+                  <></>
+                }
                 {roles.find(role => role === "super_admin") ?
                   <Button fullWidth component={Link} to={"/admin"}>Admin</Button>
                   :

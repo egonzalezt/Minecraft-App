@@ -72,6 +72,7 @@ async function addMods(req, res) {
     const fileName = req.body.fileName;
     const version = req.body.version;
     const file = req.files.file;
+    const url = req.body.url;
     const client = (req.body.client).toLowerCase() == 'true' ? true : false;
     const server = (req.body.server).toLowerCase() == 'true' ? true : false;
     const type = []
@@ -87,7 +88,7 @@ async function addMods(req, res) {
         type.push(modType.Client);
         file.mv(process.env.CLIENTMODSPATH + fileName)
     }
-    var result = await saveMod(name, fileName, version, type);
+    var result = await saveMod(name, fileName, version, type, url);
     if (result) {
         return res.status(200)
             .json({ error: false, message: "Mod saved successfully" });

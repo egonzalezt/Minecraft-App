@@ -5,6 +5,8 @@ import Typography from '@mui/material/Typography';
 import AdminApi from '../../services/admin';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import Swal from 'sweetalert2'
+import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
 
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
@@ -15,26 +17,30 @@ const columns = [
     {
         field: 'name',
         headerName: 'Nombre',
-        width: 300,
+        minWidth: 300,
+        flex: 1,
         editable: false,
     },
     {
         field: 'version',
         headerName: 'Version',
-        width: 150,
+        minWidth: 150,
+        flex: 1,
         editable: false,
     },
     {
         field: 'fileName',
         headerName: 'Archivo',
-        width: 300,
+        minWidth: 300,
+        flex: 1,
         editable: false,
     },
     {
         field: 'type',
         headerName: 'Tipo Mod',
         editable: false,
-        width: 200,
+        minWidth: 200,
+        flex: 1,
         valueGetter: (params) =>
             params.row.type.join(", "),
     },
@@ -167,6 +173,7 @@ export default function ModList() {
                     sx={{ width: "5%", alignItems: "center", alignContent: "center" }}>
                     <DeleteRoundedIcon />
                 </LoadingButton>
+                <Button component={Link} to={"/admin/upload"}>Agregar Mod</Button>
                 <GridToolbarExport printOptions={{ disableToolbarButton: true }} />
             </GridToolbarContainer>
         );

@@ -16,6 +16,7 @@ import AdminUpload from './pages/uploadMod';
 import ServerStatus from './pages/serverStatus';
 import Login from './pages/login'
 import SignUp from './pages/signup'
+import User from './pages/user'
 import { storeData } from './states/stores';
 
 let theme = createTheme({
@@ -61,7 +62,9 @@ let theme = createTheme({
 
 theme = responsiveFontSizes(theme);
 
-const ProtectedRoute = ({
+theme = responsiveFontSizes(theme);
+
+const ProtectedRouteAdmin = ({
   user,
   redirectPath = '/',
   children,
@@ -74,7 +77,21 @@ const ProtectedRoute = ({
     }
   }
   return <Navigate to={redirectPath} replace />;
+};
 
+const ProtectedRouteUser = ({
+  user,
+  redirectPath = '/',
+  children,
+}) => {
+  if (!user) {
+    return <Navigate to={redirectPath} replace />;
+  }else if(user.roles !== undefined){
+    if(user.roles.find(role => role === "user")){
+      return children ? children : <Outlet />;
+    }
+  }
+  return <Navigate to={redirectPath} replace />;
 };
 
 function App() {
@@ -88,9 +105,12 @@ function App() {
           <Route path="status" element={<div className="grass"><ServerStatus /></div>} />
           <Route path="login" element={<div className="grass"><Login /></div>} />
           <Route path="signup" element={<div className="grass"><SignUp /></div>} />
-          <Route element={<ProtectedRoute user={getUser} />}>
+          <Route element={<ProtectedRouteAdmin user={getUser} />}>
             <Route path="admin" element={<Admin />} />
             <Route path="admin/upload" element={<AdminUpload />}></Route>
+          </Route>
+          <Route element={<ProtectedRouteUser user={getUser} />}>
+            <Route path="user" element={<User />} />
           </Route>
           <Route path='*' element={<NotFound />}></Route>
         </Routes>
