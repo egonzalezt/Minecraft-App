@@ -17,13 +17,9 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 
-import UploadFileIcon from '@mui/icons-material/UploadFile';
 import PrecisionManufacturingRoundedIcon from '@mui/icons-material/PrecisionManufacturingRounded';
-import PublicIcon from '@mui/icons-material/Public';
-import FolderZipRoundedIcon from '@mui/icons-material/FolderZipRounded';
 
 import { ReactComponent as Logo } from '../../kirb.svg';
 

@@ -7,19 +7,6 @@ a {
   text-align: center;
 }
 
-@font-face {
-  font-family: Minecraft;
-  font-style: normal;
-  font-weight: 400;
-  src: url(https://cdn.jsdelivr.net/gh/nailujx86/Minecraft-Webfont-and-Colors@v1.0/font/minecraft_font.woff)
-      format("woff"),
-    url(https://cdn.jsdelivr.net/gh/nailujx86/Minecraft-Webfont-and-Colors@v1.0/font/minecraft_font.eot)
-      format("eot"),
-    url(https://cdn.jsdelivr.net/gh/nailujx86/Minecraft-Webfont-and-Colors@v1.0/font/minecraft_font.ttf)
-      format("truetype"),
-    url(https://cdn.jsdelivr.net/gh/nailujx86/Minecraft-Webfont-and-Colors@v1.0/font/minecraft_font.svg#Minecraft)
-      format("svg");
-}
 .mc {
   padding: 1em;
   font-family: Minecraft;

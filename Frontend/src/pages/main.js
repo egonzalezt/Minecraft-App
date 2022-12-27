@@ -1,63 +1,61 @@
 import Header from "../components/header";
 import Footer from "../components/footer";
 import NavBar from "../components/navBar";
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 
 function Main() {
     return (
         <div>
             <NavBar />
-            <div id="text" style={{
+            <Stack direction="column" alignItems="center" padding={8} spacing={2} sx={{
                 backgroundImage: `url(${"../img/book.png"})`,
                 backgroundRepeat: "no-repeat",
-                backgroundSize: "60% 100%",
+                backgroundSize: { xs: "70% 100%", md: "65% 100%" },
                 backgroundPosition: "center",
             }}>
                 <Header />
-                <div style={{ padding: 10 }}>
-                    <br />
-                    <h2><u>kiubo gonorea</u></h2>
-                    <p className="normal">
+                    <Typography variant="h3">kiubo gonorea</Typography>
+                    <Typography>
                         Presione el boton para descargar los mods men.
-                    </p>
-                    <p className="normal">
+                    </Typography>
+                    <Typography>
                         Version de maincra 1.16.5
-                    </p>
-                    <p className="normal">
+                    </Typography>
+                    <Typography>
                         Forge 36.2.39
-                    </p>
-                    <p className="normal">
+                    </Typography>
+                    <Typography>
                         Turip Ip Ip
-                    </p>
-
-                    <p className="normal">
+                    </Typography>
+                    <Typography>
                         Montesitos Product Owner
-                    </p>
-                    <p className="normal">
+                    </Typography>
+                    <Typography>
                         Llamas220 Product Owner
-                    </p>
-                    <p className="normal">
+                    </Typography>
+                    <Typography>
                         Daves2126 Developer
-                    </p>
-                    <p className="normal">
+                    </Typography>
+                    <Typography>
                         Catmizxc Supervisor, Cloud Engineer
-                    </p>
-                    <p className="normal">
+                    </Typography>
+                    <Typography>
                         Perderas BetaTester
-                    </p>
-                    <p className="normal">
+                    </Typography>
+                    <Typography>
                         Almowolf (UI) Designer
-                    </p>
-                    <p className="normal">
+                    </Typography>
+                    <Typography>
                         Ima24 Tester
-                    </p>
-                    <p className="normal">
+                    </Typography>
+                    <Typography>
                         Turip Ip Ip
-                    </p>
-                    <p className="normal">
+                    </Typography>
+                    <Typography>
                         Made by VasitosCorp
-                    </p>
-                </div>
-            </div>
+                    </Typography>
+            </Stack>
             <Footer />
         </div>
     );

@@ -5,6 +5,8 @@ import Typography from '@mui/material/Typography';
 import AdminApi from '../../services/admin';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import Swal from 'sweetalert2'
+import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
 
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
@@ -171,6 +173,7 @@ export default function ModList() {
                     sx={{ width: "5%", alignItems: "center", alignContent: "center" }}>
                     <DeleteRoundedIcon />
                 </LoadingButton>
+                <Button component={Link} to={"/admin/upload"}>Agregar Mod</Button>
                 <GridToolbarExport printOptions={{ disableToolbarButton: true }} />
             </GridToolbarContainer>
         );

@@ -10,6 +10,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import Skeleton from '@mui/material/Skeleton';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import axios from "axios";
 
@@ -24,6 +25,8 @@ function Status() {
     const [motd, setMotd] = useState("");
     const [status, setStatus] = useState(false);
     const [loading, setLoading] = useState(true);
+    const matches = useMediaQuery('(min-width:700px)');
+    
     useEffect(() => {
         setLoading(true);
         axios.get("https://api.mcsrvstat.us/2/desmadra.arequipet.ga").then(response => {
@@ -44,33 +47,34 @@ function Status() {
     }, []);
 
     return (
-        <Grid container justifyContent="center" spacing={3} sx={{ color: "white" }}>
+        <Grid container justifyContent="center" sx={{ color: "white" }}>
 
             <Grid xs={12}>
-                <Typography variant="h2">
+                <Typography variant="h2" sx={{ marginBottom: "2%", overflowWrap: "break-word"}}>
                     desmadra.arequipet.ga
                 </Typography>
             </Grid>
             <Grid xs={12}>
-                <Typography variant="h3">
+                <Typography variant="h3" sx={{ marginBottom: "2%" }}>
                     1.16.5
                 </Typography>
             </Grid>
 
-            {loading ? <>
-                <Grid xs={12} sx={{ marginBottom: "2%" }} container justifyContent="center" >
-                    <Skeleton variant="rectangular" width="30%" height={300} sx={{ bgcolor: 'grey.900' }} />
-                </Grid>
-                <Grid xs={12} sx={{ marginBottom: "2%" }} container justifyContent="center" >
-                    <Skeleton variant="rectangular" width="50%" height={50} sx={{ bgcolor: 'grey.900' }} />
-                </Grid>
-                <Grid xs={12} sx={{ marginBottom: "2%" }} container justifyContent="center" >
-                    <Skeleton variant="rectangular" width="80%" height={50} sx={{ bgcolor: 'grey.900' }} />
-                </Grid>
-            </>
+            {loading ?
+                <>
+                    <Grid xs={12} sx={{ marginBottom: "2%" }} container justifyContent="center" >
+                        <Skeleton variant="rectangular" width={matches ? '20%' : '80%'} height={400} sx={{ bgcolor: 'grey.900' }} />
+                    </Grid>
+                    <Grid xs={12} sx={{ marginBottom: "2%" }} container justifyContent="center" >
+                        <Skeleton variant="rectangular" width="60%" height={50} sx={{ bgcolor: 'grey.900' }} />
+                    </Grid>
+                    <Grid xs={12} sx={{ marginBottom: "2%" }} container justifyContent="center" >
+                        <Skeleton variant="rectangular" width="80%" height={50} sx={{ bgcolor: 'grey.900' }} />
+                    </Grid>
+                </>
                 :
                 <>
-                    <Grid xs={12} container justifyContent="center" >
+                    <Grid xs={12} width="80%" container justifyContent="center"  sx={{ marginBottom: "2%" }}>
                         <Card>
                             <CardMedia
                                 component="img"
@@ -95,7 +99,7 @@ function Status() {
                             </CardContent>
                         </Card>
                     </Grid>
-                    <Grid width="50%">
+                    <Grid width="60%" sx={{ marginBottom: "2%" }}>
                         <Accordion>
                             <AccordionSummary
                                 expandIcon={<ExpandMoreIcon />}>
@@ -106,11 +110,10 @@ function Status() {
                                     <Typography key={index}>
                                         {player}
                                     </Typography>))}
-                                {/* For variant="text", adjust the height via font-size */}
                             </AccordionDetails>
                         </Accordion>
                     </Grid>
-                    <Grid width="80%">
+                    <Grid width="80%" sx={{ marginBottom: "2%" }}>
                         <Accordion>
                             <AccordionSummary
                                 expandIcon={<ExpandMoreIcon />}>
@@ -119,8 +122,8 @@ function Status() {
                             <AccordionDetails>
                                 <Grid container columnSpacing={5} justifyContent="center">
                                     {mods.map(((mod, index) =>
-                                        <Grid>
-                                            <Typography key={index}>
+                                        <Grid key={index}>
+                                            <Typography>
                                                 {mod}
                                             </Typography>
                                         </Grid>
