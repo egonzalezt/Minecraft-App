@@ -20,6 +20,7 @@ function UploadMod() {
 
     const [file, setFile] = useState(null);
     const [name, setName] = useState("");
+    const [url, setUrl] = useState("");
     const [version, setVersion] = useState("");
     const [client, setClient] = useState(false);
     const [server, setServer] = useState(false);
@@ -56,9 +57,8 @@ function UploadMod() {
                 title: 'Hey te falto algo en el formulario',
                 footer: `<ul>${errors.join("")}</ul>`
             })
-            return
+            return;
         }
-
 
         setLoading(true);
         let formData = new FormData();
@@ -68,7 +68,7 @@ function UploadMod() {
         formData.append('server', server);
         formData.append('file', file);
         formData.append('name', name);
-
+        formData.append('url', url)
         AdminApi.upload(formData).then(res => {
             setLoading(false);
             Swal.fire({
@@ -152,6 +152,17 @@ function UploadMod() {
                                 setIsInvalidVersion(false)
                             }
                             setVersion(event.target.value) 
+                        }}
+                    />
+                </Grid>
+                <Grid xs={12}>
+                    <TextField
+                        label="Url Mod"
+                        fullWidth
+                        variant="standard"
+                        value={url}
+                        onChange={(event) => {
+                            setUrl(event.target.value) 
                         }}
                     />
                 </Grid>

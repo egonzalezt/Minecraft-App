@@ -19,6 +19,9 @@ const modsSchema  = new Schema({
         type:String,
         require:true,
     },
+    url:{
+        type:String,
+    },
     type: {
         type: [String],
         enum: modType,
