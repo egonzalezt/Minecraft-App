@@ -46,12 +46,18 @@ export default function UserModList() {
             headerName: "Descargar",
             sortable: false,
             renderCell: (cellValues) => {
+                const date = new Date(cellValues.row.createdAt)
+                const time_difference = Date.now() - date.getTime();  
+                const days_difference = time_difference / (1000 * 60 * 60 * 24); 
                 return (
                 <IconButton 
                     aria-label="delete"
                     color="primary"
                     onClick={async () => await downloadMod(cellValues)}
                 >
+                    {days_difference<=2 && 
+                        <Typography>Nuevo Mod</Typography>
+                    }
                     <DownloadIcon/>
                 </IconButton>
                 );
@@ -96,7 +102,6 @@ export default function UserModList() {
     function searchData(page) {
         setIsLoading(true)
         AdminApi.mods(page + 1, pageSize).then(response => {
-            console.log(response.data)
             const modsTemp = response.data.mods
             for (let i = 0; i < modsTemp.length; i++) {
                 modsTemp[i]["id"] = modsTemp[i]._id;

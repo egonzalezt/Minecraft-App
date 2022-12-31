@@ -25,7 +25,7 @@ const modsSchema  = new Schema({
     type: {
         type: [String],
         enum: modType,
-    }
-})
+    },
+},{timestamps: true})
 
 module.exports = mongoose.model("Mods", modsSchema );
