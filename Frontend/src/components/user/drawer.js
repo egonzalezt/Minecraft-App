@@ -148,7 +148,7 @@ export default function AdminDrawer(props) {
                 justifyContent: open ? 'initial' : 'center',
                 px: 2.5,
               }}
-              component={Link} to={"/admin"}
+              component={Link} to={"/user"}
             >
               <ListItemIcon
                 sx={{
