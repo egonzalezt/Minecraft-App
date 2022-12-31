@@ -1,16 +1,18 @@
-const cors = require('cors')
-const express = require('express')
-const bodyParser = require('body-parser')
+const cors = require('cors');
+const express = require('express');
+const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
 require('express-async-errors');
-require('dotenv').config()
-require('./config/database')
+require('dotenv').config();
+require('./config/database');
 global.isModsFileAvailable = true;
 //routes
 
-const modsRouter = require('./routes/downloader')
-const adminRouter = require('./routes/adminRouter')
-const userRouter = require('./routes/userRouter')
+const modsRouter = require('./routes/downloader');
+const adminRouter = require('./routes/adminRouter');
+const userRouter = require('./routes/userRouter');
+const rconRouter = require('./routes/rconRouter');
+
 const app = express();
 app.use(express.json({limit: '1024mb'}))
 
@@ -23,17 +25,19 @@ var corsOptions = {
     methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH'],
     origin:true,
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
+};
 
-app.use(cors(corsOptions))
-app.use(bodyParser.json())
+app.use(cors(corsOptions));
+app.use(bodyParser.json());
 
 
-app.use('/api/v1/mods', modsRouter)
+app.use('/api/v1/mods', modsRouter);
 
-app.use('/api/v1/admin', adminRouter)
+app.use('/api/v1/admin', adminRouter);
 
-app.use('/api/v1/user', userRouter)
+app.use('/api/v1/user', userRouter);
+
+app.use('/api/v1/commands', rconRouter);
 
 app.use((err, req, res, next) => {
     console.error(err.stack)
