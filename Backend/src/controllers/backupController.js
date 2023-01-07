@@ -117,7 +117,7 @@ async function removeBackup(req, res) {
                 .json({ error: false, message: "Some backups could not be removed" });
         } else {
             return res.status(200)
-                .json({ error: false, message: "Mod deleted successfully" });
+                .json({ error: false, message: "Backup deleted successfully" });
         }
     }
     catch {

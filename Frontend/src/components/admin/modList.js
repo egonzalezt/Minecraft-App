@@ -122,6 +122,7 @@ export default function ModList() {
     }, [pageSize]);
 
     async function removeMods() {
+        setIsLoading(true);
         Swal.fire({
             title: '¿Estas seguro de eliminar los mods seleccionados?',
             showDenyButton: true,
@@ -142,7 +143,7 @@ export default function ModList() {
                         icon: 'success',
                         title: 'Completado',
                         text: res.data.message,
-                    })
+                    }).then(()=> setIsLoading(false));
                 });
             } else if (result.isDenied) {
                 await Toast.fire({
@@ -151,6 +152,7 @@ export default function ModList() {
                 })
             }
         }).catch(() => {
+            setIsLoading(false);
             setDeletingMods(false);
             Swal.fire({
                 icon: 'error',

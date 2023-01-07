@@ -25,7 +25,7 @@ const Toast = Swal.mixin({
     timerProgressBar: true
 })
 
-export default function ModList() {
+export default function BackupList() {
 
     const [backups, setBackups] = useState([]);
     const [totalBackups, setTotalBackups] = useState(0);
@@ -71,6 +71,7 @@ export default function ModList() {
           },
     ];
     async function downloadBackup(cellValues){
+        setIsLoading(true);
         BackupsApi.downloadBackup(cellValues.id).then(({ data }) => {
             const downloadUrl = window.URL.createObjectURL(new Blob([data]));
     
@@ -91,16 +92,16 @@ export default function ModList() {
                 icon: 'success',
                 title: 'Completado',
                 text: "El recurso de obtuvo de forma exitosa",
-            })
+            }).then(()=>setIsLoading(false));
         }).catch(err => {
-            console.log(err)
+            setIsLoading(false);
             Swal.fire({
                 timer: 4000,
                 timerProgressBar: true,
                 icon: 'error',
                 title: 'Error',
-                text: "Ocurrio un error al intentar descargar el mod porfavor intentelo mas tarde.",
-            })
+                text: "Ocurrio un error al intentar descargar el backup porfavor intentelo mas tarde.",
+            });
         });
     }
 
@@ -159,6 +160,7 @@ export default function ModList() {
     }, [pageSize]);
 
     async function removeBackups() {
+        setIsLoading(true);
         Swal.fire({
             title: '¿Estas seguro de eliminar los backups seleccionados?',
             showDenyButton: true,
@@ -179,9 +181,10 @@ export default function ModList() {
                         icon: 'success',
                         title: 'Completado',
                         text: res.data.message,
-                    })
+                    }).then(()=>setIsLoading(false));
                 });
             } else if (result.isDenied) {
+                setIsLoading(false);
                 await Toast.fire({
                     icon: 'info',
                     title: 'Operacion cancelada'
