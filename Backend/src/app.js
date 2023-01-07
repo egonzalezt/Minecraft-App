@@ -12,7 +12,7 @@ const modsRouter = require('./routes/downloader');
 const adminRouter = require('./routes/adminRouter');
 const userRouter = require('./routes/userRouter');
 const rconRouter = require('./routes/rconRouter');
-
+const backupRouter = require('./routes/backupRouter')
 const app = express();
 app.use(express.json({limit: '1024mb'}))
 
@@ -38,6 +38,8 @@ app.use('/api/v1/admin', adminRouter);
 app.use('/api/v1/user', userRouter);
 
 app.use('/api/v1/commands', rconRouter);
+
+app.use('/api/v1/backups',backupRouter)
 
 app.use((err, req, res, next) => {
     console.error(err.stack)

@@ -18,6 +18,8 @@ import Login from './pages/login'
 import SignUp from './pages/signup'
 import User from './pages/user'
 import RunCommand from './pages/runCommand';
+import Backups from './pages/backups';
+
 import { storeData } from './states/stores';
 
 let theme = createTheme({
@@ -110,6 +112,7 @@ function App() {
             <Route path="admin" element={<Admin />} />
             <Route path="admin/upload" element={<AdminUpload />}></Route>
             <Route path="admin/server" element={<RunCommand/>}/>
+            <Route path="admin/backups" element={<Backups/>}/>
           </Route>
           <Route element={<ProtectedRouteUser user={getUser} />}>
             <Route path="user" element={<User />} />
