@@ -66,6 +66,7 @@ export default function UserModList() {
     ];
 
     async function downloadMod(cellValues){
+        setIsLoading(true);
         ModsApi.downloadMod(cellValues.id).then(({ data }) => {
             const downloadUrl = window.URL.createObjectURL(new Blob([data]));
     
@@ -86,16 +87,16 @@ export default function UserModList() {
                 icon: 'success',
                 title: 'Completado',
                 text: "El recurso de obtuvo de forma exitosa",
-            })
+            }).then(()=>setIsLoading(false));
         }).catch(err => {
-            console.log(err)
+            setIsLoading(false);
             Swal.fire({
                 timer: 4000,
                 timerProgressBar: true,
                 icon: 'error',
                 title: 'Error',
                 text: "Ocurrio un error al intentar descargar el mod porfavor intentelo mas tarde.",
-            })
+            });
         });
     }
 
