@@ -14,6 +14,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
+import BackupIcon from '@mui/icons-material/Backup';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
@@ -224,7 +225,7 @@ export default function AdminDrawer(props) {
                 justifyContent: open ? 'initial' : 'center',
                 px: 2.5,
               }}
-              component={Link} to={"/admin/create"}
+              component={Link} to={"/admin/backups"}
             >
               <ListItemIcon
                 sx={{
@@ -233,9 +234,9 @@ export default function AdminDrawer(props) {
                   justifyContent: 'center',
                 }}
               >
-                <FolderZipRoundedIcon />
+                <BackupIcon />
               </ListItemIcon>
-              <ListItemText primary="Crear ZIP" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText primary="Backups" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
         </List>

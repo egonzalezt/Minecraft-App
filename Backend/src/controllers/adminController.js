@@ -1,4 +1,4 @@
-const file_system = require('fs');
+const fs = require('fs');
 var archiver = require('archiver');
 const fetch = require('node-fetch');
 const deleteMod = require('../database/repositories/mods/deleteMod');
@@ -11,8 +11,8 @@ const { modType } = require('../database/schemas/modEnum');
 async function createModsFile(req, res) {
     const filePath = `${process.env.ZIPPATH}${process.env.ZIPNAMEWITHEXT}`;
     global.isModsFileAvailable = false;
-    if (file_system.existsSync(filePath)) {
-        file_system.unlink(filePath, async (err) => {
+    if (fs.existsSync(filePath)) {
+        fs.unlink(filePath, async (err) => {
             if (err) {
                 global.isModsFileAvailable = true;
                 return res.status(500)
@@ -22,7 +22,7 @@ async function createModsFile(req, res) {
         console.log("File deleted")
     }
     console.log("Creating file")
-    var output = file_system.createWriteStream(filePath);
+    var output = fs.createWriteStream(filePath);
     var archive = archiver('zip');
     output.on('close', function () {
         console.log(archive.pointer() + ' total bytes');
@@ -117,8 +117,8 @@ async function removeMod(req, res) {
                     modPath = process.env.CLIENTMODSPATH
                 }
                 const modFullPath = modPath + mod.fileName
-                if (file_system.existsSync(modFullPath)) {
-                    file_system.unlink(modFullPath, async (err) => {
+                if (fs.existsSync(modFullPath)) {
+                    fs.unlink(modFullPath, async (err) => {
                         if (err) {
                             failedToDeleteSomeMods = true;
                         } else {

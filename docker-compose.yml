@@ -38,6 +38,8 @@ services:
       MODSPATH : /usr/src/app/modspath/
       ZIPPATH : /usr/src/app/zippath/
       CLIENTMODSPATH: /usr/src/app/clientpath/
+      WORLDPATH: /usr/src/app/world/
+      BACKUPPATH: /usr/src/app/backups/
       ZIPNAMEWITHEXT : modsitos.zip
       #MONGOURL: 
       #SALT:
@@ -54,5 +56,11 @@ services:
         source: /home/casmis123/Minecraft/mods/
         target: /usr/src/app/modspath/
       - type: bind
+        source: /home/casmis123/Minecraft/world/
+        target: /usr/src/app/world/
+      - type: bind
         source: /home/casmis123/clientfiles/
         target: /usr/src/app/clientpath/
+      - type: bind
+        source: /home/casmis123/backups/
+        target: /usr/src/app/backups/
