@@ -96,7 +96,7 @@ function App() {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: "No se encontro solicitud asociada para cambio de contraseña esto se debe porque el tiempo de 1hora establecido expiro o se solicito un nuevo cambio de contraseña",
+                    text: "No se encontró solicitud asociada para cambio de contraseña esto se debe porque el tiempo de 1hora establecido expiro o se solicitó un nuevo cambio de contraseña.",
                 });
             } else {
                 Swal.fire({
@@ -104,7 +104,7 @@ function App() {
                     timerProgressBar: true,
                     icon: 'error',
                     title: 'Error',
-                    text: "Ocurrio algo al actualizar la contraseña solicite el cambio nuevamente, si el problema persiste contacte a los administradores",
+                    text: "Ocurrió  algo al actualizar la contraseña solicite el cambio nuevamente, si el problema persiste contacte a los administradores",
                 });
             }
 
