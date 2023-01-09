@@ -19,7 +19,8 @@ import SignUp from './pages/signup'
 import User from './pages/user'
 import RunCommand from './pages/runCommand';
 import Backups from './pages/backups';
-
+import PasswordReset from './pages/passwordReset';
+import RequestPasswordReset from './pages/requestPasswordReset';
 import { storeData } from './states/stores';
 
 let theme = createTheme({
@@ -108,6 +109,8 @@ function App() {
           <Route path="status" element={<div className="grass"><ServerStatus /></div>} />
           <Route path="login" element={<div className="grass"><Login /></div>} />
           <Route path="signup" element={<div className="grass"><SignUp /></div>} />
+          <Route path="requestpasswordreset" element={<div className="grass"><RequestPasswordReset /></div>} />
+          <Route path="passwordreset" element={<div className="grass"><PasswordReset /></div>} />
           <Route element={<ProtectedRouteAdmin user={getUser} />}>
             <Route path="admin" element={<Admin />} />
             <Route path="admin/upload" element={<AdminUpload />}></Route>
