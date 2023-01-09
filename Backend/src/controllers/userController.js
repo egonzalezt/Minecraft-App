@@ -117,7 +117,7 @@ async function resetPassword(req, res){
         if(isNewUserValid){
             await deleteResetToken(resetToken.resetToken);
             const html = successPasswordResetMailHtml();
-            sendEmail(email, "Contraseña recuperada de forma exitosa", html);
+            sendEmail(isNewUserValid.email, "Contraseña recuperada de forma exitosa", html);
             return res.status(201).json({ error: false, message: "Password updated successfully" });
         }else{
             return res.status(500).json({ error: true, message: "Internal Server Error" });
