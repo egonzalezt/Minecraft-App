@@ -347,7 +347,7 @@ function restorePasswordMailHtml(url)
     
                                                                 <div
                                                                     style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:12px;font-weight:300;line-height:1;text-align:center;color:#575757;">
-                                                                    Arequipet Corp
+                                                                    Vasitos Corp
                                                                 </div>
     
                                                             </td>
