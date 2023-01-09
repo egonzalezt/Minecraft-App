@@ -10,6 +10,14 @@ class UserApi {
         return axios.post("/user/signup",data)
     }
 
+    requestPasswordReset(data) {
+        return axios.post("/user/requestpasswordreset",data)
+    }
+
+    resetPassword(data) {
+        return axios.post("/user/passwordreset",data)
+    }
+
     verify(){
         return axios.get("/user/verify",{
             headers: {

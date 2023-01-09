@@ -1,8 +1,16 @@
 const save = require('../database/repositories/user/userSave');
 const findUser = require('../database/repositories/user/userFind')
 const findUserById = require('../database/repositories/user/userFindId')
-const bcrypt = require('bcrypt');
 const { generateTokens } = require('../utils/generateToken');
+const { generateWelcomeMailHtml } = require('../utils/mails/welcomeMail');
+const restorePasswordMailHtml = require('../utils/mails/restorePassword');
+
+const sendEmail = require('../email/sendEmail');
+const bcrypt = require('bcrypt');
+const { generateResetToken } = require('../database/repositories/resetToken/generateResetToken');
+const findResetToken = require('../database/repositories/resetToken/tokenFind');
+const userUpdatePassword = require('../database/repositories/user/userUpdatePassword');
+const deleteResetToken = require('../database/repositories/resetToken/deleteResetToken');
 
 async function registerUser(req, res) {
 
@@ -16,6 +24,8 @@ async function registerUser(req, res) {
         const hashPassword = await bcrypt.hash(req.body.password, salt);
         const { email, nickName } = req.body
         await save(email, hashPassword, nickName).then((result) => {
+            let html = generateWelcomeMailHtml(nickName);
+            sendEmail(email,"Bienvenido a arequipet",html);
             return res.status(201).json({ error: false, message: "Account created successfully" });
         }).catch((err) => {
             return res.status(500).json({ error: true, message: "Internal Server Error" });
@@ -60,12 +70,65 @@ async function getUserInfo(req, res){
             message: "user information provided successfully",
         }); 
     }else{
-
+        return res
+            .status(400)
+            .json({ error: true, message: "No user found" });
     }
 }
 
+async function requestPasswordReset(req, res){
+    const email = req.body.email;
+    const user = await findUser(email);
+    if(user){
+        const hash = await generateResetToken(user);
+        const clientURL = process.env.BASEURL;
+        const url = `${clientURL}passwordReset?token=${hash}&userid=${user._id}`
+        const html = restorePasswordMailHtml(url);
+        sendEmail(email, "Recuperación de cuenta", html).then((isMailSent) => {
+            return res.status(201).json({ error: false, message: "Email sent successfully" });
+        }).catch(() => {
+            return res.status(500).json({ error: true, message: "Fail sending email" });
+        })
+    }else{
+        return res
+            .status(404)
+            .json({ error: true, message: "No email associated with any user" });
+    }
+}
+
+async function resetPassword(req, res){
+    const {token, userid, password} = req.body;
+    const resetToken = await findResetToken(userid);
+    if(resetToken){
+        const isValid = await bcrypt.compare(token, resetToken.resetToken);
+        if(!isValid){
+            return res
+                .status(404)
+                .json({ error: true, message: "Token Invalid" });
+        }
+        const salt = await bcrypt.genSalt(Number(process.env.SALT));
+        const hashPassword = await bcrypt.hash(password, salt);
+        const newUser = await userUpdatePassword(userid, hashPassword);
+        if(!newUser){
+            return res.status(400).json({ error: true, message: "Error something happens recovering your account" });
+        }
+        const isNewUserValid = await findUserById(userid);
+        if(isNewUserValid){
+            await deleteResetToken(resetToken.resetToken);
+            return res.status(201).json({ error: false, message: "Account updated successfully" });
+        }else{
+            return res.status(500).json({ error: true, message: "Internal Server Error" });
+        }
+    }else{
+        return res
+        .status(404)
+        .json({ error: true, message: "No user or reset token found" }); 
+    }
+}
 module.exports = {
     registerUser,
     loginUser,
     getUserInfo,
+    requestPasswordReset,
+    resetPassword
 };

@@ -103,7 +103,12 @@ function Login() {
                                     <button type="submit">Ingresar</button>
                                 </form>
                                 <br />
-                                <Link style={{ textDecoration: "underline", color: "blue" }} to="/signup">¿No tienes cuenta? Registrate</Link>
+                                <p>
+                                    <Link style={{ textDecoration: "underline", color: "blue" }} to="/signup">¿No tienes cuenta? Registrate</Link>
+                                </p>
+                                <p>
+                                    <Link style={{ textDecoration: "underline", color: "blue" }} to="/requestpasswordreset">¿Olvidaste la contraseña?</Link>
+                                </p>
                             </div>
                         </div>
                     )}
