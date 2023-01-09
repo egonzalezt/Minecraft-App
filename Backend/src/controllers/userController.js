@@ -11,6 +11,7 @@ const { generateResetToken } = require('../database/repositories/resetToken/gene
 const findResetToken = require('../database/repositories/resetToken/tokenFind');
 const userUpdatePassword = require('../database/repositories/user/userUpdatePassword');
 const deleteResetToken = require('../database/repositories/resetToken/deleteResetToken');
+const successPasswordResetMailHtml = require('../utils/mails/successPasswordReset');
 
 async function registerUser(req, res) {
 
@@ -115,7 +116,9 @@ async function resetPassword(req, res){
         const isNewUserValid = await findUserById(userid);
         if(isNewUserValid){
             await deleteResetToken(resetToken.resetToken);
-            return res.status(201).json({ error: false, message: "Account updated successfully" });
+            const html = successPasswordResetMailHtml();
+            sendEmail(email, "Contraseña recuperada de forma exitosa", html);
+            return res.status(201).json({ error: false, message: "Password updated successfully" });
         }else{
             return res.status(500).json({ error: true, message: "Internal Server Error" });
         }
