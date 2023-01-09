@@ -20,14 +20,14 @@ function App() {
             Swal.fire({
                 icon: 'success',
                 title: 'Correo enviado',
-                text: `Se envio un mail a su direccion de correo electronico, si encuentra el correo en su bandeja con el titulo "Recuperacion de cuenta" por favor revise spam`,
+                text: 'Se envió un mail a su dirección de correo electrónico, si encuentra el correo en su bandeja con el título "Recuperación de cuenta" por favor revise spam.',
             });
         }).catch(err => {
             if (err.response.status === 404) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: "No se encontro email registrado en Arequipet",
+                    text: "No se encontró email registrado en Arequipet.",
                 });
             } else {
                 Swal.fire({
@@ -35,7 +35,7 @@ function App() {
                     timerProgressBar: true,
                     icon: 'error',
                     title: 'Error',
-                    text: "Ocurrio al solicitar el cambio de contraseña solicite el cambio nuevamente, si el problema persiste contacte a los administradores",
+                    text: "Ocurrió al solicitar el cambio de contraseña solicite el cambio nuevamente, si el problema persiste contacte a los administradores.",
                 });
             }
 
