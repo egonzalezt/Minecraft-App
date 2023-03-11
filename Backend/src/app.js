@@ -6,6 +6,9 @@ require('express-async-errors');
 require('dotenv').config();
 require('./config/database');
 global.isModsFileAvailable = true;
+
+var apm = require('elastic-apm-node').start()
+
 //routes
 
 const modsRouter = require('./routes/downloader');
