@@ -41,6 +41,9 @@ services:
       WORLDPATH: /usr/src/app/world/
       BACKUPPATH: /usr/src/app/backups/
       ZIPNAMEWITHEXT : modsitos.zip
+      ELASTIC_APM_SERVICE_NAME : "ArequipetApi"
+      ELASTIC_APM_SECRET_TOKEN : "TOKEN"
+      ELASTIC_APM_SERVER_URL : http://apmserver/
       #MONGOURL: 
       #SALT:
       #ACCESS_TOKEN_PRIVATE_KEY:
