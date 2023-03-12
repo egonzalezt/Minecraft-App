@@ -25,6 +25,6 @@ jobs:
       - name: Build ReactJs and publish to Docker Hub
         uses: docker/build-push-action@v2
         with:
-          context: Backend
+          context: Frontend
           push: true
           tags: daves2126/arequipetweb:latest, daves2126/arequipetweb:${{ github.run_number }}
