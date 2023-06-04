@@ -1,7 +1,7 @@
 import axios from "axios";
 import Swal from 'sweetalert2'
-
-const baseUrl = "/api/v1/"
+ 
+const baseUrl = "http://localhost:8000/api/v1/"
 const axiosInstance = axios.create({
   baseURL: baseUrl,
   headers: {

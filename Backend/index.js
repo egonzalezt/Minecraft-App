@@ -1,5 +1,29 @@
-const app = require('./src/app')
+const app = require('./src/app');
+const PORT = process.env.PORT || 8000;
+const http = require('http').createServer(app);
+const backupSocketController = require('./src/WebSockets/backupSocket')
+const verifySocketsToken = require('./src/middlewares/verifySocketsToken')
+const io = require('socket.io')(http, {
+    cors: {
+        origin: 'http://localhost:3000',
+        methods: ['GET', 'POST'],
+    },
+});
 
-const PORT = process.env.PORT || 8000
+io.on('connection', (socket) => {
+    console.log('New client connected');
+    
+    socket.on('create-backup-file', (message) => {
+        verifySocketsToken(socket, ()=>{
+            backupSocketController.createBackup(io)
+        })
+    });
 
-app.listen(PORT,()=>console.log(`Server has started on port ${PORT}`))
+    socket.on('error', (error) => {
+        console.error('Socket error:', error);
+    });
+});
+
+http.listen(PORT, () => {
+    console.log(`Server has started on port ${PORT}`);
+});

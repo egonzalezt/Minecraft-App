@@ -225,6 +225,27 @@ export default function AdminDrawer(props) {
                 justifyContent: open ? 'initial' : 'center',
                 px: 2.5,
               }}
+              component={Link} to={"/admin/upload/multiple"}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : 'auto',
+                  justifyContent: 'center',
+                }}
+              >
+                <UploadFileIcon />
+              </ListItemIcon>
+              <ListItemText primary="Subir mods" sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding sx={{ display: 'block' }}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? 'initial' : 'center',
+                px: 2.5,
+              }}
               component={Link} to={"/admin/backups"}
             >
               <ListItemIcon

@@ -13,6 +13,7 @@ import Main from './pages/main';
 import NotFound from './pages/notFound';
 import Admin from './pages/admin';
 import AdminUpload from './pages/uploadMod';
+import AdminUploadMultiple from './pages/uploadMods';
 import ServerStatus from './pages/serverStatus';
 import Login from './pages/login'
 import SignUp from './pages/signup'
@@ -114,6 +115,7 @@ function App() {
           <Route element={<ProtectedRouteAdmin user={getUser} />}>
             <Route path="admin" element={<Admin />} />
             <Route path="admin/upload" element={<AdminUpload />}></Route>
+            <Route path="admin/upload/multiple" element={<AdminUploadMultiple />}></Route>
             <Route path="admin/server" element={<RunCommand/>}/>
             <Route path="admin/backups" element={<Backups/>}/>
           </Route>

@@ -13,6 +13,8 @@ import SaveIcon from '@mui/icons-material/Save';
 import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
 import AdminDrawer from "./drawer.js";
 
+import socketIOClient from 'socket.io-client';
+
 const Toast = Swal.mixin({
     toast: true,
     position: 'top-right',
@@ -35,6 +37,7 @@ export default function BackupList() {
     const [selectedBackups, setSelectedBackups] = useState([]);
     const [loadingZipCreation, setLoadingZipCreation] = useState(false);
     const [deletingBackups, setDeletingBackups] = useState(false);
+    const [message, setMessage] = useState({});
 
     const columns = [
         {
@@ -59,40 +62,40 @@ export default function BackupList() {
             sortable: false,
             renderCell: (cellValues) => {
                 return (
-                <IconButton 
-                    aria-label="delete"
-                    color="primary"
-                    onClick={async () => await downloadBackup(cellValues)}
-                >
-                    <DownloadIcon/>
-                </IconButton>
+                    <IconButton
+                        aria-label="delete"
+                        color="primary"
+                        onClick={async () => await downloadBackup(cellValues)}
+                    >
+                        <DownloadIcon />
+                    </IconButton>
                 );
-              }
-          },
+            }
+        },
     ];
-    async function downloadBackup(cellValues){
+    async function downloadBackup(cellValues) {
         setIsLoading(true);
         BackupsApi.downloadBackup(cellValues.id).then(({ data }) => {
             const downloadUrl = window.URL.createObjectURL(new Blob([data]));
-    
+
             const link = document.createElement('a');
-    
+
             link.href = downloadUrl;
-    
+
             link.setAttribute('download', cellValues.row.fileName);
             document.body.appendChild(link);
-    
+
             link.click();
-    
+
             link.remove();
-    
+
             Swal.fire({
                 timer: 2000,
                 timerProgressBar: true,
                 icon: 'success',
                 title: 'Completado',
                 text: "El recurso de obtuvo de forma exitosa",
-            }).then(()=>setIsLoading(false));
+            }).then(() => setIsLoading(false));
         }).catch(err => {
             setIsLoading(false);
             Swal.fire({
@@ -106,31 +109,65 @@ export default function BackupList() {
     }
 
     const createZipRequest = () => {
-        setLoadingZipCreation(true)
-        BackupsApi.createBackup().then(response => {
-            setLoadingZipCreation(false)
-            Swal.fire({
-                icon: 'success',
-                title: 'Completado',
-                text: 'Se creado el backup de forma exitosa',
-            })
-            searchData(currentPage);
-        }).catch(err => {
-            setLoadingZipCreation(false)
+        setLoadingZipCreation(true);
+        const socket = socketIOClient('http://localhost:8000', {
+            extraHeaders: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+            },
+        });
+
+        const timeout = setTimeout(() => {
+            setLoadingZipCreation(false);
+            socket.disconnect();
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Ha ocurrido un error',
-            })
-            console.log(err)
-        })
-    }
+                text: 'No se ha recibido respuesta del servidor',
+            });
+        }, 5000); 
+    
+        socket.on('authorization-error', () => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'No posee permisos',
+            });
+            setLoadingZipCreation(false);
+        });
+
+        socket.on('backup-creation-status', (data) => {
+            clearTimeout(timeout);
+            setMessage(data);
+            if (data?.taskComplete) {
+                socket.disconnect();
+            }
+            if (data?.type === 'statusSuccess' && !data?.error) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Completado',
+                    text: 'Se ha creado el backup de forma exitosa',
+                });
+            }
+            if (data?.type === 'statusFail' && data?.error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Ha ocurrido un error',
+                });
+            }
+        });
+
+        socket.on('disconnect', () => {
+            setLoadingZipCreation(false);
+        });
+    
+        socket.emit('create-backup-file');
+    };
 
     function searchData(page) {
         setCurrentPage(page);
         setIsLoading(true)
         BackupsApi.backups(page + 1, pageSize).then(response => {
-            console.log(response.data)
             const backupsTemp = response.data.backups
             for (let i = 0; i < backupsTemp.length; i++) {
                 backupsTemp[i]["id"] = backupsTemp[i]._id;
@@ -145,7 +182,6 @@ export default function BackupList() {
 
     useEffect(() => {
         BackupsApi.backups(0, pageSize).then(response => {
-            console.log(response.data)
             const backupsTemp = response.data.backups
             for (let i = 0; i < backupsTemp.length; i++) {
                 backupsTemp[i]["id"] = backupsTemp[i]._id;
@@ -153,7 +189,6 @@ export default function BackupList() {
             setIsLoading(false)
             setTotalBackups(response.data.total)
             setBackups(backupsTemp)
-            console.log(backups);
         }).catch(e => {
             console.log(e.response.data.message)
         });
@@ -181,7 +216,7 @@ export default function BackupList() {
                         icon: 'success',
                         title: 'Completado',
                         text: res.data.message,
-                    }).then(()=>setIsLoading(false));
+                    }).then(() => setIsLoading(false));
                 });
             } else if (result.isDenied) {
                 setIsLoading(false);
@@ -260,7 +295,7 @@ export default function BackupList() {
                     variant="contained"
                     sx={{ marginTop: "5%", width: "20%" }}
                 >
-                    Crear Backup
+                    Crear Backup {loadingZipCreation&& `${message?.value}%`}
                 </LoadingButton>
             </Box>
         </AdminDrawer>

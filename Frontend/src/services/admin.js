@@ -1,15 +1,16 @@
 import axios from "../apiConnection.js"
 
 class AdminApi {
-    upload(data) {
-        return axios.post("/admin/mods", data, {
+    upload(formData, config) {
+        return axios.post("/admin/mods", formData, {
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
                 'Content-Type': 'multipart/form-data'
-            }
-        })
+            },
+            ...config
+        });
     }
-
+    
     mods(page, pageSize) {
         return axios.get(`/admin/mods?page=${page}&limit=${pageSize}`, {
             headers: {
