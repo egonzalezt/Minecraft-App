@@ -1,5 +1,4 @@
 const fs = require('fs');
-var archiver = require('archiver');
 const fetch = require('node-fetch');
 const deleteMod = require('../database/repositories/mods/deleteMod');
 const findModFileNameById = require('../database/repositories/mods/findModFileNameById');
@@ -7,44 +6,10 @@ const getModsPaginate = require('../database/repositories/mods/getModsPaginated'
 const saveMod = require('../database/repositories/mods/addMod');
 const findModByFileName = require('../database/repositories/mods/findModByFileName')
 const { modType } = require('../database/schemas/modEnum');
+const copyModsAndCreateZip = require('../utils/copyModsAndCreateZip')
 
 async function createModsFile(req, res) {
-    const filePath = `${process.env.ZIPPATH}${process.env.ZIPNAMEWITHEXT}`;
-    global.isModsFileAvailable = false;
-    if (fs.existsSync(filePath)) {
-        fs.unlink(filePath, async (err) => {
-            if (err) {
-                global.isModsFileAvailable = true;
-                return res.status(500)
-                    .json({ error: true, message: "Internal server error" });
-            }
-        });
-        console.log("File deleted")
-    }
-    console.log("Creating file")
-    var output = fs.createWriteStream(filePath);
-    var archive = archiver('zip');
-    output.on('close', function () {
-        console.log(archive.pointer() + ' total bytes');
-        console.log('archiver has been finalized and the output file descriptor has closed.');
-    });
-    console.log(`file created on ${process.env.ZIPPATH}${process.env.ZIPNAMEWITHEXT}`);
-
-    archive.on('error', function (err) {
-        throw err;
-    });
-
-    archive.pipe(output);
-
-    // append files from a sub-directory, putting its contents at the root of archive
-    archive.directory(`${process.env.MODSPATH}`, false);
-    archive.directory(`${process.env.CLIENTMODSPATH}`, false);
-    archive.finalize().then(() => {
-        global.isModsFileAvailable = true;
-        return res.status(200).json({ error: false, message: "Mods Compressed successfully" });
-    }).catch(() => {
-        return res.status(500).json({ error: true, message: "Fail compressing mods" });
-    });
+    await copyModsAndCreateZip(req, res)
 }
 
 async function getMods(req, res) {

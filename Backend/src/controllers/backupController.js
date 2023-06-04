@@ -9,7 +9,7 @@ const deleteBackupById = require('../database/repositories/backups/deleteBackup'
 async function createBackup(req, res) {
     const backupId = uuidv4();
     const backupPath = `${process.env.BACKUPPATH}${backupId}`;
-    if (!fs.existsSync(backupPath)){
+    if (!fs.existsSync(backupPath)) {
         fs.mkdirSync(backupPath);
     }
     const date = generateDate();
@@ -32,7 +32,7 @@ async function createBackup(req, res) {
     // append files from a sub-directory, putting its contents at the root of archive
     archive.directory(`${process.env.WORLDPATH}`, false);
     archive.finalize().then(() => {
-        saveBackup(fileName,filePath,backupPath).then(()=>{
+        saveBackup(fileName, filePath, backupPath).then(() => {
             return res.status(200).json({ error: false, message: "Backup created successfully" });
         }).catch(() => {
             return res.status(500).json({ error: true, message: "Fail creating backup" });
@@ -43,19 +43,56 @@ async function createBackup(req, res) {
 }
 
 async function downloadBackup(req, res) {
-    var id = req.params.id;
-    const backup = await findBackupFileById(id)
-    if(backup){
-        var filePath = backup.filePath;
-        if(fs.existsSync(filePath)){
-            console.log(`Getting file from: ${filePath}`)
-            return res.download(filePath, function (err) {
-                if (err) {
-                    console.log(err);
-                }
-            }) 
-        }else{
-            return res.status(410).json({ error: false, message: "Backup file is currently unavailable try again later" });
+    const id = req.params.id;
+    const backup = await findBackupFileById(id);
+
+    if (backup) {
+        const filePath = backup.filePath;
+
+        if (fs.existsSync(filePath)) {
+            console.log(`Getting file from: ${filePath}`);
+
+            // Set headers for the response
+            res.setHeader('Content-Type', 'application/octet-stream');
+            res.setHeader('Content-Disposition', `attachment; filename=${backup.fileName}`);
+
+            // Create a readable stream from the file
+            const fileStream = fs.createReadStream(filePath);
+
+            // Get the file size
+            const stats = fs.statSync(filePath);
+            const fileSize = stats.size;
+
+            // Set the Content-Length header to the file size
+            res.setHeader('Content-Length', fileSize);
+
+            let downloadedBytes = 0;
+
+            // Pipe the file stream to the response stream in chunks
+            fileStream.on('data', (chunk) => {
+                downloadedBytes += chunk.length;
+
+                // Calculate the progress as a percentage
+                const progress = (downloadedBytes / fileSize) * 100;
+                //console.log(`Download progress: ${progress.toFixed(2)}%`);
+            });
+
+            // Handle any errors during the streaming
+            fileStream.on('error', (err) => {
+                console.error('Error while streaming file:', err);
+                res.status(500).json({ error: true, message: 'Internal server error' });
+            });
+
+            // End the response when the file has been fully streamed
+            fileStream.on('end', () => {
+                console.log('Download completed');
+                res.end();
+            });
+
+            // Pipe the file stream to the response stream
+            fileStream.pipe(res);
+        } else {
+            return res.status(410).json({ error: true, message: 'Backup file is currently unavailable, try again later' });
         }
     }
 }
@@ -70,13 +107,13 @@ async function getBackups(req, res) {
     return res.status(200).json({ error: false, backups: result.data, total: result.totalBackups });
 }
 
-function generateDate(){
+function generateDate() {
     var today = new Date();
     var dd = today.getDate();
-    var mm = today.getMonth()+1; 
-    var yyyy = today.getFullYear();  
+    var mm = today.getMonth() + 1;
+    var yyyy = today.getFullYear();
 
-    return [`${mm}_${dd}_${yyyy}`,today]
+    return [`${mm}_${dd}_${yyyy}`, today]
 }
 
 async function removeBackup(req, res) {
@@ -95,20 +132,20 @@ async function removeBackup(req, res) {
                 if (fs.existsSync(backupPath)) {
                     absolutePath = backup.path;
                     console.log(`removing backup from: ${backupPath}`);
-                    fs.rm(absolutePath, { recursive: true, force: true },async err => {
+                    fs.rm(absolutePath, { recursive: true, force: true }, async err => {
                         if (err) {
                             failedToDeleteSomeBackups = true;
                         } else {
                             await deleteBackupById(backupId);
                         }
-                      })
+                    })
                 } else {
                     backupsNotFound = true;
                 }
             }
         }
 
-        if(backupsNotFound){
+        if (backupsNotFound) {
             return res.status(200)
                 .json({ error: false, message: "Some backups could not be removed because .Jar file not found" });
         }
