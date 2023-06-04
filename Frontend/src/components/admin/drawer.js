@@ -139,7 +139,7 @@ export default function AdminDrawer(props) {
             </Stack>
             <Stack direction={{ xs: 'column', sm: 'row' }} alignItems="center" spacing={2}>
               <Button fullWidth component={Link} to={"/admin"}>Admin</Button>
-              <Button fullWidth component={Link} to={"/about"}>Nosotros</Button>
+              <Button fullWidth component={Link} to={"/user"}>Usuario</Button>
             </Stack>
           </Stack>
         </Toolbar>

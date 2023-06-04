@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
-import { init as initApm } from '@elastic/apm-rum'
+/*import { init as initApm } from '@elastic/apm-rum'
 
 const apm = initApm({
 
@@ -15,7 +15,7 @@ const apm = initApm({
   // Set service version (required for sourcemap feature)
   serviceVersion: '1.0.0'
 
-})
+})*/
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
