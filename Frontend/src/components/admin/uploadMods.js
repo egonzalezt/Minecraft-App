@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import { useNavigate } from 'react-router-dom';
@@ -12,8 +12,19 @@ import Swal from 'sweetalert2';
 import TextField from '@mui/material/TextField';
 import LinearProgress from '@mui/material/LinearProgress';
 import AdminApi from '../../services/admin';
+import Snackbar from '@mui/material/Snackbar';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import { ReactComponent as JavaIcon } from '../../img/java-icon.svg';
+import Collapse from '@mui/material/Collapse';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import ListItemButton from '@mui/material/ListItemButton';
 
 import AdminDrawer from './drawer';
+
 
 function UploadMod() {
     const navigate = useNavigate();
@@ -22,6 +33,17 @@ function UploadMod() {
     const [isServerChecked, setServerChecked] = useState(false);
     const [loading, setLoading] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
+    const inputRef = useRef(null);
+    const [open, setOpen] = useState(true);
+    const [uploadFile, setUploadFile] = useState({});
+
+    const handleClick = () => {
+        setOpen(!open);
+    };
+
+    const onButtonClick = () => {
+        inputRef.current.click();
+    };
 
     const handleFileChange = (event) => {
         const fileList = Array.from(event.target.files);
@@ -42,6 +64,7 @@ function UploadMod() {
                 return !isDuplicate;
             });
 
+
             setFiles([...files, ...newFiles]);
         } else {
             Swal.fire({
@@ -54,16 +77,15 @@ function UploadMod() {
         }
     };
 
-    const handleClientCheckboxChange = (event, row) => {
+    const handleClientCheckboxChange = (checked, index) => {
         const updatedFiles = [...files];
-        console.log(updatedFiles[row.id])
-        updatedFiles[row.id].isClientChecked = true;
+        files[index].isClientChecked = checked;
         setFiles(updatedFiles);
     };
-    
-    const handleServerCheckboxChange = (event, row) => {
+
+    const handleServerCheckboxChange = (checked, index) => {
         const updatedFiles = [...files];
-        updatedFiles[row.id].isServerChecked = true;
+        files[index].isServerChecked = checked;
         setFiles(updatedFiles);
     };
 
@@ -73,9 +95,9 @@ function UploadMod() {
         setFiles(updatedFiles);
     };
 
-    const handleNombreChange = (index, value) => {
+    const handleCustomNameChange = (index, value) => {
         const updatedFiles = [...files];
-        updatedFiles[index].nombre = value;
+        updatedFiles[index].customName = value;
         setFiles(updatedFiles);
     };
 
@@ -100,19 +122,18 @@ function UploadMod() {
         setLoading(true);
 
         try {
-            const formDataArray = files.map((file) => {
+
+            for (const file of files) {
                 const formData = new FormData();
                 formData.append('fileName', file.name);
-                formData.append('version', file.version || '');
+                formData.append('version', file.version);
                 formData.append('client', file.isClientChecked);
                 formData.append('server', file.isServerChecked);
                 formData.append('file', file);
-                formData.append('name', file.name);
+                formData.append('name', file.customName);
                 formData.append('url', '');
-                return formData;
-            });
-
-            for (const formData of formDataArray) {
+                setUploadFile(file.id)
+                console.log(file)
                 const config = {
                     onUploadProgress: (progressEvent) => {
                         const progress = Math.round((progressEvent.loaded / progressEvent.total) * 100);
@@ -121,7 +142,7 @@ function UploadMod() {
                     }
                 };
 
-                await AdminApi.upload(formData, config);
+                // await AdminApi.upload(formData, config);
             }
 
             setFiles([]);
@@ -148,6 +169,12 @@ function UploadMod() {
         }
     };
 
+    const checkValue = (value) => {
+        if (value === undefined) {
+            return true
+        }
+        return value
+    };
 
     const handleDragOver = (event) => {
         event.preventDefault();
@@ -188,13 +215,13 @@ function UploadMod() {
     const columns = [
         { field: 'id', headerName: 'ID', width: 70 },
         {
-            field: 'nombre',
+            field: 'customName',
             headerName: 'Nombre',
             flex: 1,
             renderCell: (params) => (
                 <TextField
-                    value={params.row.nombre || params.row.name.split('.jar')[0]}
-                    onChange={(event) => handleNombreChange(params.row.id, event.target.value)}
+                    value={params.row.customName || params.row.name.split('.jar')[0]}
+                    onChange={(event) => handleCustomNameChange(params.row.id, event.target.value)}
                     fullWidth
                 />
             ),
@@ -219,8 +246,8 @@ function UploadMod() {
             renderCell: (params) => (
                 <Checkbox
                     checked={params.row.isClientChecked}
-                    onChange={(event) => handleClientCheckboxChange(event, params.row)}
-                    color="primary"
+                    onChange={(event) => handleClientCheckboxChange(event.target.checked, params.row.id)}
+                    color="success"
                 />
             ),
         },
@@ -231,13 +258,13 @@ function UploadMod() {
             renderCell: (params) => (
                 <Checkbox
                     checked={params.row.isServerChecked}
-                    onChange={(event) => handleServerCheckboxChange(event, params.row)}
-                    color="primary"
+                    onChange={(event) => handleServerCheckboxChange(event.target.checked, params.row.id)}
+                    color="success"
                 />
             ),
         },
         {
-            field: 'estado',
+            field: 'status',
             headerName: 'Estado',
             width: 120,
         },
@@ -257,44 +284,69 @@ function UploadMod() {
         },
     ];
 
-    const rows = files.map((file, index) => ({
-        id: index,
-        nombre: file.nombre || '',
-        name: file.name,
-        version: file.version || '',
-        estado: 'Pendiente',
-        isClientChecked: false,
-        isServerChecked: false,
-    }));
-    /*useEffect(() => {
-        console.log(files)
-    }, [files]);*/
     return (
         <AdminDrawer>
-            <Typography margin={3} variant="h2" gutterBottom>
+            <Snackbar anchorOrigin={{ vertical: "bottom", horizontal: "right" }} open={true} sx={{ backgroundColor: "black", borderRadius: "15px", color: "white" }}>
+                <List
+                    sx={{ maxWidth: 360, borderRadius: "15px" }}
+                    component="nav"
+                >
+                    <ListItemButton onClick={handleClick}>
+                        <ListItemText primary="Descargas" />
+                        {open ? <ExpandLess /> : <ExpandMore />}
+                    </ListItemButton>
+                    <Collapse in={open}>
+                        <List component="div" disablePadding>
+                            {files.map((value, index) =>
+                                <ListItem key={index}>
+                                    <ListItemIcon>
+                                        <JavaIcon />
+                                    </ListItemIcon>
+                                    <ListItemText sx={{ wordWrap: "break-word" }} primary={value.name} />
+                                </ListItem>
+                            )}
+                        </List>
+                    </Collapse>
+                </List>
+            </Snackbar>
+            <Typography variant="h2" gutterBottom>
                 Subir mod
             </Typography>
-            <Grid container justifyContent="center" spacing={5}>
-                <Grid item xs={12}>
-                    <div
-                        style={{
-                            border: '2px dashed #ccc',
-                            padding: '1rem',
-                            textAlign: 'center',
-                            cursor: 'pointer',
-                        }}
-                        onDragOver={handleDragOver}
-                        onDrop={handleDrop}
-                    >
-                        <input type="file" multiple onChange={handleFileChange} style={{ display: 'none' }} />
-                        <Typography variant="body1" component="p" gutterBottom>
-                            Arrastra y suelta archivos aquí o haz clic para seleccionarlos
-                        </Typography>
-                    </div>
+            <Grid container marginTop={2} justifyContent="center" spacing={5}>
+                <Grid item
+                    xs={10}
+                    onDragOver={handleDragOver}
+                    onDrop={handleDrop}
+                    onClick={onButtonClick}
+                    sx={{
+                        borderRadius: "1rem",
+                        borderStyle: "dashed",
+                        transition: "background-color .5s",
+                        '&:hover': {
+                            cursor: "pointer",
+                            backgroundColor: "grey",
+                            MozBoxShadow: "0 0 15px #ccc",
+                            WebkitBoxShadow: "0 0 15px #ccc",
+                            boxShadow: "0 0 15px #ccc",
+                        }
+                    }}>
+                    <Typography paragraph>
+                        Arrastra y suelta archivos aquí o haz clic para seleccionarlos
+                    </Typography>
+                    <input ref={inputRef} hidden accept=".jar" type="file" multiple onChange={handleFileChange} />
+
                 </Grid>
 
-                <Grid item xs={12} style={{ height: 400, width: '100%' }}>
-                    <DataGrid columns={columns} rows={rows} autoHeight pageSize={5} rowsPerPageOptions={[5]} />
+                <Grid item xs={12} style={{ height: 400 }}>
+                    <DataGrid columns={columns} rows={files.map((file, index) => ({
+                        id: index,
+                        name: file.name,
+                        customName: file.customName || '',
+                        version: file.version || '1.19.2',
+                        status: file.status || 'Pendiente',
+                        isClientChecked: checkValue(file.isClientChecked),
+                        isServerChecked: checkValue(file.isServerChecked),
+                    }))} autoHeight pageSize={5} rowsPerPageOptions={[5]} />
                 </Grid>
 
                 {files.length > 0 && (
