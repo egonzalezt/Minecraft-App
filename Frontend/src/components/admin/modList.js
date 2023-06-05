@@ -12,6 +12,8 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
 import AdminDrawer from "./drawer.js";
+import LinearProgress from '@mui/material/LinearProgress'; // Importar componente LinearProgress
+import SocketClient from '../../socketConnection'
 
 const columns = [
     {
@@ -68,25 +70,59 @@ export default function ModList() {
     const [selectedMods, setSelectedMods] = useState([]);
     const [loadingZipCreation, setLoadingZipCreation] = useState(false);
     const [deletingMods, setDeletingMods] = useState(false);
+    const [message, setMessage] = useState({});
 
     const createZipRequest = () => {
-        setLoadingZipCreation(true)
-        AdminApi.createZip().then(response => {
-            setLoadingZipCreation(false)
-            Swal.fire({
-                icon: 'success',
-                title: 'Completado',
-                text: 'Se han creado los mods en un archivo .Zip',
-                footer: '<a href="/api/v1/mods/download">Descargar zip generado</a>'
-            })
-        }).catch(err => {
-            setLoadingZipCreation(false)
+        setLoadingZipCreation(true);
+        const socket = SocketClient;
+
+        const timeout = setTimeout(() => {
+            setLoadingZipCreation(false);
+            socket.disconnect();
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Ha ocurrido un error',
-            })
-        })
+                text: 'No se ha recibido respuesta del servidor',
+            });
+        }, 200000);
+
+        socket.on('authorization-error', () => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'No posee permisos',
+            });
+            setLoadingZipCreation(false);
+        });
+
+        socket.on('mod-zip-file-creation-status', (data) => {
+            clearTimeout(timeout);
+            setMessage(data);
+            console.log(data)
+            if (data?.taskComplete) {
+                socket.disconnect();
+            }
+            if (data?.type === 'statusSuccess' && !data?.error) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Completado',
+                    text: 'Se ha creado el archivo de mods de forma exitosa',
+                });
+            }
+            if (data?.type === 'statusFail' && data?.error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Ha ocurrido un error',
+                });
+            }
+        });
+
+        socket.on('disconnect', () => {
+            setLoadingZipCreation(false);
+        });
+
+        socket.emit('create-zip-file');
     }
 
     function searchData(page) {
@@ -143,7 +179,7 @@ export default function ModList() {
                         icon: 'success',
                         title: 'Completado',
                         text: res.data.message,
-                    }).then(()=> setIsLoading(false));
+                    }).then(() => setIsLoading(false));
                 });
             } else if (result.isDenied) {
                 await Toast.fire({
@@ -225,6 +261,24 @@ export default function ModList() {
                 >
                     Crear .ZIP
                 </LoadingButton>
+                {message?.value && (
+                    <Box sx={{ marginTop: "2%" }}>
+                        {message.type === "statusPercent" ?
+                            <Typography variant="body1" gutterBottom>
+                                Progreso: {message.value}%
+                            </Typography>
+                            :
+                            <Typography variant="body1" gutterBottom>
+                                Estado: {message.value}
+                            </Typography>
+                        }
+                        {
+                            message.type === "statusPercent" && (
+                                <LinearProgress variant="determinate" value={message.value} />
+                            )
+                        }
+                    </Box>
+                )}
             </Box>
         </AdminDrawer>
     );

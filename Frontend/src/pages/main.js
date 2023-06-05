@@ -20,10 +20,10 @@ function Main() {
                         Presione el boton para descargar los mods men.
                     </Typography>
                     <Typography>
-                        Version de maincra 1.16.5
+                        Version de maincra 1.19.2
                     </Typography>
                     <Typography>
-                        Forge 36.2.39
+                        Fabric 0.11.2
                     </Typography>
                     <Typography>
                         Turip Ip Ip
@@ -38,16 +38,19 @@ function Main() {
                         Daves2126 Developer
                     </Typography>
                     <Typography>
-                        Catmizxc Supervisor, Cloud Engineer
+                        Catmizxc Supervisor, Performance Engineer
+                    </Typography>
+                    <Typography>
+                        DavidSonLee Cloud Engineer
+                    </Typography>
+                    <Typography>
+                        Ima24 Tester
                     </Typography>
                     <Typography>
                         Perderas BetaTester
                     </Typography>
                     <Typography>
                         Almowolf (UI) Designer
-                    </Typography>
-                    <Typography>
-                        Ima24 Tester
                     </Typography>
                     <Typography>
                         Turip Ip Ip
