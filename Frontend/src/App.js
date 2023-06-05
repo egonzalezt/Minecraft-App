@@ -17,8 +17,9 @@ import RunCommand from './pages/runCommand';
 import Backups from './pages/backups';
 import PasswordReset from './pages/passwordReset';
 import RequestPasswordReset from './pages/requestPasswordReset';
-import { storeData } from './states/stores';
 import UserApi from './services/users';
+import { SnackbarProvider } from 'notistack';
+
 
 let theme = createTheme({
   typography: {
@@ -101,37 +102,39 @@ function App() {
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <div className="App">
-        <Routes>
-          <Route
-            index
-            element={
-              <div className="grass">
-                <Main />
-              </div>
-            }
-            fallback={<Navigate to="/404" />}
-          />
-          <Route path="status" element={<div className="grass"><ServerStatus /></div>} />
-          <Route path="login" element={<div className="grass"><Login /></div>} />
-          <Route path="signup" element={<div className="grass"><SignUp /></div>} />
-          <Route path="requestpasswordreset" element={<div className="grass"><RequestPasswordReset /></div>} />
-          <Route path="passwordreset" element={<div className="grass"><PasswordReset /></div>} />
-          <Route element={<ProtectedRouteAdmin />}>
-            <Route path="admin" element={<Admin />} />
-            <Route path="admin/upload" element={<AdminUpload />} />
-            <Route path="admin/upload/multiple" element={<AdminUploadMultiple />} />
-            <Route path="admin/server" element={<RunCommand />} />
-            <Route path="admin/backups" element={<Backups />} />
-          </Route>
-          <Route element={<ProtectedRouteUser />}>
-            <Route path="user" element={<User />} />
-          </Route>
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </div>
-    </ThemeProvider>
+    <SnackbarProvider>
+      <ThemeProvider theme={theme}>
+        <div className="App">
+          <Routes>
+            <Route
+              index
+              element={
+                <div className="grass">
+                  <Main />
+                </div>
+              }
+              fallback={<Navigate to="/404" />}
+            />
+            <Route path="status" element={<div className="grass"><ServerStatus /></div>} />
+            <Route path="login" element={<div className="grass"><Login /></div>} />
+            <Route path="signup" element={<div className="grass"><SignUp /></div>} />
+            <Route path="requestpasswordreset" element={<div className="grass"><RequestPasswordReset /></div>} />
+            <Route path="passwordreset" element={<div className="grass"><PasswordReset /></div>} />
+            <Route element={<ProtectedRouteAdmin />}>
+              <Route path="admin" element={<Admin />} />
+              <Route path="admin/upload" element={<AdminUpload />} />
+              <Route path="admin/upload/multiple" element={<AdminUploadMultiple />} />
+              <Route path="admin/server" element={<RunCommand />} />
+              <Route path="admin/backups" element={<Backups />} />
+            </Route>
+            <Route element={<ProtectedRouteUser />}>
+              <Route path="user" element={<User />} />
+            </Route>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
+      </ThemeProvider>
+    </SnackbarProvider>
   );
 }
 

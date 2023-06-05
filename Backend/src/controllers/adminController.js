@@ -41,18 +41,24 @@ async function addMods(req, res) {
     const client = (req.body.client).toLowerCase() == 'true' ? true : false;
     const server = (req.body.server).toLowerCase() == 'true' ? true : false;
     const type = []
-
-    if (client && server) {
-        type.push(modType.Server);
-        type.push(modType.Client);
-        file.mv(process.env.MODSPATH + fileName)
-    } else if (server) {
-        type.push(modType.Server);
-        file.mv(process.env.MODSPATH + fileName)
-    } else {
-        type.push(modType.Client);
-        file.mv(process.env.CLIENTMODSPATH + fileName)
+    try {
+        if (client && server) {
+            type.push(modType.Server);
+            type.push(modType.Client);
+            file.mv(process.env.MODSPATH + fileName)
+        } else if (server) {
+            type.push(modType.Server);
+            file.mv(process.env.MODSPATH + fileName)
+        } else {
+            type.push(modType.Client);
+            file.mv(process.env.CLIENTMODSPATH + fileName)
+        }
+    } catch (e) {
+        console.log(e)
+        return res.status(500)
+            .json({ error: true, message: "Error saving the mod" });
     }
+
     var result = await saveMod(name, fileName, version, type, url);
     if (result) {
         return res.status(200)
@@ -96,7 +102,7 @@ async function removeMod(req, res) {
             }
         }
 
-        if(modsNotFound){
+        if (modsNotFound) {
             return res.status(200)
                 .json({ error: false, message: "Some mods could not be removed because .Jar file not found" });
         }

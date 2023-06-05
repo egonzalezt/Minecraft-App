@@ -25,7 +25,6 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import PrecisionManufacturingRoundedIcon from '@mui/icons-material/PrecisionManufacturingRounded';
 import PublicIcon from '@mui/icons-material/Public';
-import FolderZipRoundedIcon from '@mui/icons-material/FolderZipRounded';
 
 import { ReactComponent as Logo } from '../../kirb.svg';
 

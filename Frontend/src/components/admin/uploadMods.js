@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
-import { useNavigate } from 'react-router-dom';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -10,32 +9,23 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 import Swal from 'sweetalert2';
 import TextField from '@mui/material/TextField';
-import LinearProgress from '@mui/material/LinearProgress';
-import AdminApi from '../../services/admin';
 import Snackbar from '@mui/material/Snackbar';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { ReactComponent as JavaIcon } from '../../img/java-icon.svg';
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import ListItemButton from '@mui/material/ListItemButton';
-
+import UploadModStatus from '../uploadModStatus';
 import AdminDrawer from './drawer';
 
 
 function UploadMod() {
-    const navigate = useNavigate();
     const [files, setFiles] = useState([]);
-    const [isClientChecked, setClientChecked] = useState(false);
-    const [isServerChecked, setServerChecked] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [uploadProgress, setUploadProgress] = useState(0);
     const inputRef = useRef(null);
     const [open, setOpen] = useState(true);
-    const [uploadFile, setUploadFile] = useState({});
+    // const [uploadFile, setUploadFile] = useState({});
 
     const handleClick = () => {
         setOpen(!open);
@@ -43,6 +33,17 @@ function UploadMod() {
 
     const onButtonClick = () => {
         inputRef.current.click();
+    };
+
+    const createFileObject = (file) => {
+        return {
+            name: file.name,
+            version: '1.19.2',
+            isClientChecked: true,
+            isServerChecked: true,
+            customName: file.name.split('.jar')[0],
+            file: file,
+        };
     };
 
     const handleFileChange = (event) => {
@@ -64,8 +65,9 @@ function UploadMod() {
                 return !isDuplicate;
             });
 
+            const fileObjects = newFiles.map((file) => createFileObject(file));
 
-            setFiles([...files, ...newFiles]);
+            setFiles([...files, ...fileObjects]);
         } else {
             Swal.fire({
                 timer: 3000,
@@ -107,66 +109,57 @@ function UploadMod() {
         setFiles(updatedFiles);
     };
 
+    const handleComponentFinish = (componentId) => {
+        setFiles(prevFiles => prevFiles.filter(file => file.id !== componentId));
+      };
+
     const handleUpload = async () => {
-        if (!isClientChecked && !isServerChecked) {
-            Swal.fire({
-                timer: 3000,
-                timerProgressBar: true,
-                icon: 'warning',
-                title: 'Seleccione al menos una opción',
-                text: 'Debe seleccionar al menos una opción para Cliente o Servidor',
-            });
-            return;
-        }
 
         setLoading(true);
 
-        try {
+        // try {
 
-            for (const file of files) {
-                const formData = new FormData();
-                formData.append('fileName', file.name);
-                formData.append('version', file.version);
-                formData.append('client', file.isClientChecked);
-                formData.append('server', file.isServerChecked);
-                formData.append('file', file);
-                formData.append('name', file.customName);
-                formData.append('url', '');
-                setUploadFile(file.id)
-                console.log(file)
-                const config = {
-                    onUploadProgress: (progressEvent) => {
-                        const progress = Math.round((progressEvent.loaded / progressEvent.total) * 100);
-                        setUploadProgress(progress);
-                        console.log(progress)
-                    }
-                };
+        //     for (const file of files) {
+        //         const formData = new FormData();
+        //         formData.append('fileName', file.name);
+        //         formData.append('version', file.version);
+        //         formData.append('client', file.isClientChecked);
+        //         formData.append('server', file.isServerChecked);
+        //         formData.append('file', file.file);
+        //         formData.append('name', file.customName);
+        //         formData.append('url', '');
+        //         setUploadFile(file.id)
 
-                // await AdminApi.upload(formData, config);
-            }
+        //         const config = {
+        //             onUploadProgress: (progressEvent) => {
+        //                 const progress = Math.round((progressEvent.loaded / progressEvent.total) * 100);
+        //                 setUploadProgress(progress);
+        //             }
+        //         };
 
-            setFiles([]);
-            setClientChecked(false);
-            setServerChecked(false);
+        //         await AdminApi.upload(formData, config);
+        //     }
 
-            Swal.fire({
-                timer: 3000,
-                timerProgressBar: true,
-                icon: 'success',
-                title: 'Archivos subidos exitosamente',
-                text: 'Los archivos han sido subidos al servidor',
-            });
-        } catch (error) {
-            Swal.fire({
-                timer: 3000,
-                timerProgressBar: true,
-                icon: 'error',
-                title: 'Error al subir los archivos',
-                text: 'Ha ocurrido un error al intentar subir los archivos',
-            });
-        } finally {
-            setLoading(false);
-        }
+        //     setFiles([]);
+
+        //     Swal.fire({
+        //         timer: 3000,
+        //         timerProgressBar: true,
+        //         icon: 'success',
+        //         title: 'Archivos subidos exitosamente',
+        //         text: 'Los archivos han sido subidos al servidor',
+        //     });
+        // } catch (error) {
+        //     Swal.fire({
+        //         timer: 3000,
+        //         timerProgressBar: true,
+        //         icon: 'error',
+        //         title: 'Error al subir los archivos',
+        //         text: 'Ha ocurrido un error al intentar subir los archivos',
+        //     });
+        // } finally {
+        //     setLoading(false);
+        // }
     };
 
     const checkValue = (value) => {
@@ -286,7 +279,7 @@ function UploadMod() {
 
     return (
         <AdminDrawer>
-            <Snackbar anchorOrigin={{ vertical: "bottom", horizontal: "right" }} open={true} sx={{ backgroundColor: "black", borderRadius: "15px", color: "white" }}>
+            <Snackbar anchorOrigin={{ vertical: "bottom", horizontal: "right" }} open={loading} sx={{ backgroundColor: "black", borderRadius: "15px", color: "white" }}>
                 <List
                     sx={{ maxWidth: 360, borderRadius: "15px" }}
                     component="nav"
@@ -298,12 +291,7 @@ function UploadMod() {
                     <Collapse in={open}>
                         <List component="div" disablePadding>
                             {files.map((value, index) =>
-                                <ListItem key={index}>
-                                    <ListItemIcon>
-                                        <JavaIcon />
-                                    </ListItemIcon>
-                                    <ListItemText sx={{ wordWrap: "break-word" }} primary={value.name} />
-                                </ListItem>
+                                <UploadModStatus file={value} key={index} onComponentFinish={handleComponentFinish}/>
                             )}
                         </List>
                     </Collapse>

@@ -120,7 +120,7 @@ function App() {
         }
         setToken(tempToken);
         setId(tempId);
-    }, [])
+    }, [navigate, search])
 
     return (
         <div>
