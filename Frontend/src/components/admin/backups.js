@@ -12,8 +12,9 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
 import AdminDrawer from "./drawer.js";
+import LinearProgress from '@mui/material/LinearProgress'; // Importar componente LinearProgress
 
-import socketIOClient from 'socket.io-client';
+import SocketClient from '../../socketConnection'
 
 const Toast = Swal.mixin({
     toast: true,
@@ -110,11 +111,7 @@ export default function BackupList() {
 
     const createZipRequest = () => {
         setLoadingZipCreation(true);
-        const socket = socketIOClient('http://localhost:8000', {
-            extraHeaders: {
-                Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-            },
-        });
+        const socket = SocketClient
 
         const timeout = setTimeout(() => {
             setLoadingZipCreation(false);
@@ -124,8 +121,8 @@ export default function BackupList() {
                 title: 'Oops...',
                 text: 'No se ha recibido respuesta del servidor',
             });
-        }, 5000); 
-    
+        }, 200000);
+
         socket.on('authorization-error', () => {
             Swal.fire({
                 icon: 'error',
@@ -160,7 +157,7 @@ export default function BackupList() {
         socket.on('disconnect', () => {
             setLoadingZipCreation(false);
         });
-    
+
         socket.emit('create-backup-file');
     };
 
@@ -295,8 +292,26 @@ export default function BackupList() {
                     variant="contained"
                     sx={{ marginTop: "5%", width: "20%" }}
                 >
-                    Crear Backup {loadingZipCreation&& `${message?.value}%`}
+                    Crear Backup
                 </LoadingButton>
+                {message?.value && (
+                    <Box sx={{ marginTop: "2%" }}>
+                        {message.type === "statusPercent" ?
+                            <Typography variant="body1" gutterBottom>
+                                Progreso: {message.value}%
+                            </Typography>
+                            :
+                            <Typography variant="body1" gutterBottom>
+                                Estado: {message.value}
+                            </Typography>
+                        }
+                        {
+                            message.type === "statusPercent" && (
+                                <LinearProgress variant="determinate" value={message.value} />
+                            )
+                        }
+                    </Box>
+                )}
             </Box>
         </AdminDrawer>
     );

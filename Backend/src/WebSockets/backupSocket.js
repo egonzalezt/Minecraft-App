@@ -2,6 +2,7 @@ const fs = require('fs');
 var archiver = require('archiver');
 const { v4: uuidv4 } = require('uuid');
 const saveBackup = require('../database/repositories/backups/addBackup')
+const path = require('path');
 
 async function createBackup(io) {
     const backupId = uuidv4();
@@ -15,8 +16,6 @@ async function createBackup(io) {
     const filePath = `${backupPath}/${fileName}`;
     const output = fs.createWriteStream(filePath);
     const archive = archiver('zip');
-    const fileCount = await calculateFileCount(process.env.WORLDPATH);
-    let processedFileCount = 0;
 
     output.on('close', function () {
         console.log(archive.pointer() + ' total bytes');
@@ -29,11 +28,16 @@ async function createBackup(io) {
         throw err;
     });
 
-    archive.on('entry', function () {
-        processedFileCount++;
-        const percentComplete = Math.round((processedFileCount / fileCount) * 100);
-        sendMessage(io, { type: 'statusPercent', value: percentComplete, process: "backupCreator", taskComplete:false, error: false });
+    const totalSize = await calculateDirectorySize(process.env.WORLDPATH);
+
+    let processedBytes = 0;
+
+    archive.on('data', (chunk) => {
+        processedBytes += chunk.length;
+        const progress = Math.round((processedBytes / totalSize) * 100);
+        sendMessage(io, { type: 'statusPercent', value: progress, process: "backupCreator", taskComplete: false, error: false });
     });
+
 
     archive.pipe(output);
 
@@ -41,37 +45,35 @@ async function createBackup(io) {
 
     archive.finalize().then(() => {
         saveBackup(fileName, filePath, backupPath).then(() => {
-            sendMessage(io, { type: 'statusSuccess', value: "Backup created successfully", process: "backupCreator", taskComplete:true, error: false });
+            sendMessage(io, { type: 'statusSuccess', value: "Backup created successfully", process: "backupCreator", taskComplete: true, error: false });
         }).catch(() => {
-            sendMessage(io, { type: 'statusFail', value: "Failed to create backup", process: "backupCreator", taskComplete:true, error: true });
+            sendMessage(io, { type: 'statusFail', value: "Failed to create backup", process: "backupCreator", taskComplete: true, error: true });
         });
     }).catch(() => {
-        sendMessage(io, { type: 'statusFail', value: "Failed to create backup", process: "backupCreator", taskComplete:true, error: true });
+        sendMessage(io, { type: 'statusFail', value: "Failed to create backup", process: "backupCreator", taskComplete: true, error: true });
     });
-
-    async function calculateFileCount(directoryPath) {
-        let fileCount = 0;
-
-        function calculateDirectoryFilesCount(dirPath) {
-            const files = fs.readdirSync(dirPath);
-
-            files.forEach((file) => {
-                const filePath = `${dirPath}/${file}`;
-                const stats = fs.statSync(filePath);
-
-                if (stats.isDirectory()) {
-                    calculateDirectoryFilesCount(filePath);
-                } else {
-                    fileCount++;
-                }
-            });
-        }
-
-        calculateDirectoryFilesCount(directoryPath);
-
-        return fileCount;
-    }
 }
+
+function calculateDirectorySize(directory) {
+    return new Promise((resolve, reject) => {
+        let totalSize = 0;
+
+        const calculateFileSize = (filePath) => {
+            const stats = fs.statSync(filePath);
+            if (stats.isDirectory()) {
+                const nestedFiles = fs.readdirSync(filePath);
+                nestedFiles.forEach((file) => calculateFileSize(path.join(filePath, file)));
+            } else if (stats.isFile()) {
+                totalSize += stats.size;
+            }
+        };
+
+        calculateFileSize(directory);
+
+        resolve(totalSize);
+    });
+}
+
 
 function generateDate() {
     var today = new Date();
