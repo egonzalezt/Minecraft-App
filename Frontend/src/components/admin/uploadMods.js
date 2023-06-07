@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Checkbox from '@mui/material/Checkbox';
@@ -18,14 +18,14 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import ListItemButton from '@mui/material/ListItemButton';
 import UploadModStatus from '../uploadModStatus';
 import AdminDrawer from './drawer';
-
+import admin from '../../services/admin';
 
 function UploadMod() {
     const [files, setFiles] = useState([]);
     const [loading, setLoading] = useState(false);
     const inputRef = useRef(null);
     const [open, setOpen] = useState(true);
-    // const [uploadFile, setUploadFile] = useState({});
+    const [totalFiles, setTotalFiles] = useState(0);
 
     const handleClick = () => {
         setOpen(!open);
@@ -43,30 +43,43 @@ function UploadMod() {
             isServerChecked: true,
             customName: file.name.split('.jar')[0],
             file: file,
+            status: 'Pendiente'
         };
     };
 
-    const handleFileChange = (event) => {
+    const handleFileChange = async (event) => {
         const fileList = Array.from(event.target.files);
         const validFiles = fileList.filter((file) => file.name.endsWith('.jar'));
-
+    
         if (validFiles.length === fileList.length) {
-            const newFiles = validFiles.filter((file) => {
-                const isDuplicate = files.some((existingFile) => existingFile.name === file.name);
-                if (isDuplicate) {
+            const newFiles = [];
+            for (const file of validFiles) {
+                const response = await admin.verifyIfModExists(file.name);
+                if (response.data.found) {
                     Swal.fire({
                         timer: 5000,
                         timerProgressBar: true,
                         icon: 'warning',
-                        title: 'Archivo duplicado',
-                        text: `El archivo ${file.name} ya existe en la lista y será ignorado.`,
+                        title: 'Archivo existente en el servidor',
+                        text: `El archivo ${file.name} ya existe en el servidor.`,
                     });
+                } else {
+                    const isDuplicate = files.some((existingFile) => existingFile.name === file.name);
+                    if (isDuplicate) {
+                        Swal.fire({
+                            timer: 5000,
+                            timerProgressBar: true,
+                            icon: 'warning',
+                            title: 'Archivo duplicado',
+                            text: `El archivo ${file.name} ya existe en la lista y sera ignorado.`,
+                        });
+                    } else {
+                        newFiles.push(file);
+                    }
                 }
-                return !isDuplicate;
-            });
-
+            }
+    
             const fileObjects = newFiles.map((file) => createFileObject(file));
-
             setFiles([...files, ...fileObjects]);
         } else {
             Swal.fire({
@@ -78,6 +91,8 @@ function UploadMod() {
             });
         }
     };
+    
+
 
     const handleClientCheckboxChange = (checked, index) => {
         const updatedFiles = [...files];
@@ -109,57 +124,31 @@ function UploadMod() {
         setFiles(updatedFiles);
     };
 
-    const handleComponentFinish = (componentId) => {
-        setFiles(prevFiles => prevFiles.filter(file => file.id !== componentId));
-      };
+    const handleComponentFinish = (componentId, successUpload) => {
+        setFiles(prevFiles => {
+            return prevFiles.map(file => {
+                if (file.id === componentId) {
+                    if (successUpload) {
+                        return {
+                            ...file,
+                            status: 'Completado'
+                        };
+                    } else {
+                        return {
+                            ...file,
+                            status: 'Error'
+                        };
+                    }
+                }
+                return file;
+            });
+        });
+        setTotalFiles(prevTotalFiles => prevTotalFiles - 1);
+    };
 
     const handleUpload = async () => {
-
+        setTotalFiles(files.length)
         setLoading(true);
-
-        // try {
-
-        //     for (const file of files) {
-        //         const formData = new FormData();
-        //         formData.append('fileName', file.name);
-        //         formData.append('version', file.version);
-        //         formData.append('client', file.isClientChecked);
-        //         formData.append('server', file.isServerChecked);
-        //         formData.append('file', file.file);
-        //         formData.append('name', file.customName);
-        //         formData.append('url', '');
-        //         setUploadFile(file.id)
-
-        //         const config = {
-        //             onUploadProgress: (progressEvent) => {
-        //                 const progress = Math.round((progressEvent.loaded / progressEvent.total) * 100);
-        //                 setUploadProgress(progress);
-        //             }
-        //         };
-
-        //         await AdminApi.upload(formData, config);
-        //     }
-
-        //     setFiles([]);
-
-        //     Swal.fire({
-        //         timer: 3000,
-        //         timerProgressBar: true,
-        //         icon: 'success',
-        //         title: 'Archivos subidos exitosamente',
-        //         text: 'Los archivos han sido subidos al servidor',
-        //     });
-        // } catch (error) {
-        //     Swal.fire({
-        //         timer: 3000,
-        //         timerProgressBar: true,
-        //         icon: 'error',
-        //         title: 'Error al subir los archivos',
-        //         text: 'Ha ocurrido un error al intentar subir los archivos',
-        //     });
-        // } finally {
-        //     setLoading(false);
-        // }
     };
 
     const checkValue = (value) => {
@@ -174,10 +163,11 @@ function UploadMod() {
     };
 
     const handleDrop = (event) => {
+        console.log("Asdads");
         event.preventDefault();
         const fileList = Array.from(event.dataTransfer.files);
         const validFiles = fileList.filter((file) => file.name.endsWith('.jar'));
-
+        console.log("Asdads");
         if (validFiles.length === fileList.length) {
             const newFiles = validFiles.filter((file) => {
                 const isDuplicate = files.some((existingFile) => existingFile.name === file.name);
@@ -277,6 +267,12 @@ function UploadMod() {
         },
     ];
 
+    useEffect(() => {
+        if (totalFiles <= 0 && loading) {
+            setLoading(false);
+        }
+    }, [totalFiles, loading]);
+
     return (
         <AdminDrawer>
             <Snackbar anchorOrigin={{ vertical: "bottom", horizontal: "right" }} open={loading} sx={{ backgroundColor: "black", borderRadius: "15px", color: "white" }}>
@@ -291,7 +287,7 @@ function UploadMod() {
                     <Collapse in={open}>
                         <List component="div" disablePadding>
                             {files.map((value, index) =>
-                                <UploadModStatus file={value} key={index} onComponentFinish={handleComponentFinish}/>
+                                <UploadModStatus file={value} key={index} onComponentFinish={handleComponentFinish} />
                             )}
                         </List>
                     </Collapse>
@@ -321,8 +317,17 @@ function UploadMod() {
                     <Typography paragraph>
                         Arrastra y suelta archivos aquí o haz clic para seleccionarlos
                     </Typography>
-                    <input ref={inputRef} hidden accept=".jar" type="file" multiple onChange={handleFileChange} />
-
+                    <input
+                        ref={inputRef}
+                        hidden
+                        accept=".jar"
+                        type="file"
+                        multiple
+                        onClick={(e) => {
+                            e.target.value = null;
+                        }}
+                        onChange={handleFileChange}
+                    />
                 </Grid>
 
                 <Grid item xs={12} style={{ height: 400 }}>

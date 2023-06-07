@@ -19,6 +19,14 @@ class AdminApi {
         })
     }
 
+    verifyIfModExists(filename) {
+        return axios.get(`/admin/mods/verify?name=${filename}`, {
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
+            }
+        })
+    }
+
     createZip() {
         return axios.get('/admin/mods/create', {
             headers: {

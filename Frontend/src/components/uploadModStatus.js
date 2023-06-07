@@ -12,6 +12,7 @@ function UploadModStatus({ file, onComponentFinish }) {
     const [isComponentMounted, setComponentMounted] = useState(true);
 
     const handleUpload = async () => {
+        let status = false;
         try {
             const formData = new FormData();
             formData.append('fileName', file.name);
@@ -28,15 +29,16 @@ function UploadModStatus({ file, onComponentFinish }) {
                     setUploadProgress(progress);
                 }
             };
-
             await AdminApi.upload(formData, config);
+            status = true;
             enqueueSnackbar(`El mod ${file.name} se ha subido exitosamente`, { variant: 'success' });
         } catch (error) {
             console.log(error);
             enqueueSnackbar(`Ocurrio un error al subir el mod ${file.name}`, { variant: 'error' });
+            status = false;
         } finally {
             setComponentMounted(false);
-            onComponentFinish(file.id);
+            onComponentFinish(file.id, status);
         }
     };
 
@@ -44,11 +46,8 @@ function UploadModStatus({ file, onComponentFinish }) {
         if (isComponentMounted) {
             handleUpload();
         }
+    }, []);
 
-        return () => {
-
-        };
-    });
 
     if (!isComponentMounted) {
         return null;

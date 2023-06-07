@@ -22,6 +22,19 @@ async function getMods(req, res) {
     return res.status(200).json({ error: false, mods: result.data, total: result.totalMods });
 }
 
+async function validateIfModExist(req,res){
+    const modFileName = req.query.name;
+    const modExists = await findModByFileName(modFileName);
+    if (modExists) {
+        return res
+            .status(200)
+            .json({ error: false, message: "Mod already exists", found: true });
+    }
+    return res
+        .status(200)
+        .json({ error: false, message: "Mod not found", found: false });
+}
+
 async function addMods(req, res) {
     const modExists = await findModByFileName(req.body.fileName);
     if (modExists) {
@@ -163,5 +176,6 @@ module.exports = {
     startServer,
     stopServer,
     serverStatus,
-    addMods
+    addMods,
+    validateIfModExist
 };
