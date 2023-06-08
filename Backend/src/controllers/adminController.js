@@ -7,7 +7,7 @@ const saveMod = require('../database/repositories/mods/addMod');
 const findModByFileName = require('../database/repositories/mods/findModByFileName')
 const { modType } = require('../database/schemas/modEnum');
 const copyModsAndCreateZip = require('../utils/copyModsAndCreateZip')
-
+const findModsByFileNames = require('../database/repositories/mods/findModsByFileNames')
 async function createModsFile(req, res) {
     await copyModsAndCreateZip(req, res)
 }
@@ -34,6 +34,25 @@ async function validateIfModExist(req,res){
         .status(200)
         .json({ error: false, message: "Mod not found", found: false });
 }
+
+async function validateIfModsExist(req, res) {
+    const mods = req.body.mods;
+      if (!Array.isArray(mods)) {
+      return res.status(400).json({ error: true, message: "Mods should be an array of strings" });
+    }
+  
+    // Validate each mod string
+    for (const mod of mods) {
+      if (typeof mod !== "string" || !mod.endsWith(".jar")) {
+        return res.status(400).json({ error: true, message: "Mods should be strings ending with '.jar'" });
+      }
+    }
+  
+    const modExists = await findModsByFileNames(mods);
+    return res
+      .status(200)
+      .json({ error: false, message: "Mods successfully found in the database", mods: modExists });
+  }
 
 async function addMods(req, res) {
     const modExists = await findModByFileName(req.body.fileName);
@@ -177,5 +196,6 @@ module.exports = {
     stopServer,
     serverStatus,
     addMods,
-    validateIfModExist
+    validateIfModExist,
+    validateIfModsExist
 };

@@ -20,6 +20,8 @@ import RequestPasswordReset from './pages/requestPasswordReset';
 import UserApi from './services/users';
 import { SnackbarProvider } from 'notistack';
 
+import ProtectedRouteAdmin from './components/router/protectedRouteAdmin';
+import ProtectedRouteUser from './components/router/protectedRouteUser';
 
 let theme = createTheme({
   typography: {
@@ -83,20 +85,6 @@ function App() {
     }
   }, []);
 
-  const ProtectedRouteAdmin = ({ redirectPath = '/', children }) => {
-    if (user && user.roles !== undefined && user.roles.includes('super_admin')) {
-      return children ? children : <Outlet />;
-    }
-    return <Navigate to={redirectPath} replace />;
-  };
-
-  const ProtectedRouteUser = ({ redirectPath = '/', children }) => {
-    if (user && user.roles !== undefined && user.roles.includes('user')) {
-      return children ? children : <Outlet />;
-    }
-    return <Navigate to={redirectPath} replace />;
-  };
-
   if (!userLoaded) {
     return <div>Loading...</div>;
   }
@@ -120,14 +108,14 @@ function App() {
             <Route path="signup" element={<div className="grass"><SignUp /></div>} />
             <Route path="requestpasswordreset" element={<div className="grass"><RequestPasswordReset /></div>} />
             <Route path="passwordreset" element={<div className="grass"><PasswordReset /></div>} />
-            <Route element={<ProtectedRouteAdmin />}>
+            <Route element={<ProtectedRouteAdmin user={user} />}>
               <Route path="admin" element={<Admin />} />
               <Route path="admin/upload" element={<AdminUpload />} />
               <Route path="admin/upload/multiple" element={<AdminUploadMultiple />} />
               <Route path="admin/server" element={<RunCommand />} />
               <Route path="admin/backups" element={<Backups />} />
             </Route>
-            <Route element={<ProtectedRouteUser />}>
+            <Route element={<ProtectedRouteUser user={user} />}>
               <Route path="user" element={<User />} />
             </Route>
             <Route path="*" element={<NotFound />} />

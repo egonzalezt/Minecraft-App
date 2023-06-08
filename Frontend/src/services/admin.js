@@ -10,7 +10,7 @@ class AdminApi {
             ...config
         });
     }
-    
+
     mods(page, pageSize) {
         return axios.get(`/admin/mods?page=${page}&limit=${pageSize}`, {
             headers: {
@@ -25,6 +25,14 @@ class AdminApi {
                 "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
             }
         })
+    }
+
+    verifyIfModsExists(mods) {
+        return axios.post('/admin/mods/verify', { mods }, {
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
+            }
+        });
     }
 
     createZip() {

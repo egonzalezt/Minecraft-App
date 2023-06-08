@@ -47,6 +47,9 @@ function Main() {
                         Ima24 Tester
                     </Typography>
                     <Typography>
+                        DoctorEaker (UI) Designer
+                    </Typography>
+                    <Typography>
                         Perderas BetaTester
                     </Typography>
                     <Typography>

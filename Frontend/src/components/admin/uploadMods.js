@@ -19,6 +19,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import UploadModStatus from '../uploadModStatus';
 import AdminDrawer from './drawer';
 import admin from '../../services/admin';
+import { enqueueSnackbar } from 'notistack';
 
 function UploadMod() {
     const [files, setFiles] = useState([]);
@@ -50,48 +51,54 @@ function UploadMod() {
     const handleFileChange = async (event) => {
         const fileList = Array.from(event.target.files);
         const validFiles = fileList.filter((file) => file.name.endsWith('.jar'));
-    
+
         if (validFiles.length === fileList.length) {
             const newFiles = [];
-            for (const file of validFiles) {
-                const response = await admin.verifyIfModExists(file.name);
-                if (response.data.found) {
-                    Swal.fire({
-                        timer: 5000,
-                        timerProgressBar: true,
-                        icon: 'warning',
-                        title: 'Archivo existente en el servidor',
-                        text: `El archivo ${file.name} ya existe en el servidor.`,
-                    });
-                } else {
-                    const isDuplicate = files.some((existingFile) => existingFile.name === file.name);
-                    if (isDuplicate) {
-                        Swal.fire({
-                            timer: 5000,
-                            timerProgressBar: true,
-                            icon: 'warning',
-                            title: 'Archivo duplicado',
-                            text: `El archivo ${file.name} ya existe en la lista y sera ignorado.`,
-                        });
+            const modsFileName = fileList.map((file) => file.name);
+
+            try {
+                const response = await admin.verifyIfModsExists(modsFileName);
+                console.log(response.data)
+                const modsResponse = response.data.mods;
+
+                for (const file of validFiles) {
+                    const alreadyAdded = modsResponse[file.name];
+                    if (alreadyAdded) {
+                        enqueueSnackbar(`El archivo ${file.name} ya existe en el servidor y sera ignorado.`, { variant: 'warning' });
                     } else {
-                        newFiles.push(file);
+                        const isDuplicate = files.some((existingFile) => existingFile.name === file.name);
+                        if (isDuplicate) {
+                            enqueueSnackbar(`El archivo ${file.name} ya existe en la lista y sera ignorado.`, { variant: 'warning' });
+                        } else {
+                            newFiles.push(file);
+                        }
                     }
                 }
+
+                const fileObjects = newFiles.map((file) => createFileObject(file));
+                setFiles([...files, ...fileObjects]);
+            } catch (error) {
+                console.log(error)
+                Swal.fire({
+                    timer: 3000,
+                    timerProgressBar: true,
+                    icon: 'error',
+                    title: 'Error en la solicitud',
+                    text: 'Ocurrió un error al verificar los mods existentes. Por favor, inténtelo de nuevo.',
+                });
             }
-    
-            const fileObjects = newFiles.map((file) => createFileObject(file));
-            setFiles([...files, ...fileObjects]);
         } else {
             Swal.fire({
                 timer: 3000,
                 timerProgressBar: true,
                 icon: 'warning',
                 title: 'Cargue un archivo válido',
-                text: 'Rectifique que todos los mods seleccionados sean .Jar',
+                text: 'Verifique que todos los mods seleccionados sean archivos .jar',
             });
         }
     };
-    
+
+
 
 
     const handleClientCheckboxChange = (checked, index) => {
@@ -163,11 +170,9 @@ function UploadMod() {
     };
 
     const handleDrop = (event) => {
-        console.log("Asdads");
         event.preventDefault();
         const fileList = Array.from(event.dataTransfer.files);
         const validFiles = fileList.filter((file) => file.name.endsWith('.jar'));
-        console.log("Asdads");
         if (validFiles.length === fileList.length) {
             const newFiles = validFiles.filter((file) => {
                 const isDuplicate = files.some((existingFile) => existingFile.name === file.name);
@@ -315,7 +320,7 @@ function UploadMod() {
                         }
                     }}>
                     <Typography paragraph>
-                        Arrastra y suelta archivos aquí o haz clic para seleccionarlos
+                        Arrastra y suelta archivos aqui o haz clic para seleccionarlos
                     </Typography>
                     <input
                         ref={inputRef}

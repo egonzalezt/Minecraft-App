@@ -3,7 +3,6 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 
-
 function NotFound() {
     return (
         <Stack width="100%" justifyContent="space-between" alignItems="center">
