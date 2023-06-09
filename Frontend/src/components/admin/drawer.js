@@ -19,6 +19,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import TerminalIcon from '@mui/icons-material/Terminal';
+import CodeIcon from '@mui/icons-material/Code';
 import { Link } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
@@ -181,7 +183,7 @@ export default function AdminDrawer(props) {
               }}
               component={Link} to={"/admin/server"}
             >
-              <ListItemIcon
+              <TerminalIcon
                 sx={{
                   minWidth: 0,
                   mr: open ? 3 : 'auto',
@@ -189,8 +191,29 @@ export default function AdminDrawer(props) {
                 }}
               >
                 <PublicIcon />
-              </ListItemIcon>
+              </TerminalIcon>
               <ListItemText primary="Server" sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding sx={{ display: 'block' }}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? 'initial' : 'center',
+                px: 2.5,
+              }}
+              component={Link} to={"/admin/edit"}
+            >
+              <CodeIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : 'auto',
+                  justifyContent: 'center',
+                }}
+              >
+                <PublicIcon />
+              </CodeIcon>
+              <ListItemText primary="Server Props" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
         </List>

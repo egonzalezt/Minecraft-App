@@ -53,6 +53,21 @@ class AdminApi {
         })
     }
 
+    getServerProperties() {
+        return axios.get('/admin/server/edit', {
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
+            }
+        })
+    }
+
+    updateServerProperties(properties) {
+        return axios.post('/admin/server/edit', { properties:properties }, {
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
+            }
+        });
+    }
 }
 
 export default new AdminApi();

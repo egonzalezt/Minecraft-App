@@ -1,0 +1,26 @@
+/* Hide the default scroll bar */
+.ace_scrollbar {
+    display: none !important;
+  }
+  
+  /* Customize the appearance of the custom scroll bar */
+  .ace_scrollbar-v {
+    width: 8px !important;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+  }
+  
+  .ace_scrollbar-v::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+  }
+  
+  .ace_scrollbar-v:hover::-webkit-scrollbar-thumb {
+    background-color: #555;
+  }
+  
+  .ace_scrollbar-v::-webkit-scrollbar-track {
+    background-color: #f0f0f0;
+    border-radius: 4px;
+  }
+  

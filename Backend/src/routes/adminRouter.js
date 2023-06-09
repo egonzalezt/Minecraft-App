@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
-var { createModsFile,getMods,removeMod,startServer,stopServer,serverStatus,addMods, validateIfModExist, validateIfModsExist } = require('../controllers/adminController')
+var { createModsFile,getMods,removeMod,startServer,stopServer,serverStatus,
+    addMods,validateIfModExist,validateIfModsExist,editProperties,updateProperties } 
+    = require('../controllers/adminController')
 var verifyToken = require('../middlewares/verifyToken')
 var verifyPermissions = require('../middlewares/verifyPermissions')
 router.get('/mods/create',verifyToken,verifyPermissions,createModsFile)
@@ -12,5 +14,7 @@ router.get('/server/status',verifyToken,verifyPermissions,serverStatus)
 router.post('/mods/',verifyToken,verifyPermissions,addMods)
 router.get('/mods/verify',verifyToken,verifyPermissions,validateIfModExist)
 router.post('/mods/verify',verifyToken,verifyPermissions,validateIfModsExist)
+router.get('/server/edit',verifyToken,verifyPermissions,editProperties)
+router.post('/server/edit',verifyToken,verifyPermissions,updateProperties)
 
 module.exports = router;

@@ -1,7 +1,7 @@
 import './App.css';
 
 import React, { useEffect, useState } from 'react';
-import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material/styles';
 
 import Main from './pages/main';
@@ -17,6 +17,7 @@ import RunCommand from './pages/runCommand';
 import Backups from './pages/backups';
 import PasswordReset from './pages/passwordReset';
 import RequestPasswordReset from './pages/requestPasswordReset';
+import CodeEditor from './pages/codeEditor';
 import UserApi from './services/users';
 import { SnackbarProvider } from 'notistack';
 
@@ -114,6 +115,7 @@ function App() {
               <Route path="admin/upload/multiple" element={<AdminUploadMultiple />} />
               <Route path="admin/server" element={<RunCommand />} />
               <Route path="admin/backups" element={<Backups />} />
+              <Route path="admin/edit" element={<CodeEditor />} />
             </Route>
             <Route element={<ProtectedRouteUser user={user} />}>
               <Route path="user" element={<User />} />
