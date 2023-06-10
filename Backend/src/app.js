@@ -7,7 +7,7 @@ require('dotenv').config();
 require('./config/database');
 global.isModsFileAvailable = true;
 
-//var apm = require('elastic-apm-node').start()
+var apm = require('elastic-apm-node').start()
 
 //routes
 
@@ -24,10 +24,9 @@ app.use(fileUpload({
 }));
 
 var corsOptions = {
-    origin: ['*'],
-    methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH'],
-    origin:true,
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+    origin: '*',
+    methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
+    optionsSuccessStatus: 200
 };
 
 app.use(cors(corsOptions));

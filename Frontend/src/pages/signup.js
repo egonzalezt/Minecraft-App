@@ -69,9 +69,9 @@ function App() {
                 setLowercase(true)
             }
         }).when('password', (password, field) => {
-            if (!(/[@$!%*#?&]+/.test(password))) {
+            if (!(/[@$!%*#?&.,ñ/\-_]+/.test(password))) {
                 setSpecial(false)
-                return field.matches(/[@$!%*#?&]+/)
+                return field.matches(/[@$!%*#?&.,ñ/\-_]+/)
             } else {
                 setSpecial(true)
             }

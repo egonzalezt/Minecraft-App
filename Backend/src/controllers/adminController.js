@@ -7,7 +7,7 @@ const saveMod = require('../database/repositories/mods/addMod');
 const findModByFileName = require('../database/repositories/mods/findModByFileName')
 const { modType } = require('../database/schemas/modEnum');
 const copyModsAndCreateZip = require('../utils/copyModsAndCreateZip')
-
+const findModsByFileNames = require('../database/repositories/mods/findModsByFileNames')
 async function createModsFile(req, res) {
     await copyModsAndCreateZip(req, res)
 }
@@ -20,6 +20,38 @@ async function getMods(req, res) {
     res.append('CurrentPage', result.currentPage);
     res.append('Content-Type', 'application/json')
     return res.status(200).json({ error: false, mods: result.data, total: result.totalMods });
+}
+
+async function validateIfModExist(req, res) {
+    const modFileName = req.query.name;
+    const modExists = await findModByFileName(modFileName);
+    if (modExists) {
+        return res
+            .status(200)
+            .json({ error: false, message: "Mod already exists", found: true });
+    }
+    return res
+        .status(200)
+        .json({ error: false, message: "Mod not found", found: false });
+}
+
+async function validateIfModsExist(req, res) {
+    const mods = req.body.mods;
+    if (!Array.isArray(mods)) {
+        return res.status(400).json({ error: true, message: "Mods should be an array of strings" });
+    }
+
+    // Validate each mod string
+    for (const mod of mods) {
+        if (typeof mod !== "string" || !mod.endsWith(".jar")) {
+            return res.status(400).json({ error: true, message: "Mods should be strings ending with '.jar'" });
+        }
+    }
+
+    const modExists = await findModsByFileNames(mods);
+    return res
+        .status(200)
+        .json({ error: false, message: "Mods successfully found in the database", mods: modExists });
 }
 
 async function addMods(req, res) {
@@ -41,18 +73,24 @@ async function addMods(req, res) {
     const client = (req.body.client).toLowerCase() == 'true' ? true : false;
     const server = (req.body.server).toLowerCase() == 'true' ? true : false;
     const type = []
-
-    if (client && server) {
-        type.push(modType.Server);
-        type.push(modType.Client);
-        file.mv(process.env.MODSPATH + fileName)
-    } else if (server) {
-        type.push(modType.Server);
-        file.mv(process.env.MODSPATH + fileName)
-    } else {
-        type.push(modType.Client);
-        file.mv(process.env.CLIENTMODSPATH + fileName)
+    try {
+        if (client && server) {
+            type.push(modType.Server);
+            type.push(modType.Client);
+            file.mv(process.env.MODSPATH + fileName)
+        } else if (server) {
+            type.push(modType.Server);
+            file.mv(process.env.MODSPATH + fileName)
+        } else {
+            type.push(modType.Client);
+            file.mv(process.env.CLIENTMODSPATH + fileName)
+        }
+    } catch (e) {
+        console.log(e)
+        return res.status(500)
+            .json({ error: true, message: "Error saving the mod" });
     }
+
     var result = await saveMod(name, fileName, version, type, url);
     if (result) {
         return res.status(200)
@@ -96,7 +134,7 @@ async function removeMod(req, res) {
             }
         }
 
-        if(modsNotFound){
+        if (modsNotFound) {
             return res.status(200)
                 .json({ error: false, message: "Some mods could not be removed because .Jar file not found" });
         }
@@ -150,6 +188,56 @@ function serverStatus(req, res) {
         });
 }
 
+function editProperties(req, res) {
+    const filePath = process.env.SERVERPROPERTIES;
+    fs.access(filePath, fs.constants.F_OK, (err) => {
+        if (err) {
+            console.error('server.properties file not found:', err);
+            return res.status(404).json({ error: 'server.properties file not found' });
+        }
+
+        fs.readFile(filePath, 'utf8', (err, data) => {
+            if (err) {
+                console.error('Error reading server.properties:', err);
+                return res.status(500).json({ error: 'Failed to read server.properties' });
+            }
+            res.send(data);
+        });
+    });
+}
+
+function updateProperties(req, res) {
+    const filePath = process.env.SERVERPROPERTIES;
+    const { properties } = req.body;
+
+    const resultOfValidation = validateProperties(properties)
+    if (resultOfValidation) {
+        return res.status(400).json({ error: 'Invalid data structure' });
+    }
+
+    fs.writeFile(filePath, properties, 'utf8', (err) => {
+        if (err) {
+            console.error('Error saving server.properties:', err);
+            return res.status(500).json({ error: 'Failed to save server.properties' });
+        }
+
+        return res.json({ message: 'Server properties updated successfully' });
+    });
+}
+
+function validateProperties(properties) {
+    const regex = /^\w+=(?:\w*)?$/gm;
+    const lines = properties.split('\n');
+
+    for (const line of lines) {
+        if (!regex.test(line)) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 module.exports = {
     createModsFile,
     getMods,
@@ -157,5 +245,9 @@ module.exports = {
     startServer,
     stopServer,
     serverStatus,
-    addMods
+    addMods,
+    validateIfModExist,
+    validateIfModsExist,
+    editProperties,
+    updateProperties
 };

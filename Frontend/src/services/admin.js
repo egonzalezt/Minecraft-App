@@ -1,13 +1,14 @@
 import axios from "../apiConnection.js"
 
 class AdminApi {
-    upload(data) {
-        return axios.post("/admin/mods", data, {
+    upload(formData, config) {
+        return axios.post("/admin/mods", formData, {
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
                 'Content-Type': 'multipart/form-data'
-            }
-        })
+            },
+            ...config
+        });
     }
 
     mods(page, pageSize) {
@@ -16,6 +17,22 @@ class AdminApi {
                 "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
             }
         })
+    }
+
+    verifyIfModExists(filename) {
+        return axios.get(`/admin/mods/verify?name=${filename}`, {
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
+            }
+        })
+    }
+
+    verifyIfModsExists(mods) {
+        return axios.post('/admin/mods/verify', { mods }, {
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
+            }
+        });
     }
 
     createZip() {
@@ -36,6 +53,21 @@ class AdminApi {
         })
     }
 
+    getServerProperties() {
+        return axios.get('/admin/server/edit', {
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
+            }
+        })
+    }
+
+    updateServerProperties(properties) {
+        return axios.post('/admin/server/edit', { properties:properties }, {
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
+            }
+        });
+    }
 }
 
 export default new AdminApi();

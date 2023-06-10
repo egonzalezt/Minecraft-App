@@ -26,23 +26,24 @@ function Status() {
     const [status, setStatus] = useState(false);
     const [loading, setLoading] = useState(true);
     const matches = useMediaQuery('(min-width:700px)');
-    
+
     useEffect(() => {
         setLoading(true);
-        axios.get("https://api.mcsrvstat.us/2/desmadra.arequipet.ga").then(response => {
+        axios.get("https://api.mcsrvstat.us/2/arequipet.server.vasitos.software").then(response => {
             console.log(response.data);
             setImage(response.data.icon)
             setPlayers(response.data.players.list ? response.data.players.list : ["Sin jugadores"])
             setMax(response.data.players.max)
             setOnline(response.data.players.online)
-            setMods(response.data.mods.names)
+
+            response.data.mods && (setMods(response.data.mods.names))
 
             setStatus(response.data.online)
             const temp = response.data.motd.html.reduce((motd, text) => `${motd}${text}<br>`, "")
             setMotd(temp)
             setLoading(false);
         }).catch(e => {
-            console.log(e.response.data)
+            console.log(e)
         });
     }, []);
 
@@ -50,13 +51,13 @@ function Status() {
         <Grid container justifyContent="center" sx={{ color: "white" }}>
 
             <Grid xs={12}>
-                <Typography variant="h2" sx={{ marginBottom: "2%", overflowWrap: "break-word"}}>
-                    desmadra.arequipet.ga
+                <Typography variant="h2" sx={{ marginBottom: "2%", overflowWrap: "break-word" }}>
+                    arequipet.server.vasitos.software
                 </Typography>
             </Grid>
             <Grid xs={12}>
                 <Typography variant="h3" sx={{ marginBottom: "2%" }}>
-                    1.16.5
+                    1.19.2
                 </Typography>
             </Grid>
 
@@ -74,7 +75,7 @@ function Status() {
                 </>
                 :
                 <>
-                    <Grid xs={12} width="80%" container justifyContent="center"  sx={{ marginBottom: "2%" }}>
+                    <Grid xs={12} width="80%" container justifyContent="center" sx={{ marginBottom: "2%" }}>
                         <Card>
                             <CardMedia
                                 component="img"
@@ -113,28 +114,29 @@ function Status() {
                             </AccordionDetails>
                         </Accordion>
                     </Grid>
-                    <Grid width="80%" sx={{ marginBottom: "2%" }}>
-                        <Accordion>
-                            <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}>
-                                <Typography>Mods</Typography>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                <Grid container columnSpacing={5} justifyContent="center">
-                                    {mods.map(((mod, index) =>
-                                        <Grid key={index}>
-                                            <Typography>
-                                                {mod}
-                                            </Typography>
-                                        </Grid>
-                                    ))}
-                                </Grid>
-                            </AccordionDetails>
-                        </Accordion>
-                    </Grid>
+                    {mods.length > 0 && (
+                        <Grid width="80%" sx={{ marginBottom: "2%" }}>
+                            <Accordion>
+                                <AccordionSummary
+                                    expandIcon={<ExpandMoreIcon />}>
+                                    <Typography>Mods</Typography>
+                                </AccordionSummary>
+                                <AccordionDetails>
+                                    <Grid container columnSpacing={5} justifyContent="center">
+                                        {mods.map(((mod, index) =>
+                                            <Grid key={index}>
+                                                <Typography>
+                                                    {mod}
+                                                </Typography>
+                                            </Grid>
+                                        ))}
+                                    </Grid>
+                                </AccordionDetails>
+                            </Accordion>
+                        </Grid>
+                    )}
                 </>
             }
-
         </Grid>
     );
 }

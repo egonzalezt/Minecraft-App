@@ -12,35 +12,68 @@ async function createBackup(req, res) {
     if (!fs.existsSync(backupPath)) {
         fs.mkdirSync(backupPath);
     }
+
     const date = generateDate();
-    const fileName = `backup_${date[0]}.zip`
-    const filePath = `${backupPath}/${fileName}`
-    var output = fs.createWriteStream(filePath);
-    var archive = archiver('zip');
+    const fileName = `backup_${date[0]}.zip`;
+    const filePath = `${backupPath}/${fileName}`;
+    const output = fs.createWriteStream(filePath);
+    const archive = archiver('zip');
+    const totalBytesToWrite = await calculateTotalBytes(process.env.WORLDPATH);
+
     output.on('close', function () {
         console.log(archive.pointer() + ' total bytes');
         console.log('archiver has been finalized and the output file descriptor has closed.');
     });
-    console.log(`file created on ${filePath}`);
+
+    console.log(`File created at ${filePath}`);
 
     archive.on('error', function (err) {
         throw err;
     });
 
+    archive.on('progress', function (progress) {
+        const percentComplete = Math.round((progress.fs.processedBytes / totalBytesToWrite) * 100);
+        console.log('Progress:', percentComplete + '%');
+    });
+    
     archive.pipe(output);
 
-    // append files from a sub-directory, putting its contents at the root of archive
-    archive.directory(`${process.env.WORLDPATH}`, false);
+    archive.directory(process.env.WORLDPATH, false);
+
     archive.finalize().then(() => {
         saveBackup(fileName, filePath, backupPath).then(() => {
-            return res.status(200).json({ error: false, message: "Backup created successfully" });
+            return res.status(200).json({ error: false, message: 'Backup created successfully' });
         }).catch(() => {
-            return res.status(500).json({ error: true, message: "Fail creating backup" });
+            return res.status(500).json({ error: true, message: 'Failed to create backup' });
         });
     }).catch(() => {
-        return res.status(500).json({ error: true, message: "Fail creating backup" });
+        return res.status(500).json({ error: true, message: 'Failed to create backup' });
     });
+
+    async function calculateTotalBytes(directoryPath) {
+        let totalBytes = 0;
+
+        function calculateDirectorySize(dirPath) {
+            const files = fs.readdirSync(dirPath);
+
+            files.forEach((file) => {
+                const filePath = `${dirPath}/${file}`;
+                const stats = fs.statSync(filePath);
+
+                if (stats.isDirectory()) {
+                    calculateDirectorySize(filePath);
+                } else {
+                    totalBytes += stats.size;
+                }
+            });
+        }
+
+        calculateDirectorySize(directoryPath);
+
+        return totalBytes;
+    }
 }
+
 
 async function downloadBackup(req, res) {
     const id = req.params.id;
