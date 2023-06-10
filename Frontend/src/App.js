@@ -18,6 +18,8 @@ import Backups from './pages/backups';
 import PasswordReset from './pages/passwordReset';
 import RequestPasswordReset from './pages/requestPasswordReset';
 import CodeEditor from './pages/codeEditor';
+import ModsSettingsView from './pages/modsSettings';
+import ModSettingsView from './pages/modSettings';
 import UserApi from './services/users';
 import { SnackbarProvider } from 'notistack';
 
@@ -115,7 +117,9 @@ function App() {
               <Route path="admin/upload/multiple" element={<AdminUploadMultiple />} />
               <Route path="admin/server" element={<RunCommand />} />
               <Route path="admin/backups" element={<Backups />} />
-              <Route path="admin/edit" element={<CodeEditor />} />
+              <Route path="admin/edit/server" element={<CodeEditor />} />
+              <Route path="admin/edit/mods" element={<ModsSettingsView />} />
+              <Route path="admin/edit/mod" element={<ModSettingsView />} />
             </Route>
             <Route element={<ProtectedRouteUser user={user} />}>
               <Route path="user" element={<User />} />

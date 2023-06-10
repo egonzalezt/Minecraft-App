@@ -54,7 +54,23 @@ class AdminApi {
     }
 
     getServerProperties() {
-        return axios.get('/admin/server/edit', {
+        return axios.get('/admin/server/edit/serverprops', {
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
+            }
+        })
+    }
+
+    getModsProperties() {
+        return axios.get('/admin/server/edit/modsprops', {
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
+            }
+        })
+    }
+
+    getModProperties(filename) {
+        return axios.get(`/admin/server/edit/modprops?filename=${filename}`, {
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
             }
@@ -62,7 +78,15 @@ class AdminApi {
     }
 
     updateServerProperties(properties) {
-        return axios.post('/admin/server/edit', { properties:properties }, {
+        return axios.post('/admin/server/edit/serverprops', { properties:properties }, {
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
+            }
+        });
+    }
+
+    updateModProperties(name,path,properties) {
+        return axios.post('/admin/server/edit/modprops', { name,path,properties }, {
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
             }

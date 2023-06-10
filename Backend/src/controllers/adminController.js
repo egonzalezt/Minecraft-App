@@ -1,5 +1,7 @@
 const fs = require('fs');
+const path = require('path');
 const fetch = require('node-fetch');
+const mime = require('mime');
 const deleteMod = require('../database/repositories/mods/deleteMod');
 const findModFileNameById = require('../database/repositories/mods/findModFileNameById');
 const getModsPaginate = require('../database/repositories/mods/getModsPaginated');
@@ -238,6 +240,95 @@ function validateProperties(properties) {
     return true;
 }
 
+function getServerModsConfig(req, res) {
+    const directoryPath = process.env.MODCONFIGURATION;
+
+    const readDirectory = (dirPath) => {
+        try {
+            const entries = fs.readdirSync(dirPath, { withFileTypes: true });
+
+            const directoryContents = {};
+
+            for (const entry of entries) {
+                const entryPath = path.join(dirPath, entry.name);
+                const relativePath = path.relative(directoryPath, entryPath);
+
+                if (entry.isDirectory()) {
+                    const subEntries = readDirectory(entryPath);
+                    directoryContents[entry.name] = subEntries;
+                } else if (entry.isFile()) {
+                    directoryContents[entry.name] = { isFile: true, path: relativePath, name: entry.name };
+                }
+            }
+
+            return directoryContents;
+        } catch (err) {
+            console.error('Error reading directory:', err);
+            throw err;
+        }
+    };
+
+    try {
+        const directoryContents = readDirectory(directoryPath);
+        res.status(200).json(directoryContents);
+    } catch (err) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
+
+function getModConfigFile(req, res) {
+    const directoryPath = path.resolve(process.env.MODCONFIGURATION);
+    const fileName = req.query.filename;
+
+    if (!isValidFileFormat(fileName)) {
+        res.status(400).json({ error: false, message: "Invalid file format" });
+        return;
+    }
+
+    const filePath = path.join(directoryPath, fileName);
+    const fileExists = fs.existsSync(filePath);
+
+    if (fileExists) {
+        const fileMimeType = mime.getType(filePath);
+        res.setHeader('Content-Type', fileMimeType);
+        res.sendFile(filePath);
+    } else {
+        res.status(404).json({ error: true, message: "File not found" });
+    }
+}
+
+function updateModProperties(req, res) {
+    const { name,properties } = req.body;
+    const basePath = path.resolve(process.env.MODCONFIGURATION);
+    const filePath = path.join(basePath, req.body.path);
+
+    if (!isValidFileFormat(name)) {
+        res.status(400).json({ error: false, message: "Invalid file format" });
+        return;
+    }
+
+    if (!fs.existsSync(filePath)) {
+        res.status(404).json({ error: false, message: "File not found" });
+        return;
+    }
+
+    fs.writeFile(filePath, properties, 'utf8', (err) => {
+        if (err) {
+            console.error(`Error saving ${name}:`, err);
+            return res.status(500).json({ error: `Failed to save ${name}` });
+        }
+
+        return res.json({ message: `${name} updated successfully` });
+    });
+}
+
+function isValidFileFormat(filename) {
+    const allowedFormats = ['.json', '.txt', '.toml', '.xml', '.yml'];
+    const extname = path.extname(filename);
+    return allowedFormats.includes(extname);
+}
+
 module.exports = {
     createModsFile,
     getMods,
@@ -249,5 +340,8 @@ module.exports = {
     validateIfModExist,
     validateIfModsExist,
     editProperties,
-    updateProperties
+    updateProperties,
+    getServerModsConfig,
+    getModConfigFile,
+    updateModProperties
 };

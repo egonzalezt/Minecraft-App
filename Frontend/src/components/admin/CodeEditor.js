@@ -10,7 +10,7 @@ import { enqueueSnackbar } from 'notistack';
 
 import 'ace-builds/src-noconflict/mode-text';
 import 'ace-builds/src-noconflict/theme-monokai';
-import '../../styles/editor.css';
+//import '../../styles/editor.css';
 
 function EditProperties() {
   const [fileContent, setFileContent] = useState('');
