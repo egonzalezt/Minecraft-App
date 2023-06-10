@@ -23,6 +23,8 @@ import TerminalIcon from '@mui/icons-material/Terminal';
 import CodeIcon from '@mui/icons-material/Code';
 import { Link } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import QueueIcon from '@mui/icons-material/Queue';
+import FileOpenIcon from '@mui/icons-material/FileOpen';
 
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import PrecisionManufacturingRoundedIcon from '@mui/icons-material/PrecisionManufacturingRounded';
@@ -202,7 +204,7 @@ export default function AdminDrawer(props) {
                 justifyContent: open ? 'initial' : 'center',
                 px: 2.5,
               }}
-              component={Link} to={"/admin/edit"}
+              component={Link} to={"/admin/edit/server"}
             >
               <CodeIcon
                 sx={{
@@ -214,6 +216,27 @@ export default function AdminDrawer(props) {
                 <PublicIcon />
               </CodeIcon>
               <ListItemText primary="Server Props" sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding sx={{ display: 'block' }}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? 'initial' : 'center',
+                px: 2.5,
+              }}
+              component={Link} to={"/admin/edit/mods"}
+            >
+              <FileOpenIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : 'auto',
+                  justifyContent: 'center',
+                }}
+              >
+                <PublicIcon />
+              </FileOpenIcon>
+              <ListItemText primary="Mods Props" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
         </List>
@@ -256,7 +279,7 @@ export default function AdminDrawer(props) {
                   justifyContent: 'center',
                 }}
               >
-                <UploadFileIcon />
+                <QueueIcon />
               </ListItemIcon>
               <ListItemText primary="Subir mods" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
