@@ -7,7 +7,7 @@ require('dotenv').config();
 require('./config/database');
 global.isModsFileAvailable = true;
 
-//var apm = require('elastic-apm-node').start()
+var apm = require('elastic-apm-node').start()
 
 //routes
 
