@@ -158,7 +158,7 @@ export default function BackupList() {
 
             setMessage(data);
             if (data?.taskComplete) {
-                socket.disconnect();
+                setLoadingZipCreation(false);
             }
             if (data?.type === 'statusSuccess' && !data?.error) {
                 Swal.fire({

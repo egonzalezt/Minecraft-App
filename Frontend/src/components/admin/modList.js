@@ -171,9 +171,11 @@ export default function ModList() {
         });
 
         socket.on('mod-zip-file-creation-status', (data) => {
+            !loadingZipCreation && setLoadingZipCreation(true);
+
             setMessage(data);
             if (data?.taskComplete) {
-                socket.disconnect();
+                setLoadingZipCreation(false);
             }
             if (data?.type === 'statusSuccess' && !data?.error) {
                 Swal.fire({
