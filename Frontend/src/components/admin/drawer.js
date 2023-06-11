@@ -141,7 +141,7 @@ export default function AdminDrawer(props) {
               </Link>
             </Stack>
             <Stack direction={{ xs: 'column', sm: 'row' }} alignItems="center" spacing={2}>
-              <Button fullWidth component={Link} to={"/admin"}>Admin</Button>
+              <Button fullWidth component={Link} to={"/dashboard/admin"}>Admin</Button>
               <Button fullWidth component={Link} to={"/user"}>Usuario</Button>
             </Stack>
           </Stack>
@@ -162,7 +162,7 @@ export default function AdminDrawer(props) {
                 justifyContent: open ? 'initial' : 'center',
                 px: 2.5,
               }}
-              component={Link} to={"/admin"}
+              component={Link} to={"/dashboard/admin"}
             >
               <ListItemIcon
                 sx={{
@@ -183,7 +183,7 @@ export default function AdminDrawer(props) {
                 justifyContent: open ? 'initial' : 'center',
                 px: 2.5,
               }}
-              component={Link} to={"/admin/server"}
+              component={Link} to={"/dashboard/server"}
             >
               <TerminalIcon
                 sx={{
@@ -204,7 +204,7 @@ export default function AdminDrawer(props) {
                 justifyContent: open ? 'initial' : 'center',
                 px: 2.5,
               }}
-              component={Link} to={"/admin/edit/server"}
+              component={Link} to={"/dashboard/edit/server"}
             >
               <CodeIcon
                 sx={{
@@ -225,7 +225,7 @@ export default function AdminDrawer(props) {
                 justifyContent: open ? 'initial' : 'center',
                 px: 2.5,
               }}
-              component={Link} to={"/admin/edit/mods"}
+              component={Link} to={"/dashboard/edit/mods"}
             >
               <FileOpenIcon
                 sx={{
@@ -249,7 +249,7 @@ export default function AdminDrawer(props) {
                 justifyContent: open ? 'initial' : 'center',
                 px: 2.5,
               }}
-              component={Link} to={"/admin/upload"}
+              component={Link} to={"/dashboard/upload"}
             >
               <ListItemIcon
                 sx={{
@@ -270,7 +270,7 @@ export default function AdminDrawer(props) {
                 justifyContent: open ? 'initial' : 'center',
                 px: 2.5,
               }}
-              component={Link} to={"/admin/upload/multiple"}
+              component={Link} to={"/dashboard/upload/multiple"}
             >
               <ListItemIcon
                 sx={{
@@ -291,7 +291,7 @@ export default function AdminDrawer(props) {
                 justifyContent: open ? 'initial' : 'center',
                 px: 2.5,
               }}
-              component={Link} to={"/admin/backups"}
+              component={Link} to={"/dashboard/backups"}
             >
               <ListItemIcon
                 sx={{

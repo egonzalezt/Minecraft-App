@@ -1,30 +1,12 @@
 import './App.css';
 
 import React, { useEffect, useState } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material/styles';
-
-import Main from './pages/main';
-import NotFound from './pages/notFound';
-import Admin from './pages/admin';
-import AdminUpload from './pages/uploadMod';
-import AdminUploadMultiple from './pages/uploadMods';
-import ServerStatus from './pages/serverStatus';
-import Login from './pages/login';
-import SignUp from './pages/signup';
-import User from './pages/user';
-import RunCommand from './pages/runCommand';
-import Backups from './pages/backups';
-import PasswordReset from './pages/passwordReset';
-import RequestPasswordReset from './pages/requestPasswordReset';
-import CodeEditor from './pages/codeEditor';
-import ModsSettingsView from './pages/modsSettings';
-import ModSettingsView from './pages/modSettings';
 import UserApi from './services/users';
 import { SnackbarProvider } from 'notistack';
 
-import ProtectedRouteAdmin from './components/router/protectedRouteAdmin';
-import ProtectedRouteUser from './components/router/protectedRouteUser';
+import Router from './routes';
+
 
 let theme = createTheme({
   typography: {
@@ -96,36 +78,7 @@ function App() {
     <SnackbarProvider>
       <ThemeProvider theme={theme}>
         <div className="App">
-          <Routes>
-            <Route
-              index
-              element={
-                <div className="grass">
-                  <Main />
-                </div>
-              }
-              fallback={<Navigate to="/404" />}
-            />
-            <Route path="status" element={<div className="grass"><ServerStatus /></div>} />
-            <Route path="login" element={<div className="grass"><Login /></div>} />
-            <Route path="signup" element={<div className="grass"><SignUp /></div>} />
-            <Route path="requestpasswordreset" element={<div className="grass"><RequestPasswordReset /></div>} />
-            <Route path="passwordreset" element={<div className="grass"><PasswordReset /></div>} />
-            <Route element={<ProtectedRouteAdmin user={user} />}>
-              <Route path="admin" element={<Admin />} />
-              <Route path="admin/upload" element={<AdminUpload />} />
-              <Route path="admin/upload/multiple" element={<AdminUploadMultiple />} />
-              <Route path="admin/server" element={<RunCommand />} />
-              <Route path="admin/backups" element={<Backups />} />
-              <Route path="admin/edit/server" element={<CodeEditor />} />
-              <Route path="admin/edit/mods" element={<ModsSettingsView />} />
-              <Route path="admin/edit/mod" element={<ModSettingsView />} />
-            </Route>
-            <Route element={<ProtectedRouteUser user={user} />}>
-              <Route path="user" element={<User />} />
-            </Route>
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <Router/>
         </div>
       </ThemeProvider>
     </SnackbarProvider>

@@ -231,7 +231,7 @@ export default function ModList() {
                     sx={{ width: "5%", alignItems: "center", alignContent: "center" }}>
                     <DeleteRoundedIcon />
                 </LoadingButton>
-                <Button component={Link} to={"/admin/upload"}>Agregar Mod</Button>
+                <Button component={Link} to={"/dashboard/upload"}>Agregar Mod</Button>
                 <GridToolbarExport printOptions={{ disableToolbarButton: true }} />
             </GridToolbarContainer>
         );

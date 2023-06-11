@@ -81,7 +81,7 @@ function NavBar() {
                   <></>
                 }
                 {roles.find(role => role === "super_admin") ?
-                  <Button fullWidth component={Link} to={"/admin"}>Admin</Button>
+                  <Button fullWidth component={Link} to={"/dashboard/admin"}>Admin</Button>
                   :
                   null
                 }

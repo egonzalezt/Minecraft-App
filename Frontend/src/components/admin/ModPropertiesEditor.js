@@ -86,7 +86,7 @@ function EditModProperties() {
   return (
     <AdminDrawer>
       <Typography variant="h2" gutterBottom>
-        <IconButton component={Link} to={"/admin/edit/mods"}>
+        <IconButton component={Link} to={"/dashboard/edit/mods"}>
           <ArrowBackRoundedIcon />
         </IconButton>Editar {filename}
       </Typography>

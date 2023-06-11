@@ -32,7 +32,7 @@ function ModsSettings() {
 
   const handleClick = (file) => {
     const query = `dir=${file.path}&name=${file.name}`
-    navigate(`/admin/edit/mod?${query}`);
+    navigate(`/dashboard/edit/mod?${query}`);
   };
 
   const renderTree = (data) => (

@@ -76,8 +76,8 @@ function UploadMod() {
                 timerProgressBar: true,
                 icon: 'success',
                 title: `Mod creado`,
-                text: `El mod  ${name}  se a creado correctamente`,
-            }).then(() => navigate("/admin"));
+                text: `El mod  ${name} se a creado correctamente`,
+            }).then(() => navigate("/dashboard/admin"));
         }).catch(err => {
             setLoading(false);
             Swal.fire({
