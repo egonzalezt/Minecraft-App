@@ -1,11 +1,10 @@
 const findUser = require('../database/repositories/user/userFindId');
 const jwt = require('jsonwebtoken');
 
-async function verifySocketsToken(socket, next) {
-    const token = socket.request.headers.authorization;
+async function verifySocketsToken(token) {
 
     if (!token) {
-        return socket.emit('authorization-error', 'Unauthorized access');
+        return {isValid:false, hasToken: false, error: false, message:"Authentication failed. No token provided."}
     }
 
     try {
@@ -14,13 +13,12 @@ async function verifySocketsToken(socket, next) {
         const user = await findUser(decoded._id);
 
         if (user) {
-            socket.usrId = decoded._id;
-            return next();
+            return {isValid:true, hasToken: true, error: false, message:"Authentication failed. No token provided.", id: decoded._id}
         } else {
-            socket.emit('authorization-error', 'Unauthorized access');
+            return {isValid:false, hasToken: true, error: false, message:"User not found with token provided"}
         }
     } catch (error) {
-        socket.emit('authorization-error', 'Unauthorized access');
+        return {isValid:false, hasToken: true, error: true, message:"Authentication failed."}
     }
 }
 

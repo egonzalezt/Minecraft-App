@@ -2,8 +2,8 @@ import socketIOClient from 'socket.io-client';
 
 const baseUrl = "/"
 const socketInstance = socketIOClient(baseUrl, {
-    extraHeaders: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+    auth: {
+        token: `Bearer ${localStorage.getItem("accessToken")}`
     },
 });
 

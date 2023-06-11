@@ -39,6 +39,7 @@ export default function BackupList() {
     const [loadingZipCreation, setLoadingZipCreation] = useState(false);
     const [deletingBackups, setDeletingBackups] = useState(false);
     const [message, setMessage] = useState({});
+    const [socket, setSocket] = useState(null);
 
     const columns = [
         {
@@ -110,20 +111,40 @@ export default function BackupList() {
     }
 
     const createZipRequest = () => {
+        if (socket === null) {
+            initializeSocket();
+        }
         setLoadingZipCreation(true);
-        const socket = SocketClient
+        socket.emit('create-backup-file');
+    };
 
-        const timeout = setTimeout(() => {
-            setLoadingZipCreation(false);
-            socket.disconnect();
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'No se ha recibido respuesta del servidor',
-            });
-        }, 200000);
+    const initializeSocket = () => {
+        const newSocket = SocketClient;
+        setSocket(newSocket);
+    };
 
-        socket.on('authorization-error', () => {
+    function searchData(page) {
+        setCurrentPage(page);
+        setIsLoading(true)
+        BackupsApi.backups(page + 1, pageSize).then(response => {
+            const backupsTemp = response.data.backups
+            for (let i = 0; i < backupsTemp.length; i++) {
+                backupsTemp[i]["id"] = backupsTemp[i]._id;
+            }
+            setIsLoading(false)
+            setTotalBackups(response.data.total)
+            setBackups(backupsTemp)
+        }).catch(e => {
+            console.log(e.response.data.message)
+        });
+    }
+
+    useEffect(() => {
+        if (!socket) {
+            return;
+        }
+
+        socket.on('authentication-error', () => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -133,7 +154,8 @@ export default function BackupList() {
         });
 
         socket.on('backup-creation-status', (data) => {
-            clearTimeout(timeout);
+            !loadingZipCreation && setLoadingZipCreation(true);
+
             setMessage(data);
             if (data?.taskComplete) {
                 socket.disconnect();
@@ -155,27 +177,31 @@ export default function BackupList() {
         });
 
         socket.on('disconnect', () => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Se ha perdido la conexión con el servidor',
+            });
             setLoadingZipCreation(false);
         });
 
-        socket.emit('create-backup-file');
-    };
+        return () => {
+            socket.off('authentication-error');
+            socket.off('backup-creation-status');
+            socket.off('disconnect');
+        };
+    }, [socket]);
 
-    function searchData(page) {
-        setCurrentPage(page);
-        setIsLoading(true)
-        BackupsApi.backups(page + 1, pageSize).then(response => {
-            const backupsTemp = response.data.backups
-            for (let i = 0; i < backupsTemp.length; i++) {
-                backupsTemp[i]["id"] = backupsTemp[i]._id;
+    useEffect(() => {
+        initializeSocket();
+
+        return () => {
+            if (socket) {
+                socket.disconnect();
+                setSocket(null);
             }
-            setIsLoading(false)
-            setTotalBackups(response.data.total)
-            setBackups(backupsTemp)
-        }).catch(e => {
-            console.log(e.response.data.message)
-        });
-    }
+        };
+    }, []);
 
     useEffect(() => {
         BackupsApi.backups(0, pageSize).then(response => {

@@ -71,57 +71,15 @@ export default function ModList() {
     const [loadingZipCreation, setLoadingZipCreation] = useState(false);
     const [deletingMods, setDeletingMods] = useState(false);
     const [message, setMessage] = useState({});
+    const [socket, setSocket] = useState(null);
+
+    const initializeSocket = () => {
+        const newSocket = SocketClient;
+        setSocket(newSocket);
+    };
 
     const createZipRequest = () => {
         setLoadingZipCreation(true);
-        const socket = SocketClient;
-
-        const timeout = setTimeout(() => {
-            setLoadingZipCreation(false);
-            socket.disconnect();
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'No se ha recibido respuesta del servidor',
-            });
-        }, 200000);
-
-        socket.on('authorization-error', () => {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'No posee permisos',
-            });
-            setLoadingZipCreation(false);
-        });
-
-        socket.on('mod-zip-file-creation-status', (data) => {
-            clearTimeout(timeout);
-            setMessage(data);
-            console.log(data)
-            if (data?.taskComplete) {
-                socket.disconnect();
-            }
-            if (data?.type === 'statusSuccess' && !data?.error) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Completado',
-                    text: 'Se ha creado el archivo de mods de forma exitosa',
-                });
-            }
-            if (data?.type === 'statusFail' && data?.error) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Ha ocurrido un error',
-                });
-            }
-        });
-
-        socket.on('disconnect', () => {
-            setLoadingZipCreation(false);
-        });
-
         socket.emit('create-zip-file');
     }
 
@@ -197,6 +155,68 @@ export default function ModList() {
             })
         });
     }
+
+    useEffect(() => {
+        if (!socket) {
+            return;
+        }
+
+        socket.on('authentication-error', () => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'No posee permisos',
+            });
+            setLoadingZipCreation(false);
+        });
+
+        socket.on('mod-zip-file-creation-status', (data) => {
+            setMessage(data);
+            if (data?.taskComplete) {
+                socket.disconnect();
+            }
+            if (data?.type === 'statusSuccess' && !data?.error) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Completado',
+                    text: 'Se ha creado el archivo de mods de forma exitosa',
+                });
+            }
+            if (data?.type === 'statusFail' && data?.error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Ha ocurrido un error',
+                });
+            }
+        });
+
+        socket.on('disconnect', () => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Se ha perdido la conexión con el servidor',
+            });
+            setLoadingZipCreation(false);
+        });
+
+        return () => {
+            socket.off('authentication-error');
+            socket.off('backup-creation-status');
+            socket.off('disconnect');
+        };
+    }, [socket]);
+
+    useEffect(() => {
+        initializeSocket();
+
+        return () => {
+            if (socket) {
+                socket.disconnect();
+                setSocket(null);
+            }
+        };
+    }, []);
 
     function CustomToolbar() {
         return (
