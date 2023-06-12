@@ -112,7 +112,7 @@ function EditModProperties() {
           onChange={(newValue) => {
             setFileContent(newValue);
           }}
-          style={{ height: '70vh', width: '40vw', fontSize: '20px' }}
+          style={{ fontSize: '20px' }}
           highlightActiveLine={true}
           setOptions={{
             showLineNumbers: true,

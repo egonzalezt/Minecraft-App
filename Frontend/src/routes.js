@@ -47,16 +47,16 @@ export default function Router({ user }) {
         { path: 'mods', element: <User /> },
     ];
 
-    const [permittedRoutes, setPermittedRoutes] = useState(userRoutes);
-
-
+    const [permittedRoutes, setPermittedRoutes] = useState([]);
+    const [isRoutesReady, setIsRoutesReady] = useState(false);
 
     useEffect(() => {
         if (isSuperAdmin) {
-            setPermittedRoutes(superAdminRoutes)
+            setPermittedRoutes(superAdminRoutes);
         } else if (isAdmin) {
-            setPermittedRoutes(adminRoutes)
+            setPermittedRoutes(adminRoutes);
         }
+        setIsRoutesReady(true);
     }, []);
 
     const routes = useRoutes([
@@ -100,5 +100,5 @@ export default function Router({ user }) {
         },
     ]);
 
-    return routes;
+    return isRoutesReady ? routes : null;
 }

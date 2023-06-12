@@ -54,13 +54,13 @@ function EditProperties() {
         onChange={(newValue) => {
           setFileContent(newValue);
         }}
-        style={{ height: '70vh', width: '40vw', fontSize: '20px' }}
+        style={{ fontSize: '20px' }}
         highlightActiveLine={true}
         setOptions={{
           showLineNumbers: true,
           tabSize: 2,
         }}
-        readOnly={loading}
+        readOnly={loading} // Disable editing when loading is true
       />
       <LoadingButton
         color="secondary"

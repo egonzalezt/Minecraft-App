@@ -35,13 +35,15 @@ const Main = styled('div')(({ theme }) => ({
 
 export default function DashboardLayout({ user, isAdmin, redirectPath = '/' }) {
     const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(true);
     const addUser = storeData(state => state.addUser);
 
     useEffect(() => {
         if (user === undefined) {
             setOpen(false);
-        }else{
+        } else {
             addUser(user);
+            setLoading(false)
         }
     }, [user]);
 
@@ -50,13 +52,14 @@ export default function DashboardLayout({ user, isAdmin, redirectPath = '/' }) {
     }
 
     return (
-        <StyledRoot>
-            <Header onOpenNav={() => setOpen(true)} />
-            <Nav openNav={open} onCloseNav={() => setOpen(false)} />
-            <Main>
-                <Outlet />
-            </Main>
-        </StyledRoot>
+        (!loading &&
+            <StyledRoot>
+                <Header onOpenNav={() => setOpen(true)} />
+                <Nav openNav={open} onCloseNav={() => setOpen(false)} />
+                <Main>
+                    <Outlet />
+                </Main>
+            </StyledRoot>)
     );
 }
 
