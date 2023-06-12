@@ -1,7 +1,4 @@
 import { Navigate, useRoutes } from 'react-router-dom';
-// layouts
-import ProtectedRouteAdmin from './components/router/protectedRouteAdmin';
-import ProtectedRouteUser from './components/router/protectedRouteUser';
 //
 import Main from './pages/main';
 import NotFound from './pages/notFound';

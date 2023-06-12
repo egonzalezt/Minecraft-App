@@ -34,6 +34,10 @@ function EditModProperties() {
     switch (extension) {
       case 'json':
         return 'json';
+      case 'json5':
+        return 'json5';
+      case 'jsonc':
+        return 'jsonc';
       case 'toml':
         return 'toml';
       case 'xml':

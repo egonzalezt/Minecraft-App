@@ -324,7 +324,7 @@ function updateModProperties(req, res) {
 }
 
 function isValidFileFormat(filename) {
-    const allowedFormats = ['.json', '.txt', '.toml', '.xml', '.yml'];
+    const allowedFormats = ['.json5','.jsonc','.json','.txt','.toml','.xml','.yml','.properties'];
     const extname = path.extname(filename);
     return allowedFormats.includes(extname);
 }
