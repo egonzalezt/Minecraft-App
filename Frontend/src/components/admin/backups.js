@@ -134,7 +134,7 @@ export default function BackupList() {
             setTotalBackups(response.data.total)
             setBackups(backupsTemp)
         }).catch(e => {
-            console.log(e.response.data.message)
+
         });
     }
 
@@ -212,7 +212,7 @@ export default function BackupList() {
             setTotalBackups(response.data.total)
             setBackups(backupsTemp)
         }).catch(e => {
-            console.log(e.response.data.message)
+
         });
     }, [pageSize]);
 

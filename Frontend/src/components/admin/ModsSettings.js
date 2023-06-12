@@ -21,7 +21,6 @@ function ModsSettings() {
         setLoading(false);
       } catch (error) {
         // Handle error
-        console.log('Error:', error);
         setLoading(false);
       }
     };

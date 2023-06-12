@@ -37,10 +37,12 @@ function Login() {
                     icon: 'success',
                     title: `Inicio de sesion exitoso`,
                     text: `Bienvenido ${res.data.userNickName} a arequipet.ga`,
-                }).then(() => navigate("/"));
+                }).then(() => {
+                    navigate("/dashboard");
+                    window.location.reload();
+                });
             })
         }).catch(err => {
-            console.log(err)
             Swal.fire({
                 timer: 2000,
                 timerProgressBar: true,

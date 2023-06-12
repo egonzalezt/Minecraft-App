@@ -86,7 +86,6 @@ export default function ModList() {
         setCurrentPage(page);
         setIsLoading(true)
         AdminApi.mods(page + 1, pageSize).then(response => {
-            console.log(response.data)
             const modsTemp = response.data.mods
             for (let i = 0; i < modsTemp.length; i++) {
                 modsTemp[i]["id"] = modsTemp[i]._id;
@@ -95,13 +94,12 @@ export default function ModList() {
             setTotalMods(response.data.total)
             setMods(modsTemp)
         }).catch(e => {
-            console.log(e.response.data.message)
+
         });
     }
 
     useEffect(() => {
         AdminApi.mods(0, pageSize).then(response => {
-            console.log(response.data)
             const modsTemp = response.data.mods
             for (let i = 0; i < modsTemp.length; i++) {
                 modsTemp[i]["id"] = modsTemp[i]._id;
@@ -110,7 +108,7 @@ export default function ModList() {
             setTotalMods(response.data.total)
             setMods(modsTemp)
         }).catch(e => {
-            console.log(e.response.data.message)
+
         });
     }, [pageSize]);
 

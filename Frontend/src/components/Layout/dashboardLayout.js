@@ -51,15 +51,18 @@ export default function DashboardLayout({ user, isAdmin, redirectPath = '/' }) {
         return <Navigate to={redirectPath} replace />;
     }
 
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
     return (
-        (!loading &&
-            <StyledRoot>
-                <Header onOpenNav={() => setOpen(true)} />
-                <Nav openNav={open} onCloseNav={() => setOpen(false)} />
-                <Main>
-                    <Outlet />
-                </Main>
-            </StyledRoot>)
+        <StyledRoot>
+            <Header onOpenNav={() => setOpen(true)} />
+            <Nav openNav={open} onCloseNav={() => setOpen(false)} />
+            <Main>
+                <Outlet />
+            </Main>
+        </StyledRoot>
     );
 }
 

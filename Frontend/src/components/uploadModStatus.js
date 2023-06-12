@@ -33,7 +33,6 @@ function UploadModStatus({ file, onComponentFinish }) {
             status = true;
             enqueueSnackbar(`El mod ${file.name} se ha subido exitosamente`, { variant: 'success' });
         } catch (error) {
-            console.log(error);
             enqueueSnackbar(`Ocurrio un error al subir el mod ${file.name}`, { variant: 'error' });
             status = false;
         } finally {

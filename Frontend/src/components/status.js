@@ -30,7 +30,6 @@ function Status() {
     useEffect(() => {
         setLoading(true);
         axios.get("https://api.mcsrvstat.us/2/arequipet.server.vasitos.software").then(response => {
-            console.log(response.data);
             setImage(response.data.icon)
             setPlayers(response.data.players.list ? response.data.players.list : ["Sin jugadores"])
             setMax(response.data.players.max)
@@ -43,7 +42,7 @@ function Status() {
             setMotd(temp)
             setLoading(false);
         }).catch(e => {
-            console.log(e)
+
         });
     }, []);
 

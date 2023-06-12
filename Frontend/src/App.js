@@ -51,12 +51,14 @@ let theme = createTheme({
 
 theme = responsiveFontSizes(theme);
 
-const avatars =["alex","cave-spider","cow","creeper","enderman","pig","sheep",
-"skeleton","spider","steve","villager","wolf","zombie"]
+const avatars = ["alex", "cave-spider", "cow", "creeper", "enderman", "pig", "sheep",
+  "skeleton", "spider", "steve", "villager", "wolf", "zombie"]
 
 function App() {
   const [userLoaded, setUserLoaded] = useState(false);
+
   const [user, setUser] = useState(null);
+  const [isRoutesReady, setIsRoutesReady] = useState(false);
 
   useEffect(() => {
     setUserLoaded(false);
@@ -75,7 +77,7 @@ function App() {
     }
   }, []);
 
-  if (!userLoaded) {
+  if (!userLoaded && !isRoutesReady) {
     return <div>Loading...</div>;
   }
 
@@ -83,7 +85,9 @@ function App() {
     <SnackbarProvider>
       <ThemeProvider theme={theme}>
         <div className="App">
-          <Router user={user} />
+          <Router user={user}
+            setIsRoutesReady={setIsRoutesReady}
+            isRoutesReady={isRoutesReady} />
         </div>
       </ThemeProvider>
     </SnackbarProvider>

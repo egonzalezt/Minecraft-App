@@ -35,6 +35,9 @@ Nav.propTypes = {
   onCloseNav: PropTypes.func,
 };
 
+const media = ['1.png', '2.png', '3.png', '4.png', '5.png', '6.png','7.png','8.png','9.png',
+'10.png','11.png','12.png','13.png','14.png','15.png','16.png','17.png','18.gif']
+
 export default function Nav({ openNav, onCloseNav }) {
   const { pathname } = useLocation();
   const [user, setUser] = useState({ nickName: "Kirb", email: "kirb@vasitos.com" });
@@ -42,6 +45,7 @@ export default function Nav({ openNav, onCloseNav }) {
   const [navConfig, setNavConfig] = useState(userNavConfig);
   const [socket, setSocket] = useState(null);
   const [serverPingResult, setServerPingResult] = useState(null);
+  const [navbarImage, setNavbarImage] = useState(null);
 
   const getUser = storeData(state => state.user);
 
@@ -98,6 +102,12 @@ export default function Nav({ openNav, onCloseNav }) {
     }
   }, [getUser]);
 
+  useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * media.length);
+    const randomValue = media[randomIndex];
+    setNavbarImage(`/assets/images/characters/${randomValue}`)
+  }, []);
+
   const renderContent = (
     <Scrollbar
       sx={{
@@ -133,11 +143,19 @@ export default function Nav({ openNav, onCloseNav }) {
 
       <Box sx={{ px: 2.5, pb: 3, mt: 15 }}>
         <Stack alignItems="center" spacing={3} sx={{ pt: 5, borderRadius: 2, position: 'relative' }}>
-          <Box
-            component="img"
-            src="/assets/images/Alex_Fighter.webp"
-            sx={{ width: 100, position: 'absolute', top: -100 }}
-          />
+          {navbarImage ?
+            <Box
+              component="img"
+              src={navbarImage}
+              sx={{ height: 150, position: 'absolute', top: -100 }}
+            />
+            :
+            <Box
+              component="img"
+              src="/assets/images/Alex_Fighter.webp"
+              sx={{ width: 150, position: 'absolute', top: -100 }}
+            />
+          }
 
           <Box sx={{ textAlign: 'center' }}>
             <Typography gutterBottom variant="h6" sx={{ color: 'white' }}>

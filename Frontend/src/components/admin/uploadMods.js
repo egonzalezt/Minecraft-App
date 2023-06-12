@@ -57,7 +57,6 @@ function UploadMod() {
 
             try {
                 const response = await admin.verifyIfModsExists(modsFileName);
-                console.log(response.data)
                 const modsResponse = response.data.mods;
 
                 for (const file of validFiles) {
@@ -77,7 +76,6 @@ function UploadMod() {
                 const fileObjects = newFiles.map((file) => createFileObject(file));
                 setFiles([...files, ...fileObjects]);
             } catch (error) {
-                console.log(error)
                 Swal.fire({
                     timer: 3000,
                     timerProgressBar: true,

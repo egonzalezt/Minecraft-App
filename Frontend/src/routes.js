@@ -19,7 +19,7 @@ import ModsSettingsView from './pages/modsSettings';
 import ModSettingsView from './pages/modSettings';
 import DashboardLayout from './components/Layout/dashboardLayout';
 
-export default function Router({ user }) {
+export default function Router({ user, setIsRoutesReady, isRoutesReady }) {
     const isSuperAdmin = user && user.roles.includes('super_admin');
     const isAdmin = user && user.roles.includes('admin');
 
@@ -48,7 +48,6 @@ export default function Router({ user }) {
     ];
 
     const [permittedRoutes, setPermittedRoutes] = useState([]);
-    const [isRoutesReady, setIsRoutesReady] = useState(false);
 
     useEffect(() => {
         if (isSuperAdmin) {
