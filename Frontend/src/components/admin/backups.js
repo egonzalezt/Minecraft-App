@@ -39,6 +39,7 @@ export default function BackupList() {
     const [deletingBackups, setDeletingBackups] = useState(false);
     const [message, setMessage] = useState({});
     const [socket, setSocket] = useState(null);
+    const [downloadProgress, setDownloadProgress] = useState(0);
 
     const columns = [
         {
@@ -74,20 +75,23 @@ export default function BackupList() {
             }
         },
     ];
+
     async function downloadBackup(cellValues) {
         setIsLoading(true);
-        BackupsApi.downloadBackup(cellValues.id).then(({ data }) => {
+        setDownloadProgress(0);
+
+        try {
+            const { data } = await BackupsApi.downloadBackup(cellValues.id, (progressEvent) => {
+                const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                setDownloadProgress(progress);
+            });
+
             const downloadUrl = window.URL.createObjectURL(new Blob([data]));
-
             const link = document.createElement('a');
-
             link.href = downloadUrl;
-
             link.setAttribute('download', cellValues.row.fileName);
             document.body.appendChild(link);
-
             link.click();
-
             link.remove();
 
             Swal.fire({
@@ -95,18 +99,18 @@ export default function BackupList() {
                 timerProgressBar: true,
                 icon: 'success',
                 title: 'Completado',
-                text: "El recurso de obtuvo de forma exitosa",
+                text: 'El recurso se obtuvo de forma exitosa',
             }).then(() => setIsLoading(false));
-        }).catch(err => {
+        } catch (err) {
             setIsLoading(false);
             Swal.fire({
                 timer: 4000,
                 timerProgressBar: true,
                 icon: 'error',
                 title: 'Error',
-                text: "Ocurrio un error al intentar descargar el backup porfavor intentelo mas tarde.",
+                text: 'Ocurrió un error al intentar descargar el backup. Por favor, inténtelo más tarde.',
             });
-        });
+        }
     }
 
     const createZipRequest = () => {
@@ -337,6 +341,16 @@ export default function BackupList() {
                         }
                     </Box>
                 )}
+                {isLoading && downloadProgress > 0 &&
+                    (
+                        <Box sx={{ marginTop: "2%" }}>
+
+                            <Typography variant="body1" gutterBottom>
+                                Descargando Backup: {downloadProgress}%
+                            </Typography>
+                            <LinearProgress variant="determinate" value={downloadProgress} />
+                        </Box>
+                    )}
             </Box>
         </div>
     );

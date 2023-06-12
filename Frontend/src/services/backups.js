@@ -28,13 +28,14 @@ class AdminApi {
         })
     }
 
-    downloadBackup(id) {
+    downloadBackup(id, onProgress) {
         return axios.get(`/backups/download/${id}`, {
-            responseType: 'blob', 
+            responseType: 'blob',
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
-            }
-        })
+            },
+            onDownloadProgress: onProgress
+        });
     }
 }
 
