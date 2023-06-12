@@ -11,7 +11,6 @@ import DownloadIcon from '@mui/icons-material/Download';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
-import AdminDrawer from "./drawer.js";
 import LinearProgress from '@mui/material/LinearProgress'; // Importar componente LinearProgress
 
 import SocketClient from '../../socketConnection'
@@ -277,8 +276,8 @@ export default function BackupList() {
     }
 
     return (
-        <AdminDrawer>
-            <Box sx={{ flexGrow: 1, width: "85%" }}>
+        <div>
+            <Box >
                 <Grid item xs={12} md={6}>
                     <Typography sx={{ mb: 2 }} variant="h2" component="div">
                         Lista de Backups
@@ -339,6 +338,6 @@ export default function BackupList() {
                     </Box>
                 )}
             </Box>
-        </AdminDrawer>
+        </div>
     );
 }

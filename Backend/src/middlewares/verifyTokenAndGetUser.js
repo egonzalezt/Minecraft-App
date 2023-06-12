@@ -10,7 +10,7 @@ async function verifyTokenAndGetUser(req,res,next)
         const decoded = jwt.verify(token,process.env.ACCESS_TOKEN_PRIVATE_KEY)
         const user = await findUser(decoded._id)
         if(user){
-            return res.status(200).json({nickName: user.nickName,roles: user.roles})
+            return res.status(200).json({nickName: user.nickName,roles: user.roles, email: user.email})
         }else{
             return res.status(401).json({message:"Invalid token please login again"})
         }

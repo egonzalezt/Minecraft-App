@@ -3,14 +3,13 @@ import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 import CircularProgress from '@mui/material/CircularProgress';
-import AdminDrawer from './drawer';
 import AceEditor from 'react-ace';
 import admin from '../../services/admin';
 import { enqueueSnackbar } from 'notistack';
+import Container from '@mui/material/Container';
 
 import 'ace-builds/src-noconflict/mode-text';
 import 'ace-builds/src-noconflict/theme-monokai';
-//import '../../styles/editor.css';
 
 function EditProperties() {
   const [fileContent, setFileContent] = useState('');
@@ -42,7 +41,7 @@ function EditProperties() {
   };
 
   return (
-    <AdminDrawer>
+    <Container maxWidth="md" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <Typography variant="h2" gutterBottom>
         Editar server.properties
       </Typography>
@@ -61,7 +60,7 @@ function EditProperties() {
           showLineNumbers: true,
           tabSize: 2,
         }}
-        readOnly={loading} // Disable editing when loading is true
+        readOnly={loading}
       />
       <LoadingButton
         color="secondary"
@@ -75,7 +74,7 @@ function EditProperties() {
       >
         {loading ? <CircularProgress size={24} color="inherit" /> : 'Subir'}
       </LoadingButton>
-    </AdminDrawer>
+    </Container>
   );
 }
 

@@ -17,7 +17,6 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import ListItemButton from '@mui/material/ListItemButton';
 import UploadModStatus from '../uploadModStatus';
-import AdminDrawer from './drawer';
 import admin from '../../services/admin';
 import { enqueueSnackbar } from 'notistack';
 
@@ -279,7 +278,7 @@ function UploadMod() {
     }, [totalFiles, loading]);
 
     return (
-        <AdminDrawer>
+        <div>
             <Snackbar anchorOrigin={{ vertical: "bottom", horizontal: "right" }} open={loading} sx={{ backgroundColor: "black", borderRadius: "15px", color: "white" }}>
                 <List
                     sx={{ maxWidth: 360, borderRadius: "15px" }}
@@ -360,7 +359,7 @@ function UploadMod() {
                     </LoadingButton>
                 )}
             </Grid>
-        </AdminDrawer>
+        </div>
     );
 }
 

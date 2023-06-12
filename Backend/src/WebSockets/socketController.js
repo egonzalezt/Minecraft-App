@@ -36,6 +36,8 @@ async function configureSockets(io) {
                 adminSocketController.createModsFile(io);
             });
 
+            setInterval(() => adminSocketController.performTcpPing(io), 5000);
+
             socket.on('error', (error) => {
                 console.error('Socket error:', error);
                 socket.emit('socket-error', 'An error occurred on the server');

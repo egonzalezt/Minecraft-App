@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@iconify/react": "^4.1.0",
     "@mui/icons-material": "^5.10.16",
     "@mui/lab": "^5.0.0-alpha.113",
     "@mui/material": "^5.10.17",
@@ -20,6 +21,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.5",
     "react-scripts": "5.0.1",
+    "simplebar-react": "^3.2.4",
     "socket.io-client": "^4.6.2",
     "sweetalert2": "^11.6.15",
     "terminal-in-react": "^4.3.1",

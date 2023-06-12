@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import AdminDrawer from './drawer';
 import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -79,7 +78,7 @@ function ModsSettings() {
 
 
   return (
-    <AdminDrawer>
+    <div>
       <Typography variant="h2" gutterBottom>
         Editar configuracion de mods
       </Typography>
@@ -98,7 +97,7 @@ function ModsSettings() {
           </TreeView>
         </div>
       )}
-    </AdminDrawer>
+    </div>
   );
 }
 

@@ -11,7 +11,6 @@ import { Link } from 'react-router-dom';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
-import AdminDrawer from "./drawer.js";
 import LinearProgress from '@mui/material/LinearProgress'; // Importar componente LinearProgress
 import SocketClient from '../../socketConnection'
 
@@ -240,68 +239,66 @@ export default function ModList() {
     }
 
     return (
-        <AdminDrawer>
-            <Box sx={{ flexGrow: 1, width: "85%" }}>
-                <Grid item xs={12} md={6}>
-                    <Typography sx={{ mb: 2 }} variant="h2" component="div">
-                        Lista de Mods
-                    </Typography>
-                    <Box sx={{ height: 450, width: '100%' }}>
-                        <DataGrid
-                            // autoHeight
-                            pagination
-                            loading={isLoading}
-                            rows={mods}
-                            columns={columns}
-                            pageSize={pageSize}
-                            rowsPerPageOptions={[3, 5, 8, 15, 30]}
-                            onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-                            rowCount={totalMods}
-                            paginationMode="server"
-                            onPageChange={searchData}
-                            checkboxSelection
-                            disableSelectionOnClick
-                            onSelectionModelChange={(newSelectionMod) => {
-                                setSelectedMods(newSelectionMod);
-                            }}
-                            selectionModel={selectedMods}
-                            keepNonExistentRowsSelected
-                            components={{
-                                Toolbar: CustomToolbar,
-                            }}
-                        />
-                    </Box>
-                </Grid>
-                <LoadingButton
-                    color="secondary"
-                    onClick={createZipRequest}
-                    loading={loadingZipCreation}
-                    loadingPosition="start"
-                    startIcon={<SaveIcon />}
-                    variant="contained"
-                    sx={{ marginTop: "5%", width: "20%" }}
-                >
-                    Crear .ZIP
-                </LoadingButton>
-                {message?.value && (
-                    <Box sx={{ marginTop: "2%" }}>
-                        {message.type === "statusPercent" ?
-                            <Typography variant="body1" gutterBottom>
-                                Progreso: {message.value}%
-                            </Typography>
-                            :
-                            <Typography variant="body1" gutterBottom>
-                                Estado: {message.value}
-                            </Typography>
-                        }
-                        {
-                            message.type === "statusPercent" && (
-                                <LinearProgress variant="determinate" value={message.value} />
-                            )
-                        }
-                    </Box>
-                )}
-            </Box>
-        </AdminDrawer>
+        <Box>
+            <Grid item xs={12} md={6}>
+                <Typography sx={{ mb: 2 }} variant="h2" component="div">
+                    Lista de Mods
+                </Typography>
+                <Box sx={{ height: 450, width: '100%' }}>
+                    <DataGrid
+                        // autoHeight
+                        pagination
+                        loading={isLoading}
+                        rows={mods}
+                        columns={columns}
+                        pageSize={pageSize}
+                        rowsPerPageOptions={[3, 5, 8, 15, 30]}
+                        onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+                        rowCount={totalMods}
+                        paginationMode="server"
+                        onPageChange={searchData}
+                        checkboxSelection
+                        disableSelectionOnClick
+                        onSelectionModelChange={(newSelectionMod) => {
+                            setSelectedMods(newSelectionMod);
+                        }}
+                        selectionModel={selectedMods}
+                        keepNonExistentRowsSelected
+                        components={{
+                            Toolbar: CustomToolbar,
+                        }}
+                    />
+                </Box>
+            </Grid>
+            <LoadingButton
+                color="secondary"
+                onClick={createZipRequest}
+                loading={loadingZipCreation}
+                loadingPosition="start"
+                startIcon={<SaveIcon />}
+                variant="contained"
+                sx={{ marginTop: "5%", width: "20%" }}
+            >
+                Crear .ZIP
+            </LoadingButton>
+            {message?.value && (
+                <Box sx={{ marginTop: "2%" }}>
+                    {message.type === "statusPercent" ?
+                        <Typography variant="body1" gutterBottom>
+                            Progreso: {message.value}%
+                        </Typography>
+                        :
+                        <Typography variant="body1" gutterBottom>
+                            Estado: {message.value}
+                        </Typography>
+                    }
+                    {
+                        message.type === "statusPercent" && (
+                            <LinearProgress variant="determinate" value={message.value} />
+                        )
+                    }
+                </Box>
+            )}
+        </Box>
     );
 }

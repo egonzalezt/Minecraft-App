@@ -19,7 +19,7 @@ import RequestPasswordReset from './pages/requestPasswordReset';
 import CodeEditor from './pages/codeEditor';
 import ModsSettingsView from './pages/modsSettings';
 import ModSettingsView from './pages/modSettings';
-
+import DashboardLayout from './components/Layout/dashboardLayout';
 // ----------------------------------------------------------------------
 
 export default function Router({ user }) {
@@ -31,9 +31,11 @@ export default function Router({ user }) {
         },
         {
             path: '/dashboard',
+            element: <DashboardLayout user={user} isAdmin={true} />,
             children: [
                 { element: <Navigate to="/dashboard/admin" />, index: true },
                 { path: 'admin', element: <Admin /> },
+                { path: 'download/mods', element: <User /> },
                 { path: 'upload', element: <AdminUpload /> },
                 { path: 'upload/multiple', element: <AdminUploadMultiple /> },
                 { path: 'server', element: <RunCommand /> },
@@ -44,7 +46,8 @@ export default function Router({ user }) {
             ],
         },
         {
-            path: '/user/',
+            path: '/user',
+            element: <DashboardLayout user={user} isAdmin={false} />,
             children: [
                 { element: <Navigate to="/user/dashboard" />, index: true },
                 { path: 'dashboard', element: <User /> },

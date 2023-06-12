@@ -3,13 +3,14 @@ import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 import CircularProgress from '@mui/material/CircularProgress';
-import AdminDrawer from './drawer';
 import AceEditor from 'react-ace';
 import admin from '../../services/admin';
 import { enqueueSnackbar } from 'notistack';
 import { useLocation, Link } from 'react-router-dom';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import IconButton from '@mui/material/IconButton';
+import Box from '@mui/material/Box'; // Import Box component from Mui
+import Container from '@mui/material/Container'; // Import Container component from Mui
 
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/mode-text';
@@ -48,12 +49,12 @@ function EditModProperties() {
   useEffect(() => {
     if (path) {
       setLoadingGetData(true);
-  
+
       admin
         .getModProperties(path)
         .then((response) => {
           const responseData = response.data;
-          if(getFileMode(filename)==='json'){
+          if (getFileMode(filename) === 'json') {
             setFileContent(JSON.stringify(responseData, null, 2));
             return;
           }
@@ -71,11 +72,12 @@ function EditModProperties() {
   const handleSave = () => {
     setLoadingSendData(true);
 
-    admin.updateModProperties(filename,path,fileContent)
+    admin
+      .updateModProperties(filename, path, fileContent)
       .then(() => {
         enqueueSnackbar(`server.properties actualizado de forma exitosa`, { variant: 'success' });
       })
-      .catch(error => {
+      .catch((error) => {
         enqueueSnackbar(`Fallo la actualizacion de server.properties`, { variant: 'error' });
       })
       .finally(() => {
@@ -84,17 +86,18 @@ function EditModProperties() {
   };
 
   return (
-    <AdminDrawer>
+    <Container maxWidth="md" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <Typography variant="h2" gutterBottom>
-        <IconButton component={Link} to={"/dashboard/edit/mods"}>
+        <IconButton component={Link} to={'/dashboard/edit/mods'}>
           <ArrowBackRoundedIcon />
-        </IconButton>Editar {filename}
+        </IconButton>
+        Editar {filename}
       </Typography>
       {loadingGetData ? (
-        <div>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <CircularProgress />
-          <p>Obteniendo datos...</p>
-        </div>
+          <Typography variant="body1">Obteniendo datos...</Typography>
+        </Box>
       ) : (
         <AceEditor
           mode={getFileMode(filename)}
@@ -130,7 +133,7 @@ function EditModProperties() {
           'Subir'
         )}
       </LoadingButton>
-    </AdminDrawer>
+    </Container>
   );
 }
 

@@ -51,6 +51,9 @@ let theme = createTheme({
 
 theme = responsiveFontSizes(theme);
 
+const avatars =["alex","cave-spider","cow","creeper","enderman","pig","sheep",
+"skeleton","spider","steve","villager","wolf","zombie"]
+
 function App() {
   const [userLoaded, setUserLoaded] = useState(false);
   const [user, setUser] = useState(null);
@@ -60,6 +63,8 @@ function App() {
     if (localStorage.getItem('accessToken')) {
       UserApi.verify()
         .then((res) => {
+          const data = res.data;
+          data.imageName = avatars[Math.floor(Math.random() * avatars.length)];
           setUser(res.data);
         })
         .catch(() => setUser(null))
@@ -78,7 +83,7 @@ function App() {
     <SnackbarProvider>
       <ThemeProvider theme={theme}>
         <div className="App">
-          <Router/>
+          <Router user={user} />
         </div>
       </ThemeProvider>
     </SnackbarProvider>

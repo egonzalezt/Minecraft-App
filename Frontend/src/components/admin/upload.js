@@ -12,7 +12,6 @@ import { useNavigate } from "react-router-dom";
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 
-import AdminDrawer from "./drawer";
 import AdminApi from '../../services/admin';
 
 function UploadMod() {
@@ -112,7 +111,7 @@ function UploadMod() {
     };
 
     return (
-        <AdminDrawer>
+        <div>
             <Typography margin={3} variant="h2" gutterBottom>
                 Subir mod
             </Typography>
@@ -202,7 +201,7 @@ function UploadMod() {
                     </LoadingButton>
                 </Grid>
             </Grid>
-        </AdminDrawer>
+        </div>
     );
 }
 
