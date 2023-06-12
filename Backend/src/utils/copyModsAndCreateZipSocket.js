@@ -14,7 +14,16 @@ async function copyModsAndCreateZip(io) {
   const zipName = process.env.ZIPNAMEWITHEXT;
 
   mods.forEach(async (mod) => {
-    const modType = mod.type.includes('server') ? 'server' : 'client';
+    const modType = null;
+
+    if (mod.type.includes('client') && lista.includes('server')) {
+      modType = 'server';
+    } else if (mod.type.includes('client')) {
+      modType = 'client';
+    } else {
+      return;
+    }
+
     const sourcePath = modType === 'server' ? modsPath : clientModsPath;
     const destinationPath = path.join(tempModsPath, mod.fileName);
 
