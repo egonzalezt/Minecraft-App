@@ -91,7 +91,7 @@ function ModsSettings() {
             defaultCollapseIcon={<ExpandMoreIcon />}
             defaultExpandIcon={<ChevronRightIcon />}
             multiSelect
-            sx={{ height: '100%', flexGrow: 1, overflowY: 'auto' }}
+            sx={{ height: '100%', flexGrow: 1, overflowY: 'auto', textAlign:'start' }}
           >
             {data && renderData(data)}
           </TreeView>

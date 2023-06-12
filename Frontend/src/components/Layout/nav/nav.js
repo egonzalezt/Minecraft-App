@@ -10,7 +10,7 @@ import useResponsive from '../hooks/useResponsive';
 // components
 import Logo from '../logo';
 import Scrollbar from '../scrollbar';
-import NavSection from '../nav-section';
+import NavSection from '../nav-section/NavSection';
 // States
 import SocketClient from '../../../socketConnection'
 //
