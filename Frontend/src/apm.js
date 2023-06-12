@@ -2,8 +2,8 @@ import { init as initApm, apm } from '@elastic/apm-rum';
 
 export function initApmAgent() {
   initApm({
-    serviceName: 'your-service-name',
-    serverUrl: 'http://your-apm-server-url',
+    serviceName: 'ArequipetWeb',
+    serverUrl: 'http://35.196.30.242:8200/',
     // Additional configuration options can be specified here
   });
 

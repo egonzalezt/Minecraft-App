@@ -1,5 +1,6 @@
 import { Navigate, useRoutes } from 'react-router-dom';
-//
+import React, { useState, useEffect } from 'react';
+
 import Main from './pages/main';
 import NotFound from './pages/notFound';
 import Admin from './pages/admin';
@@ -17,38 +18,57 @@ import CodeEditor from './pages/codeEditor';
 import ModsSettingsView from './pages/modsSettings';
 import ModSettingsView from './pages/modSettings';
 import DashboardLayout from './components/Layout/dashboardLayout';
-// ----------------------------------------------------------------------
 
 export default function Router({ user }) {
+    const isSuperAdmin = user && user.roles.includes('super_admin');
+    const isAdmin = user && user.roles.includes('admin');
+
+    const superAdminRoutes = [
+        { element: <Navigate to="/dashboard/admin" />, index: true },
+        { path: 'admin', element: <Admin /> },
+        { path: 'mods', element: <User /> },
+        { path: 'upload', element: <AdminUpload /> },
+        { path: 'upload/multiple', element: <AdminUploadMultiple /> },
+        { path: 'server', element: <RunCommand /> },
+        { path: 'backups', element: <Backups /> },
+        { path: 'edit/server', element: <CodeEditor /> },
+        { path: 'edit/mods', element: <ModsSettingsView /> },
+        { path: 'edit/mod', element: <ModSettingsView /> },
+    ];
+
+    const adminRoutes = [
+        { element: <Navigate to="/dashboard/mods" />, index: true },
+        { path: 'mods', element: <User /> },
+        { path: 'server', element: <RunCommand /> },
+    ];
+
+    const userRoutes = [
+        { element: <Navigate to="/dashboard/mods" />, index: true },
+        { path: 'mods', element: <User /> },
+    ];
+
+    const [permittedRoutes, setPermittedRoutes] = useState(userRoutes);
+
+
+
+    useEffect(() => {
+        if (isSuperAdmin) {
+            setPermittedRoutes(superAdminRoutes)
+        } else if (isAdmin) {
+            setPermittedRoutes(adminRoutes)
+        }
+    }, []);
+
     const routes = useRoutes([
         {
             path: '/',
             element: <div className="grass"><Main /></div>,
-            fallback: <Navigate to="/404" />
+            fallback: <Navigate to="/404" />,
         },
         {
             path: '/dashboard',
-            element: <DashboardLayout user={user} isAdmin={true} />,
-            children: [
-                { element: <Navigate to="/dashboard/admin" />, index: true },
-                { path: 'admin', element: <Admin /> },
-                { path: 'download/mods', element: <User /> },
-                { path: 'upload', element: <AdminUpload /> },
-                { path: 'upload/multiple', element: <AdminUploadMultiple /> },
-                { path: 'server', element: <RunCommand /> },
-                { path: 'backups', element: <Backups /> },
-                { path: 'edit/server', element: <CodeEditor /> },
-                { path: 'edit/mods', element: <ModsSettingsView /> },
-                { path: 'edit/mod', element: <ModSettingsView /> },
-            ],
-        },
-        {
-            path: '/user',
-            element: <DashboardLayout user={user} isAdmin={false} />,
-            children: [
-                { element: <Navigate to="/user/dashboard" />, index: true },
-                { path: 'dashboard', element: <User /> },
-            ],
+            element: <DashboardLayout user={user} isAdmin={isAdmin} />,
+            children: permittedRoutes,
         },
         {
             path: 'login',

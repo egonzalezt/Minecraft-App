@@ -49,12 +49,6 @@ export default function DashboardLayout({ user, isAdmin, redirectPath = '/' }) {
         return <Navigate to={redirectPath} replace />;
     }
 
-    if (isAdmin && (!user || !user.roles.includes('super_admin'))) {
-        return <Navigate to={redirectPath} replace />;
-    } else if (!isAdmin && (!user || !user.roles.includes('user'))) {
-        return <Navigate to={redirectPath} replace />;
-    }
-
     return (
         <StyledRoot>
             <Header onOpenNav={() => setOpen(true)} />

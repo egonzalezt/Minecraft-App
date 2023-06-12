@@ -14,7 +14,7 @@ import NavSection from '../nav-section/NavSection';
 // States
 import SocketClient from '../../../socketConnection'
 //
-import { adminNavConfig, userNavConfig } from './config';
+import { superAdminNavConfig, adminNavConfig, userNavConfig } from './config';
 import { storeData } from '../../../states/stores';
 // ----------------------------------------------------------------------
 
@@ -90,6 +90,8 @@ export default function Nav({ openNav, onCloseNav }) {
       setUser(getUser)
       const roles = getUser.roles
       if (roles?.includes('super_admin')) {
+        setNavConfig(superAdminNavConfig);
+      } else if (roles?.includes('admin')) {
         setNavConfig(adminNavConfig);
       }
       setLoading(false);
@@ -141,27 +143,26 @@ export default function Nav({ openNav, onCloseNav }) {
             <Typography gutterBottom variant="h6" sx={{ color: 'white' }}>
               Listo Para Jugar?
             </Typography>
+            {serverPingResult &&
+              (<Box>
+                <Typography gutterBottom variant="h6" sx={{ color: 'white' }}>
+                  Estado del servidor
+                </Typography>
+                <Typography gutterBottom variant="h6" sx={{ color: 'white' }}>
+                  <FiberManualRecordIcon
+                    fontSize="small"
+                    sx={{
+                      mr: 1,
+                      color: serverPingResult?.isAvailable ? '#4caf50' : '#d9182e',
+                    }}
+                  />
+                  {serverPingResult?.message}
+                </Typography>
+              </Box>)
+            }
           </Box>
         </Stack>
       </Box>
-
-      {serverPingResult &&
-        (<Box sx={{ px: 2.5, pb: 3, mt: 15 }}>
-          <Typography gutterBottom variant="h6" sx={{ color: 'white' }}>
-            Estado del servidor
-          </Typography>
-          <Typography gutterBottom variant="h6" sx={{ color: 'white' }}>
-            <FiberManualRecordIcon
-              fontSize="small"
-              sx={{
-                mr: 1,
-                color: serverPingResult?.isAvailable ? '#4caf50' : '#d9182e',
-              }}
-            />
-            {serverPingResult?.message}
-          </Typography>
-        </Box>)
-      }
     </Scrollbar>
   );
 

@@ -8,7 +8,7 @@ import BackupIcon from '@mui/icons-material/Backup';
 import SettingsIcon from '@mui/icons-material/Settings';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 
-export const adminNavConfig = [
+export const superAdminNavConfig = [
   {
     title: 'Mods',
     path: '/dashboard/admin',
@@ -26,7 +26,7 @@ export const adminNavConfig = [
       },
       {
         title: 'Descargar mods',
-        path: '/dashboard/download/mods',
+        path: '/dashboard/mods',
         icon: <CloudDownloadIcon/>,
       }
     ],
@@ -60,10 +60,23 @@ export const adminNavConfig = [
   }
 ];
 
+export const adminNavConfig = [
+  {
+    title: 'Mods',
+    path: '/dashboard/mods',
+    icon: <CloudDownloadIcon/>,
+  },
+  {
+    title: 'Terminal',
+    path: '/dashboard/server',
+    icon: <TerminalIcon/>,
+  }
+];
+
 export const userNavConfig = [
   {
     title: 'Mods',
-    path: '/user/dashboard',
+    path: '/dashboard/mods',
     icon: <CloudDownloadIcon/>,
   }
 ];
