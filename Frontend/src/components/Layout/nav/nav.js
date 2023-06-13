@@ -9,13 +9,14 @@ import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import useResponsive from '../hooks/useResponsive';
 // components
 import Logo from '../logo';
-import Scrollbar from '../scrollbar';
 import NavSection from '../nav-section/NavSection';
 // States
 import SocketClient from '../../../socketConnection'
 //
 import { superAdminNavConfig, adminNavConfig, userNavConfig } from './config';
 import { storeData } from '../../../states/stores';
+import { enqueueSnackbar } from 'notistack';
+
 // ----------------------------------------------------------------------
 
 const NAV_WIDTH = 280;
@@ -35,8 +36,8 @@ Nav.propTypes = {
   onCloseNav: PropTypes.func,
 };
 
-const media = ['1.png', '2.png', '3.png', '4.png', '5.png', '6.png','7.png','8.png','9.png',
-'10.png','11.png','12.png','13.png','14.png','15.png','16.png','17.png','18.gif']
+const media = ['1.png', '2.png', '3.png', '4.png', '5.png', '6.png', '7.png', '8.png', '9.png',
+  '10.png', '11.png', '12.png', '13.png', '14.png', '15.png', '16.png', '17.png', '18.gif']
 
 export default function Nav({ openNav, onCloseNav }) {
   const { pathname } = useLocation();
@@ -76,6 +77,10 @@ export default function Nav({ openNav, onCloseNav }) {
       setServerPingResult(data)
     });
 
+    socket.on('disconnect', () => {
+      enqueueSnackbar(`Se ha perdido la conexión con el servidor`, { variant: 'warning' });
+    });
+
     return () => {
       socket.off('tcpPingResult');
     };
@@ -109,11 +114,22 @@ export default function Nav({ openNav, onCloseNav }) {
   }, []);
 
   const renderContent = (
-    <Scrollbar
+    <Box
       sx={{
         backgroundImage: `url(${"../img/stones.jpg"})`,
-        height: 1,
-        '& .simplebar-content': { height: 1, display: 'flex', flexDirection: 'column' },
+        height: '100%',
+        overflowY: 'scroll',
+        '&::-webkit-scrollbar': {
+          width: '0.2em'
+        },
+        '&::-webkit-scrollbar-track': {
+          '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)'
+        },
+        '&::-webkit-scrollbar-thumb': {
+          backgroundColor: 'rgba(0,0,0,.1)',
+          outline: '1px solid slategrey'
+        },
+        '& .simplebar-content': { display: 'flex', flexDirection: 'column' },
       }}
     >
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -181,7 +197,7 @@ export default function Nav({ openNav, onCloseNav }) {
           </Box>
         </Stack>
       </Box>
-    </Scrollbar>
+    </Box>
   );
 
   return (
@@ -200,7 +216,7 @@ export default function Nav({ openNav, onCloseNav }) {
             sx: {
               width: NAV_WIDTH,
               bgcolor: 'background.default',
-              borderRightStyle: 'dashed',
+              borderRightStyle: 'dashed'
             },
           }}
         >

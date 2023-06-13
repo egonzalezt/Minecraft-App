@@ -158,7 +158,7 @@ export default function BackupList() {
 
         socket.on('backup-creation-status', (data) => {
             !loadingZipCreation && setLoadingZipCreation(true);
-
+            
             setMessage(data);
             if (data?.taskComplete) {
                 setLoadingZipCreation(false);
@@ -180,11 +180,6 @@ export default function BackupList() {
         });
 
         socket.on('disconnect', () => {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Se ha perdido la conexión con el servidor',
-            });
             setLoadingZipCreation(false);
         });
 
