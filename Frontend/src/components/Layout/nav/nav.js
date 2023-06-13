@@ -119,16 +119,6 @@ export default function Nav({ openNav, onCloseNav }) {
         backgroundImage: `url(${"../img/stones.jpg"})`,
         height: '100%',
         overflowY: 'scroll',
-        '&::-webkit-scrollbar': {
-          width: '0.2em'
-        },
-        '&::-webkit-scrollbar-track': {
-          '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)'
-        },
-        '&::-webkit-scrollbar-thumb': {
-          backgroundColor: 'rgba(0,0,0,.1)',
-          outline: '1px solid slategrey'
-        },
         '& .simplebar-content': { display: 'flex', flexDirection: 'column' },
       }}
     >

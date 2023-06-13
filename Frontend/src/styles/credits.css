@@ -1,0 +1,42 @@
+.backgroundDirt {
+    image-rendering: pixelated;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), #866043 url("../img/dirt.png") repeat 0 0;
+    background-size: 10%;
+    color: #FFF;
+    text-align: center;
+    font-family: Minecraft;
+    text-shadow: 0.2vw 0.2vw 0 #383838;
+    min-height: 100%;
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    -webkit-animation: BackgroundScroll 20s ease-out;
+    animation: BackgroundScroll 20s ease-out;
+}
+
+.creditsScroll {
+    -webkit-animation: CreditsScroll 20s ease-out;
+    animation: CreditsScroll 20s ease-out;
+    height: 80vh;
+}
+
+@keyframes BackgroundScroll {
+    0% {
+        background-position: 0 150px;
+    }
+
+    100% {
+        background-position: 0 0;
+    }
+
+}
+
+@keyframes CreditsScroll {
+    0% {
+        transform: translateY(100%);
+    }
+
+    100% {
+        transform: translateY(0%);
+    }
+}

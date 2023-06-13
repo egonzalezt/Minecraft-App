@@ -12,8 +12,12 @@
   font-weight: 400;
 }
 
+html,
+body {
+  margin: 0;
+}
 
-h1{
+h1 {
   font-family: Minecrafter;
   letter-spacing: 0.18em;
 }
@@ -21,5 +25,16 @@ h1{
 .grass {
   background-image: url('img/grass.jpg');
   font-family: Minecrafter;
-  color:black;
+  color: black;
+}
+
+::-webkit-scrollbar {
+  width: 0.3em;
+}
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.00);
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,.1);
+  outline: 1px solid slategrey;
 }

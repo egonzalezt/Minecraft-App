@@ -219,7 +219,6 @@ export default function ModList() {
                     color="secondary"
                     onClick={removeMods}
                     loading={deletingMods}
-                    loadingPosition="start"
                     variant="contained"
                     disabled={selectedMods.length <= 0}
                     sx={{ width: "5%", alignItems: "center", alignContent: "center" }}>
