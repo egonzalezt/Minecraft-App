@@ -263,7 +263,6 @@ export default function BackupList() {
                     color="secondary"
                     onClick={removeBackups}
                     loading={deletingBackups}
-                    loadingPosition="start"
                     variant="contained"
                     disabled={selectedBackups.length <= 0}
                     sx={{ width: "5%", alignItems: "center", alignContent: "center" }}>

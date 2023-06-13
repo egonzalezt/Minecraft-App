@@ -43,7 +43,6 @@ function NavItem({ item }) {
   return (
     <>
       <ListItemButton
-        button
         component={RouterLink}
         to={path}
         sx={{

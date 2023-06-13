@@ -5,6 +5,8 @@ import { ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material/s
 import UserApi from './services/users';
 import { SnackbarProvider } from 'notistack';
 
+import signButton from './img/sign.png';
+
 import Router from './routes';
 
 
@@ -28,7 +30,7 @@ let theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          backgroundImage: `url(${"../img/sign.png"})`,
+          backgroundImage: `url(${signButton})`,
           backgroundSize: '128px 55px',
           height: '55px',
           width: '128px',

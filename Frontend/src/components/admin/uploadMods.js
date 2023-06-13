@@ -261,6 +261,7 @@ function UploadMod() {
                 <Button
                     variant="contained"
                     onClick={() => handleDeleteFile(params.row.id)}
+                    loadingPosition="start"
                     startIcon={<DeleteIcon />}
                     style={{ backgroundColor: 'transparent' }}
                     disableElevation

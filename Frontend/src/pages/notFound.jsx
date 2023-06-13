@@ -1,29 +1,26 @@
-import { Link } from 'react-router-dom';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Stack from '@mui/material/Stack';
+import { Link } from "react-router-dom";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Stack from "@mui/material/Stack";
+import styles from '../styles/credits.css'
+import minecraftLogo from '../img/minecraft.png';
+
 
 function NotFound() {
     return (
-        <Stack width="100%" justifyContent="space-between" alignItems="center">
-            <Stack width="100%" sx={{
-                backgroundImage: "url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif)",
-                height: "400px",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat"
-            }}>
-                <Typography variant='h1'>
-                    404
+        <div className="backgroundDirt">
+            <Stack justifyContent="space-between" alignItems="center" className="creditsScroll" paddingTop={4}>
+                <img alt="Minecraft" src={minecraftLogo} width="60%" />
+                <Typography variant="h4" sx={{ color: 'yellow' }}>
+                    Error: 404 Not Found
                 </Typography>
-            </Stack>
-            <Stack alignItems="center">
-                <Typography variant='h2'>
-                    Parece que estas perdido
+                <Typography variant="h5">
+                    The webpage you are looking for might have been removed, had its
+                    name changed, or is temporarily unavailable.
                 </Typography>
-                <Typography paragraph>La pagina que buscas no existe!</Typography>
-                <Button component={Link} to={"/"}>Volver al inicio</Button>
+                <Button component={Link} to={"/"}>Home</Button>
             </Stack>
-        </Stack>
+        </div>
     );
 }
 
