@@ -191,11 +191,6 @@ export default function ModList() {
         });
 
         socket.on('disconnect', () => {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Se ha perdido la conexión con el servidor',
-            });
             setLoadingZipCreation(false);
         });
 
