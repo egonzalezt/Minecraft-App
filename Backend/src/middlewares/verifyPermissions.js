@@ -1,16 +1,23 @@
-const findRolesById = require('../database/repositories/user/userGetPermissions')
+const findRolesById = require('../database/repositories/user/userGetPermissions');
 
-async function verifyPermissions(req, res, next) {
-    let values = req.body
+function verifyPermissions(acceptedRoles = ["super_admin"]) {
+  return function(req, res, next) {
+    const values = req.body;
 
-    await findRolesById(values.usrId).then(result => {
-        const roles = result.roles
-        if (roles && roles.find(rol => rol === "super_admin")) {
-            return next();
+    findRolesById(values.usrId)
+      .then(result => {
+        const roles = result.roles;
+
+        if (roles && roles.find(rol => acceptedRoles.includes(rol))) {
+          return next();
         } else {
-            return res.status(403).json({ error: false, message: "Sorry you don't have permissions" });
+          return res.status(403).json({ error: false, message: "Sorry, you don't have permissions" });
         }
-    })
-
+      })
+      .catch(error => {
+        return res.status(500).json({ error: true, message: "Internal server error" });
+      });
+  };
 }
-module.exports = verifyPermissions
+
+module.exports = verifyPermissions;
