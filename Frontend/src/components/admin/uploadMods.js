@@ -95,9 +95,6 @@ function UploadMod() {
         }
     };
 
-
-
-
     const handleClientCheckboxChange = (checked, index) => {
         const updatedFiles = [...files];
         files[index].isClientChecked = checked;
@@ -273,6 +270,7 @@ function UploadMod() {
     useEffect(() => {
         if (totalFiles <= 0 && loading) {
             setLoading(false);
+            window.location.reload();
         }
     }, [totalFiles, loading]);
 

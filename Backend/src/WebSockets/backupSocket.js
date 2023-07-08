@@ -3,6 +3,7 @@ var archiver = require('archiver');
 const { v4: uuidv4 } = require('uuid');
 const saveBackup = require('../database/repositories/backups/addBackup')
 const path = require('path');
+const uploadBackUp = require('../utils/gdrive');
 
 async function createBackup(io) {
     const backupId = uuidv4();
@@ -12,7 +13,7 @@ async function createBackup(io) {
     }
 
     const date = generateDate();
-    const fileName = `backup_${date[0]}.zip`;
+    const fileName = `backup_${date[0]}-${backupId}.zip`;
     const filePath = `${backupPath}/${fileName}`;
     const output = fs.createWriteStream(filePath);
     const archive = archiver('zip');
@@ -35,7 +36,7 @@ async function createBackup(io) {
     archive.on('data', (chunk) => {
         processedBytes += chunk.length;
         const progress = Math.round((processedBytes / totalSize) * 100);
-        sendMessage(io, { type: 'statusPercent', value: progress, process: "backupCreator", taskComplete: false, error: false });
+        sendMessage(io, { type: 'statusPercentZip', value: progress, process: "backupCreator", taskComplete: false, error: false });
     });
 
 
@@ -43,15 +44,24 @@ async function createBackup(io) {
 
     archive.directory(process.env.WORLDPATH, false);
 
-    archive.finalize().then(() => {
-        saveBackup(fileName, filePath, backupPath).then(() => {
-            sendMessage(io, { type: 'statusSuccess', value: "Backup created successfully", process: "backupCreator", taskComplete: true, error: false });
-        }).catch(() => {
-            sendMessage(io, { type: 'statusFail', value: "Failed to create backup", process: "backupCreator", taskComplete: true, error: true });
+    try {
+        await archive.finalize();
+        sendMessage(io, { type: 'statusGdrive', value: "Uploading into Google Drive", process: "backupCreator", taskComplete: false, error: false });
+        const id = await uploadBackUp(io, fileName, filePath);
+        sendMessage(io, { type: 'statusGdrive', value: "Successfully uploaded into Google Drive", process: "backupCreator", taskComplete: false, error: false });
+
+        fs.unlink(filePath, (err) => {
+            if (err) {
+                console.error('Error deleting file:', err);
+            } else {
+                console.log('File deleted successfully');
+            }
         });
-    }).catch(() => {
+        await saveBackup(fileName, null, null, id);
+        sendMessage(io, { type: 'statusSuccess', value: "Backup created and saved successfully", process: "backupCreator", taskComplete: true, error: false });
+    } catch (error) {
         sendMessage(io, { type: 'statusFail', value: "Failed to create backup", process: "backupCreator", taskComplete: true, error: true });
-    });
+    }
 }
 
 function calculateDirectorySize(directory) {
