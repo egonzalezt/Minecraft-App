@@ -11,12 +11,16 @@ const backupSchema  = new Schema({
     },
     filePath:{
         type:String,
-        require:true,
+        require:false,
     },
     path:{
         type:String,
-        require:true,
+        require:false,
     },
+    gdriveId:{
+        type:String,
+        require:false,
+    }
 },{timestamps: true})
 
 module.exports = mongoose.model("Backups", backupSchema );

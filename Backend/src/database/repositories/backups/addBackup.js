@@ -4,13 +4,15 @@ const schema = require('../../schemas/backups')
  * @param {string} fileName
  * @param {string} filePath
  * @param {string} path
+ * @param {string} gdriveId
  */
-function saveBackup(fileName,filePath,path)
+function saveBackup(fileName,filePath,path,gdriveId)
 {
     let values = {
         "fileName": fileName,
         "filePath": filePath,
-        "path": path
+        "path": path,
+        "gdriveId": gdriveId
     };
 
     var backup = new schema(values);

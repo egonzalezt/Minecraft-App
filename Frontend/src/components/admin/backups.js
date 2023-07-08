@@ -11,7 +11,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
-import LinearProgress from '@mui/material/LinearProgress'; // Importar componente LinearProgress
+import LinearProgress from '@mui/material/LinearProgress';
 
 import SocketClient from '../../socketConnection'
 
@@ -77,7 +77,11 @@ export default function BackupList() {
     ];
 
     async function downloadBackup(cellValues) {
-        setIsLoading(true);
+
+        const downloadLink = `https://drive.google.com/uc?id=${cellValues.row.gdriveId}&export=download`
+        window.open(downloadLink, '_blank');
+
+        /*setIsLoading(true);
         setDownloadProgress(0);
 
         try {
@@ -110,7 +114,7 @@ export default function BackupList() {
                 title: 'Error',
                 text: 'Ocurrió un error al intentar descargar el backup. Por favor, inténtelo más tarde.',
             });
-        }
+        }*/
     }
 
     const createZipRequest = () => {
@@ -158,7 +162,7 @@ export default function BackupList() {
 
         socket.on('backup-creation-status', (data) => {
             !loadingZipCreation && setLoadingZipCreation(true);
-            
+
             setMessage(data);
             if (data?.taskComplete) {
                 setLoadingZipCreation(false);
@@ -168,7 +172,7 @@ export default function BackupList() {
                     icon: 'success',
                     title: 'Completado',
                     text: 'Se ha creado el backup de forma exitosa',
-                });
+                }).then(() => window.location.reload());
             }
             if (data?.type === 'statusFail' && data?.error) {
                 Swal.fire({
@@ -317,28 +321,44 @@ export default function BackupList() {
                 >
                     Crear Backup
                 </LoadingButton>
-                {message?.value && (
+
+                {(message?.value && message.type === "statusPercentZip") && (
                     <Box sx={{ marginTop: "2%" }}>
-                        {message.type === "statusPercent" ?
-                            <Typography variant="body1" gutterBottom>
-                                Progreso: {message.value}%
-                            </Typography>
-                            :
-                            <Typography variant="body1" gutterBottom>
-                                Estado: {message.value}
-                            </Typography>
-                        }
-                        {
-                            message.type === "statusPercent" && (
-                                <LinearProgress variant="determinate" value={message.value} />
-                            )
-                        }
+                        <Typography variant="body1" gutterBottom>
+                            Progreso creacion backup: {message.value}%
+                        </Typography>
+                        <LinearProgress variant="determinate" value={message.value} />
                     </Box>
                 )}
+
+                {(message?.value && message.type === "statusGdrive") && (
+                    <Box sx={{ marginTop: "2%" }}>
+                        <Typography variant="body1" gutterBottom>
+                            {message.value}
+                        </Typography>
+                    </Box>
+                )}
+
+                {(message?.value && message.type === "statusPercentGdrive") && (
+                    <Box sx={{ marginTop: "2%" }}>
+                        <Typography variant="body1" gutterBottom>
+                            Subiendo archivo a Google Drive: {message.value}%
+                        </Typography>
+                        <LinearProgress variant="determinate" value={message.value} />
+                    </Box>
+                )}
+
+                {(message?.value && message.type === "statusSuccess") && (
+                    <Box sx={{ marginTop: "2%" }}>
+                        <Typography variant="body1" gutterBottom>
+                            {message.value}
+                        </Typography>
+                    </Box>
+                )}
+
                 {isLoading && downloadProgress > 0 &&
                     (
                         <Box sx={{ marginTop: "2%" }}>
-
                             <Typography variant="body1" gutterBottom>
                                 Descargando Backup: {downloadProgress}%
                             </Typography>
