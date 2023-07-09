@@ -26,6 +26,14 @@ class UserApi {
         })
     }
 
+    getSkin(){
+        return axios.get("/user/skin",{
+            headers: {
+                "Authorization":`Bearer ${localStorage.getItem("accessToken")}`,
+            }
+        })
+    }
+
     logOut(){
         return axios.delete("/user/logout",{
             headers: {

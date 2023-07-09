@@ -11,6 +11,7 @@ async function verifyToken(req,res,next)
         const user = await findUser(decoded._id)
         if(user){
             req.body['usrId']=decoded._id
+            req.body['nickName']=user.nickName
             next();
         }else{
             return res.status(401).json({message:"Invalid token please login again"})

@@ -19,7 +19,7 @@ import { storeData } from '../../../states/stores';
 import { enqueueSnackbar } from 'notistack';
 import SkinRenderer from '../../Skinview3D/skinRenderer';
 import skinDefault from '../../../img/rei.png'
-import axios from 'axios';
+import users from '../../../services/users';
 
 // ----------------------------------------------------------------------
 
@@ -54,6 +54,7 @@ export default function Nav({ openNav, onCloseNav }) {
   const [skinData, setSkinData] = useState(skinDefault);
   const [animation, setAnimation] = useState(0);
   const [speed, setSpeed] = useState(1);
+  const [showSkin, setShowSkin] = useState(false);
 
   const getUser = storeData(state => state.user);
   const getAnimation = storeSkin(state => state.animation);
@@ -126,27 +127,20 @@ export default function Nav({ openNav, onCloseNav }) {
   }, [getUser]);
 
   useEffect(() => {
-    const fetchSkin = async (playerName) => {
+    const fetchSkin = async () => {
       try {
-        const response = await axios.get(`https://api.mojang.com/users/profiles/minecraft/${playerName}`);
-        const playerData = response.data;
-
-        const uuid = playerData.id;
-
-        const profileResponse = await axios.get(`https://sessionserver.mojang.com/session/minecraft/profile/${uuid}`);
-        const profileData = profileResponse.data;
-
-        const properties = profileData.properties[0].value;
-        const decodedProperties = JSON.parse(atob(properties));
-        const skinURL = decodedProperties.textures.SKIN.url;
-
-        setSkinData(skinURL);
+        const res = await users.getSkin();
+        setSkinData(res.data.skinURL);
       } catch (error) {
         console.error('Error fetching player skin:', error);
       }
     };
 
-    fetchSkin(user.nickName);
+    if(isDesktop)
+    {
+      fetchSkin();
+    }
+    setShowSkin(true)
   }, [user.nickName]);
 
   useEffect(() => {
@@ -192,7 +186,7 @@ export default function Nav({ openNav, onCloseNav }) {
       <Box sx={{ px: 2.5, pb: 3, mt: isDesktop?5:15  }}>
         <Stack alignItems="center" spacing={3} sx={{ pt: 5, borderRadius: 2, position: 'relative' }}>
 
-          {(isDesktop && skinData) ?
+          {(isDesktop && skinData && showSkin) ?
             <SkinRenderer skinData={skinData} nameTag={user.nickName} animationType={animation} width={250} height={300} speed={speed}/>
             :
             <>

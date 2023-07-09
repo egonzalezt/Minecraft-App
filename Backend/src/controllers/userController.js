@@ -13,6 +13,9 @@ const userUpdatePassword = require('../database/repositories/user/userUpdatePass
 const deleteResetToken = require('../database/repositories/resetToken/deleteResetToken');
 const successPasswordResetMailHtml = require('../utils/mails/successPasswordReset');
 
+const fetch = require('node-fetch');
+const atob = require('atob');
+
 async function registerUser(req, res) {
 
     const user = await findUser(req.body.email);
@@ -26,7 +29,7 @@ async function registerUser(req, res) {
         const { email, nickName } = req.body
         await save(email, hashPassword, nickName).then((result) => {
             let html = generateWelcomeMailHtml(nickName);
-            sendEmail(email,"Bienvenido a arequipet",html);
+            sendEmail(email, "Bienvenido a arequipet", html);
             return res.status(201).json({ error: false, message: "Account created successfully" });
         }).catch((err) => {
             return res.status(500).json({ error: true, message: "Internal Server Error" });
@@ -54,33 +57,33 @@ async function loginUser(req, res) {
     const { accessToken, refreshToken } = await generateTokens(user);
     return res.status(200).json({
         error: false,
-        userNickName:user.nickName,
+        userNickName: user.nickName,
         accessToken,
         refreshToken,
         message: "Logged in successfully",
     });
 }
 
-async function getUserInfo(req, res){
+async function getUserInfo(req, res) {
     const idUser = req.body['usrId'];
     const user = await findUserById(idUser);
-    if(user){
+    if (user) {
         res.status(200).json({
             error: false,
             user: user,
             message: "user information provided successfully",
-        }); 
-    }else{
+        });
+    } else {
         return res
             .status(400)
             .json({ error: true, message: "No user found" });
     }
 }
 
-async function requestPasswordReset(req, res){
+async function requestPasswordReset(req, res) {
     const email = req.body.email;
     const user = await findUser(email);
-    if(user){
+    if (user) {
         const hash = await generateResetToken(user);
         const clientURL = process.env.BASEURL;
         const url = `${clientURL}passwordReset?token=${hash}&userid=${user._id}`
@@ -90,19 +93,19 @@ async function requestPasswordReset(req, res){
         }).catch(() => {
             return res.status(500).json({ error: true, message: "Fail sending email" });
         })
-    }else{
+    } else {
         return res
             .status(404)
             .json({ error: true, message: "No email associated with any user" });
     }
 }
 
-async function resetPassword(req, res){
-    const {token, userid, password} = req.body;
+async function resetPassword(req, res) {
+    const { token, userid, password } = req.body;
     const resetToken = await findResetToken(userid);
-    if(resetToken){
+    if (resetToken) {
         const isValid = await bcrypt.compare(token, resetToken.resetToken);
-        if(!isValid){
+        if (!isValid) {
             return res
                 .status(404)
                 .json({ error: true, message: "Token Invalid" });
@@ -110,22 +113,46 @@ async function resetPassword(req, res){
         const salt = await bcrypt.genSalt(Number(process.env.SALT));
         const hashPassword = await bcrypt.hash(password, salt);
         const newUser = await userUpdatePassword(userid, hashPassword);
-        if(!newUser){
+        if (!newUser) {
             return res.status(400).json({ error: true, message: "Error something happens recovering your account" });
         }
         const isNewUserValid = await findUserById(userid);
-        if(isNewUserValid){
+        if (isNewUserValid) {
             await deleteResetToken(resetToken.resetToken);
             const html = successPasswordResetMailHtml();
             sendEmail(isNewUserValid.email, "Contraseña recuperada de forma exitosa", html);
             return res.status(201).json({ error: false, message: "Password updated successfully" });
-        }else{
+        } else {
             return res.status(500).json({ error: true, message: "Internal Server Error" });
         }
-    }else{
+    } else {
+        return res
+            .status(404)
+            .json({ error: true, message: "No user or reset token found" });
+    }
+}
+
+
+async function getSkin(req, res) {
+    try {
+        const playerName = req.body.nickName;
+        const response = await fetch(`https://api.mojang.com/users/profiles/minecraft/${playerName}`);
+        const playerData = await response.json();
+
+        const uuid = playerData.id;
+
+        const profileResponse = await fetch(`https://sessionserver.mojang.com/session/minecraft/profile/${uuid}`);
+        const profileData = await profileResponse.json();
+
+        const properties = profileData.properties[0].value;
+        const decodedProperties = JSON.parse(atob(properties));
+        const skinURL = decodedProperties.textures.SKIN.url;
+
+        res.send({ error: false, skinURL, message: "Skin found" });
+    } catch (error) {
         return res
         .status(404)
-        .json({ error: true, message: "No user or reset token found" }); 
+        .json({ error: true, message: "No Skin found" });
     }
 }
 module.exports = {
@@ -133,5 +160,6 @@ module.exports = {
     loginUser,
     getUserInfo,
     requestPasswordReset,
-    resetPassword
+    resetPassword,
+    getSkin
 };

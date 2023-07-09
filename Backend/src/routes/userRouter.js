@@ -16,5 +16,6 @@ router.get('/',verifyToken,userController.getUserInfo);
 router.get('/verify',verifyTokenAndGetUser);
 router.post('/requestpasswordreset', userController.requestPasswordReset);
 router.post('/passwordreset', userController.resetPassword);
+router.get('/skin',verifyToken, userController.getSkin);
 
 module.exports = router;
