@@ -7,6 +7,7 @@ import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import Swal from 'sweetalert2'
 import IconButton from '@mui/material/IconButton';
 import DownloadIcon from '@mui/icons-material/Download';
+import { storeSkin } from '../../states/skinStore';
 
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
@@ -40,6 +41,10 @@ export default function BackupList() {
     const [message, setMessage] = useState({});
     const [socket, setSocket] = useState(null);
     const [downloadProgress, setDownloadProgress] = useState(0);
+    const setAnimation = storeSkin((state) => state.setAnimation);
+    const getAnimation = storeSkin(state => state.animation);
+    const setSpeed = storeSkin((state) => state.setSpeed);
+    const getSpeed = storeSkin(state => state.speed);
 
     const columns = [
         {
@@ -123,6 +128,7 @@ export default function BackupList() {
         }
         setLoadingZipCreation(true);
         socket.emit('create-backup-file');
+        setAnimation(1)
     };
 
     const initializeSocket = () => {
@@ -168,6 +174,8 @@ export default function BackupList() {
                 setLoadingZipCreation(false);
             }
             if (data?.type === 'statusSuccess' && !data?.error) {
+                setSpeed(1);
+                setAnimation(1);
                 Swal.fire({
                     icon: 'success',
                     title: 'Completado',
@@ -181,6 +189,29 @@ export default function BackupList() {
                     text: 'Ha ocurrido un error',
                 });
             }
+
+            if (data?.type === 'statusPercentZip') {
+                if(getAnimation!=1){
+                    setAnimation(1);
+                }
+                var speedValue = parseInt(data.value);
+                var currentSpeed = parseInt(getSpeed);
+                if(speedValue != currentSpeed){
+                    let newSpeed = speedValue/100;
+                    setSpeed(newSpeed);
+                }
+            } 
+            if (data?.type === 'statusPercentGdrive') {
+                if(getAnimation!=2){
+                    setAnimation(2);
+                }
+                var speedValue = parseInt(data.value);
+                var currentSpeed = parseInt(getSpeed);
+                if(speedValue != currentSpeed){
+                    let newSpeed = speedValue/100;
+                    setSpeed(newSpeed);
+                }
+            } 
         });
 
         socket.on('disconnect', () => {

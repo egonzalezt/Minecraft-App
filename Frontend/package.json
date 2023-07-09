@@ -23,6 +23,7 @@
     "react-router-dom": "^6.4.5",
     "react-scripts": "5.0.1",
     "simplebar-react": "^3.2.4",
+    "skinview3d": "^3.0.0-alpha.1",
     "socket.io-client": "^4.6.2",
     "sweetalert2": "^11.6.15",
     "terminal-in-react": "^4.3.1",

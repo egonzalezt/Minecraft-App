@@ -19,6 +19,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import UploadModStatus from '../uploadModStatus';
 import admin from '../../services/admin';
 import { enqueueSnackbar } from 'notistack';
+import { useNavigate } from "react-router-dom";
 
 function UploadMod() {
     const [files, setFiles] = useState([]);
@@ -26,6 +27,7 @@ function UploadMod() {
     const inputRef = useRef(null);
     const [open, setOpen] = useState(true);
     const [totalFiles, setTotalFiles] = useState(0);
+    const navigate = useNavigate();
 
     const handleClick = () => {
         setOpen(!open);
@@ -270,7 +272,7 @@ function UploadMod() {
     useEffect(() => {
         if (totalFiles <= 0 && loading) {
             setLoading(false);
-            window.location.reload();
+            navigate(`/dashboard/admin`);
         }
     }, [totalFiles, loading]);
 

@@ -7,6 +7,7 @@ import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import Swal from 'sweetalert2'
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
+import { storeSkin } from '../../states/skinStore';
 
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
@@ -71,6 +72,10 @@ export default function ModList() {
     const [deletingMods, setDeletingMods] = useState(false);
     const [message, setMessage] = useState({});
     const [socket, setSocket] = useState(null);
+    const setAnimation = storeSkin((state) => state.setAnimation);
+    const getAnimation = storeSkin(state => state.animation);
+    const setSpeed = storeSkin((state) => state.setSpeed);
+    const getSpeed = storeSkin(state => state.speed);
 
     const initializeSocket = () => {
         const newSocket = SocketClient;
@@ -78,8 +83,12 @@ export default function ModList() {
     };
 
     const createZipRequest = () => {
+        if (socket === null) {
+            initializeSocket();
+        }
         setLoadingZipCreation(true);
         socket.emit('create-zip-file');
+        setAnimation(1)
     }
 
     function searchData(page) {
@@ -175,6 +184,8 @@ export default function ModList() {
                 setLoadingZipCreation(false);
             }
             if (data?.type === 'statusSuccess' && !data?.error) {
+                setAnimation(1);
+                setSpeed(1);
                 Swal.fire({
                     icon: 'success',
                     title: 'Completado',
@@ -188,6 +199,18 @@ export default function ModList() {
                     text: 'Ha ocurrido un error',
                 });
             }
+
+            if (data?.type === 'statusPercent') {
+                if(getAnimation!=2){
+                    setAnimation(2);
+                }
+                var speedValue = parseInt(data.value);
+                var currentSpeed = parseInt(getSpeed);
+                if(speedValue != currentSpeed){
+                    let newSpeed = speedValue/100;
+                    setSpeed(newSpeed);
+                }
+            } 
         });
 
         socket.on('disconnect', () => {

@@ -12,10 +12,14 @@ import Logo from '../logo';
 import NavSection from '../nav-section/NavSection';
 // States
 import SocketClient from '../../../socketConnection'
+import { storeSkin } from '../../../states/skinStore';
 //
 import { superAdminNavConfig, adminNavConfig, userNavConfig } from './config';
 import { storeData } from '../../../states/stores';
 import { enqueueSnackbar } from 'notistack';
+import SkinRenderer from '../../Skinview3D/skinRenderer';
+import skinDefault from '../../../img/rei.png'
+import axios from 'axios';
 
 // ----------------------------------------------------------------------
 
@@ -47,16 +51,20 @@ export default function Nav({ openNav, onCloseNav }) {
   const [socket, setSocket] = useState(null);
   const [serverPingResult, setServerPingResult] = useState(null);
   const [navbarImage, setNavbarImage] = useState(null);
+  const [skinData, setSkinData] = useState(skinDefault);
+  const [animation, setAnimation] = useState(0);
+  const [speed, setSpeed] = useState(1);
 
   const getUser = storeData(state => state.user);
-
+  const getAnimation = storeSkin(state => state.animation);
+  const getSpeed = storeSkin(state => state.speed);
   const isDesktop = useResponsive('up', 'lg');
-
+  
   const initializeSocket = () => {
     const newSocket = SocketClient;
     setSocket(newSocket);
   };
-
+  
   useEffect(() => {
     initializeSocket();
 
@@ -67,6 +75,16 @@ export default function Nav({ openNav, onCloseNav }) {
       }
     };
   }, []);
+  useEffect(() => {
+    if(getAnimation){
+      setAnimation(getAnimation)
+    }
+  }, [getAnimation]);
+  useEffect(() => {
+    if(getSpeed){
+      setSpeed(getSpeed)
+    }
+  }, [getSpeed]);
 
   useEffect(() => {
     if (!socket) {
@@ -108,6 +126,30 @@ export default function Nav({ openNav, onCloseNav }) {
   }, [getUser]);
 
   useEffect(() => {
+    const fetchSkin = async (playerName) => {
+      try {
+        const response = await axios.get(`https://api.mojang.com/users/profiles/minecraft/${playerName}`);
+        const playerData = response.data;
+
+        const uuid = playerData.id;
+
+        const profileResponse = await axios.get(`https://sessionserver.mojang.com/session/minecraft/profile/${uuid}`);
+        const profileData = profileResponse.data;
+
+        const properties = profileData.properties[0].value;
+        const decodedProperties = JSON.parse(atob(properties));
+        const skinURL = decodedProperties.textures.SKIN.url;
+
+        setSkinData(skinURL);
+      } catch (error) {
+        console.error('Error fetching player skin:', error);
+      }
+    };
+
+    fetchSkin(user.nickName);
+  }, [user.nickName]);
+
+  useEffect(() => {
     const randomIndex = Math.floor(Math.random() * media.length);
     const randomValue = media[randomIndex];
     setNavbarImage(`/assets/images/characters/${randomValue}`)
@@ -147,22 +189,28 @@ export default function Nav({ openNav, onCloseNav }) {
 
       <Box sx={{ flexGrow: 1 }} />
 
-      <Box sx={{ px: 2.5, pb: 3, mt: 15 }}>
+      <Box sx={{ px: 2.5, pb: 3, mt: isDesktop?5:15  }}>
         <Stack alignItems="center" spacing={3} sx={{ pt: 5, borderRadius: 2, position: 'relative' }}>
-          {navbarImage ?
-            <Box
-              component="img"
-              src={navbarImage}
-              sx={{ height: 150, position: 'absolute', top: -100 }}
-            />
-            :
-            <Box
-              component="img"
-              src="/assets/images/Alex_Fighter.webp"
-              sx={{ width: 150, position: 'absolute', top: -100 }}
-            />
-          }
 
+          {(isDesktop && skinData) ?
+            <SkinRenderer skinData={skinData} nameTag={user.nickName} animationType={animation} width={250} height={300} speed={speed}/>
+            :
+            <>
+              {navbarImage ?
+                <Box
+                  component="img"
+                  src={navbarImage}
+                  sx={{ height: 150, position: 'absolute', top: -100 }}
+                />
+                :
+                <Box
+                  component="img"
+                  src="/assets/images/Alex_Fighter.webp"
+                  sx={{ width: 150, position: 'absolute', top: -100 }}
+                />
+              }
+            </>
+          }
           <Box sx={{ textAlign: 'center' }}>
             <Typography gutterBottom variant="h6" sx={{ color: 'white' }}>
               Listo Para Jugar?
