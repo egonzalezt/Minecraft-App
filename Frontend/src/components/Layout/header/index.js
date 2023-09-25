@@ -8,6 +8,7 @@ import { bgBlur } from '../utils/cssStyles';
 import Iconify from '../iconify';
 //
 import AccountPopover from './AccountPopover';
+import LanguagePopover from './LanguagePopover';
 // ----------------------------------------------------------------------
 
 const NAV_WIDTH = 280;
@@ -63,6 +64,7 @@ export default function Header({ onOpenNav }) {
             sm: 1,
           }}
         >
+          <LanguagePopover />
           <AccountPopover />
         </Stack>
       </StyledToolbar>

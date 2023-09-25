@@ -3,8 +3,11 @@ import Footer from "../components/footer";
 import NavBar from "../components/navBar";
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { useTranslation } from 'react-i18next';
 
 function Main() {
+    const { t } = useTranslation();
+
     return (
         <div>
             <NavBar />
@@ -17,10 +20,10 @@ function Main() {
                 <Header />
                     <Typography variant="h3">kiubo gonorea</Typography>
                     <Typography>
-                        Presione el boton para descargar los mods men.
+                        {t("mainPage.downloadMods")}
                     </Typography>
                     <Typography>
-                        Version de maincra 1.19.2
+                        {t("mainPage.minecraftVersion")} 1.19.2
                     </Typography>
                     <Typography>
                         Fabric 0.11.2
@@ -29,37 +32,37 @@ function Main() {
                         Turip Ip Ip
                     </Typography>
                     <Typography>
-                        Montesitos Product Owner
+                        Montesitos {t("commons.softwareDev.po")}
                     </Typography>
                     <Typography>
-                        Llamas220 Product Owner
+                        Llamas220 {t("commons.softwareDev.po")}
                     </Typography>
                     <Typography>
-                        Daves2126 Developer
+                        Daves2126 {t("commons.softwareDev.dev")}
                     </Typography>
                     <Typography>
-                        Catmizxc Supervisor, Performance Engineer
+                        Catmizxc {t("commons.softwareDev.supervisor")}, {t("commons.softwareDev.pe")}
                     </Typography>
                     <Typography>
-                        DavidSonLee Cloud Engineer
+                        DavidSonLee {t("commons.softwareDev.ce")}
                     </Typography>
                     <Typography>
-                        Ima24 Tester
+                        Ima24 {t("commons.softwareDev.tester")}
                     </Typography>
                     <Typography>
-                        DoctorEaker (UI) Designer
+                        DoctorEaker {t("commons.softwareDev.designer")}
                     </Typography>
                     <Typography>
-                        Perderas BetaTester
+                        Perderas {t("commons.softwareDev.betaTester")}
                     </Typography>
                     <Typography>
-                        Almowolf (UI) Designer
+                        Almowolf {t("commons.softwareDev.designer")}
                     </Typography>
                     <Typography>
                         Turip Ip Ip
                     </Typography>
                     <Typography>
-                        Made by VasitosCorp
+                    {t("commons.madeBy")} {t("commons.vasitosCorp")}
                     </Typography>
             </Stack>
             <Footer />

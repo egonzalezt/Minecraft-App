@@ -20,6 +20,7 @@ import UploadModStatus from '../uploadModStatus';
 import admin from '../../services/admin';
 import { enqueueSnackbar } from 'notistack';
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 function UploadMod() {
     const [files, setFiles] = useState([]);
@@ -27,6 +28,7 @@ function UploadMod() {
     const inputRef = useRef(null);
     const [open, setOpen] = useState(true);
     const [totalFiles, setTotalFiles] = useState(0);
+    const { t, i18n } = useTranslation();
     const navigate = useNavigate();
 
     const handleClick = () => {
@@ -64,11 +66,11 @@ function UploadMod() {
                 for (const file of validFiles) {
                     const alreadyAdded = modsResponse[file.name];
                     if (alreadyAdded) {
-                        enqueueSnackbar(`El archivo ${file.name} ya existe en el servidor y sera ignorado.`, { variant: 'warning' });
+                        enqueueSnackbar(t("listMods.popUpDuplicateFile.text",{name: file.name}), { variant: 'warning' });
                     } else {
                         const isDuplicate = files.some((existingFile) => existingFile.name === file.name);
                         if (isDuplicate) {
-                            enqueueSnackbar(`El archivo ${file.name} ya existe en la lista y sera ignorado.`, { variant: 'warning' });
+                            enqueueSnackbar(t("listMods.popUpDuplicateFile.text",{name: file.name}), { variant: 'warning' });
                         } else {
                             newFiles.push(file);
                         }
@@ -134,12 +136,12 @@ function UploadMod() {
                     if (successUpload) {
                         return {
                             ...file,
-                            status: 'Completado'
+                            status: t("commons.complete")
                         };
                     } else {
                         return {
                             ...file,
-                            status: 'Error'
+                            status: t("commons.error")
                         };
                     }
                 }
@@ -177,8 +179,8 @@ function UploadMod() {
                         timer: 3000,
                         timerProgressBar: true,
                         icon: 'warning',
-                        title: 'Archivo duplicado',
-                        text: `El archivo ${file.name} ya existe en la lista y será ignorado.`,
+                        title: t("listMods.popUpDuplicateFile.title"),
+                        text: t("listMods.popUpDuplicateFile.text",{name: file.name})
                     });
                 }
                 return !isDuplicate;
@@ -190,17 +192,17 @@ function UploadMod() {
                 timer: 3000,
                 timerProgressBar: true,
                 icon: 'warning',
-                title: 'Cargue un archivo válido',
-                text: 'Rectifique que todos los mods seleccionados sean .Jar',
+                title: t("listMods.popUpBadFile.text"),
+                text: t("listMods.popUpBadFile.text"),
             });
         }
     };
 
     const columns = [
-        { field: 'id', headerName: 'ID', width: 70 },
+        { field: 'id', headerName: t("uploadMultiple.table.id"), width: 70 },
         {
             field: 'customName',
-            headerName: 'Nombre',
+            headerName: t("uploadMultiple.table.name"),
             flex: 1,
             renderCell: (params) => (
                 <TextField
@@ -210,10 +212,10 @@ function UploadMod() {
                 />
             ),
         },
-        { field: 'name', headerName: 'Nombre de archivo', flex: 1 },
+        { field: 'name', headerName: t("uploadMultiple.table.fileName"), flex: 1 },
         {
             field: 'version',
-            headerName: 'Version',
+            headerName: t("uploadMultiple.table.version"),
             flex: 1,
             renderCell: (params) => (
                 <TextField
@@ -225,7 +227,7 @@ function UploadMod() {
         },
         {
             field: 'client',
-            headerName: 'Cliente',
+            headerName: t("commons.client"),
             width: 120,
             renderCell: (params) => (
                 <Checkbox
@@ -237,7 +239,7 @@ function UploadMod() {
         },
         {
             field: 'server',
-            headerName: 'Servidor',
+            headerName: t("commons.server"),
             width: 120,
             renderCell: (params) => (
                 <Checkbox
@@ -249,12 +251,12 @@ function UploadMod() {
         },
         {
             field: 'status',
-            headerName: 'Estado',
+            headerName: t("commons.status"),
             width: 120,
         },
         {
             field: 'actions',
-            headerName: 'Eliminar',
+            headerName: t("commons.delete"),
             width: 120,
             renderCell: (params) => (
                 <Button
@@ -284,7 +286,7 @@ function UploadMod() {
                     component="nav"
                 >
                     <ListItemButton onClick={handleClick}>
-                        <ListItemText primary="Descargas" />
+                        <ListItemText primary={t("commons.downloads")} />
                         {open ? <ExpandLess /> : <ExpandMore />}
                     </ListItemButton>
                     <Collapse in={open}>
@@ -297,7 +299,7 @@ function UploadMod() {
                 </List>
             </Snackbar>
             <Typography variant="h2" gutterBottom>
-                Subir mod
+                {t("uploadMultiple.title")}
             </Typography>
             <Grid container marginTop={2} justifyContent="center" spacing={5}>
                 <Grid item
@@ -318,7 +320,7 @@ function UploadMod() {
                         }
                     }}>
                     <Typography paragraph>
-                        Arrastra y suelta archivos aqui o haz clic para seleccionarlos
+                    {t("uploadMultiple.dropFiles")}
                     </Typography>
                     <input
                         ref={inputRef}
@@ -339,7 +341,7 @@ function UploadMod() {
                         name: file.name,
                         customName: file.customName || '',
                         version: file.version || '1.19.2',
-                        status: file.status || 'Pendiente',
+                        status: file.status || t("commons.pending"),
                         isClientChecked: checkValue(file.isClientChecked),
                         isServerChecked: checkValue(file.isServerChecked),
                     }))} autoHeight pageSize={5} rowsPerPageOptions={[5]} />
@@ -354,7 +356,7 @@ function UploadMod() {
                         startIcon={<SaveIcon />}
                         variant="contained"
                     >
-                        Subir
+                        {t("commons.upload")}
                     </LoadingButton>
                 )}
             </Grid>

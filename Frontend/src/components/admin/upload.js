@@ -8,6 +8,7 @@ import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Unstable_Grid2';
 import Swal from 'sweetalert2'
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
@@ -16,7 +17,7 @@ import AdminApi from '../../services/admin';
 
 function UploadMod() {
     const navigate = useNavigate();
-
+    const { t, i18n } = useTranslation();
     const [file, setFile] = useState(null);
     const [name, setName] = useState("");
     const [url, setUrl] = useState("");
@@ -24,7 +25,7 @@ function UploadMod() {
     const [client, setClient] = useState(false);
     const [server, setServer] = useState(false);
     const [isValidFile, setIsValidFile] = useState();
-    const [fileName, setFileName] = useState("Cargar mod");
+    const [fileName, setFileName] = useState(t("commons.uploadMod"));
     const [loading, setLoading] = useState(false);
     const [isInvalidName, setIsInvalidName] = useState(true);
     const [isInvalidVersion, setIsInvalidVersion] = useState(true);
@@ -37,23 +38,23 @@ function UploadMod() {
     const submitMod = () => {
         let errors = []
         if(!client && !server){
-            errors.push("<li>Seleccione el tipo de mod Server/Client</li>");
+            errors.push(`<li>${t("uploadMod.popUp.warn.type")}</li>`);
         }
         if(isInvalidName){
-            errors.push("<li>Revise el nombre del mod</li>");
+            errors.push(`<li>${t("uploadMod.popUp.warn.name")}</li>`);
         }
         if(isInvalidVersion){
-            errors.push("<li>Revise la version del mod</li>");
+            errors.push(`<li>${t("uploadMod.popUp.warn.version")}</li>`);
         }
         if(!isValidFile){
-            errors.push("<li>Revise el archivo</li>");
+            errors.push(`<li>${t("uploadMod.popUp.warn.file")}</li>`);
         }
 
 
         if(errors.length > 0){
             Swal.fire({
                 icon: 'warning',
-                title: 'Hey te falto algo en el formulario',
+                title: t("commons.errors.formTitle"),
                 footer: `<ul>${errors.join("")}</ul>`
             })
             return;
@@ -113,15 +114,15 @@ function UploadMod() {
     return (
         <div>
             <Typography margin={3} variant="h2" gutterBottom>
-                Subir mod
+                {t("uploadMod.title")}
             </Typography>
             <Grid container justifyContent="center" spacing={5}>
                 <Grid xs={12} sm={6}>
                     <TextField
                         error = {isInvalidName}
-                        helperText ={isInvalidName&& "Nombre es invalido"}
+                        helperText ={isInvalidName&& t("uploadMod.errors.name")}
                         required
-                        label="Nombre del mod"
+                        label={t("uploadMod.name")}
                         fullWidth
                         variant="standard"
                         value={name}
@@ -138,9 +139,9 @@ function UploadMod() {
                 <Grid xs={12} sm={6}>
                     <TextField
                         error = {isInvalidVersion}
-                        helperText ={isInvalidVersion && "La version es invalido"}
+                        helperText ={isInvalidVersion && t("uploadMod.errors.version")}
                         required
-                        label="Version del mod"
+                        label={t("uploadMod.version")}
                         fullWidth
                         variant="standard"
                         value={version}
@@ -156,7 +157,7 @@ function UploadMod() {
                 </Grid>
                 <Grid xs={12}>
                     <TextField
-                        label="Url Mod"
+                        label={t("uploadMod.url")}
                         fullWidth
                         variant="standard"
                         value={url}
@@ -167,8 +168,8 @@ function UploadMod() {
                 </Grid>
                 <Grid xs={12}>
                     <FormGroup>
-                        <FormControlLabel control={<Checkbox checked={server} onChange={(event) => setServer(event.target.checked)} />} label="Servidor" />
-                        <FormControlLabel control={<Checkbox checked={client} onChange={(event) => setClient(event.target.checked)} />} label="Cliente" />
+                        <FormControlLabel control={<Checkbox checked={server} onChange={(event) => setServer(event.target.checked)} />} label={t("commons.server")}/>
+                        <FormControlLabel control={<Checkbox checked={client} onChange={(event) => setClient(event.target.checked)} />} label={t("commons.client")} />
                     </FormGroup>
                 </Grid>
                 <Grid width="50%" xs={12} border={5} padding={5} sx={{
@@ -197,7 +198,7 @@ function UploadMod() {
                         startIcon={<SaveIcon />}
                         variant="contained"
                     >
-                        Subir
+                        {t("commons.upload")}
                     </LoadingButton>
                 </Grid>
             </Grid>

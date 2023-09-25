@@ -3,8 +3,11 @@ import Terminal from 'terminal-in-react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box'; // Import Box component from Mui
 import RconApi from '../../services/rcon';
+import { useTranslation } from 'react-i18next';
 
 function Server() {
+  const { t } = useTranslation();
+
   return (
     <Box
       display="flex"
@@ -13,7 +16,7 @@ function Server() {
     >
       <div className="server-container">
         <Typography margin={3} variant="h2" gutterBottom>
-          Ejecutar comando
+          {t("commands.title")}
         </Typography>
         <Terminal
           color='green'
@@ -34,7 +37,7 @@ function Server() {
             }),
           }}
           descriptions={{
-            'mine-help': 'obten los comandos de apoyo',
+            'mine-help': t("commands.descriptions.helpText"),
           }}
           commandPassThrough={(cmd, print) => {
             RconApi.runCommand(cmd.join(' ')).then((res) => {
@@ -43,7 +46,7 @@ function Server() {
               print("Ocurrio un error al ejecutar el comando")
             })
           }}
-          msg='Minecraft Terminal escriba help para mas informacion'
+          msg={t('commands.terminalTitle')}
         />
       </div>
     </Box>

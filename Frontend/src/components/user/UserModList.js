@@ -8,9 +8,10 @@ import IconButton from '@mui/material/IconButton';
 import DownloadIcon from '@mui/icons-material/Download';
 import ModsApi from '../../services/mods'
 import Swal from 'sweetalert2'
+import { useTranslation } from 'react-i18next';
 
 export default function UserModList() {
-
+    const { t } = useTranslation();
     const [mods, setMods] = useState([]);
     const [totalMods, setTotalMods] = useState(0);
     const [pageSize, setPageSize] = useState(15);
@@ -19,21 +20,21 @@ export default function UserModList() {
     const columns = [
         {
             field: 'name',
-            headerName: 'Nombre',
+            headerName: t("listMods.table.name"),
             minWidth: 200,
             flex: 1,
             editable: false,
         },
         {
             field: 'version',
-            headerName: 'Version',
+            headerName: t("listMods.table.version"),
             minWidth: 150,
             flex: 1,
             editable: false,
         },
         {
             field: 'fileName',
-            headerName: 'Archivo',
+            headerName: t("listMods.table.fileName"),
             minWidth: 200,
             flex: 1,
             editable: false,
@@ -42,7 +43,7 @@ export default function UserModList() {
             field: "download",
             minWidth: 150,
             flex: 1,
-            headerName: "Descargar",
+            headerName: t("commons.download"),
             sortable: false,
             renderCell: (cellValues) => {
                 const date = new Date(cellValues.row.createdAt)
@@ -132,7 +133,7 @@ export default function UserModList() {
         <Box>
             <Grid item xs={12} md={6}>
                 <Typography sx={{ mb: 2 }} variant="h2" component="div">
-                    Lista de Mods
+                    {t("listMods.title")}
                 </Typography>
                 <Box sx={{ height: 800, width: '100%' }}>
                     <DataGrid

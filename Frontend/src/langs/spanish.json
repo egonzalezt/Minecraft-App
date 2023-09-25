@@ -1,0 +1,167 @@
+{
+    "mainPage":{
+        "subTitle": "Vamo a jugar Arequipet",
+        "downloadMods": "Presione el boton para descargar los mods men.",
+        "minecraftVersion": "Version de maincra",
+        "downloadModsButton": "Descargar mods",
+        "downloadFabric": "Descargar fabric"
+    },
+    "auth": {
+        "loginTitle": "Ingresar",
+        "signUpTitle": "Registro",
+        "signUpTitleBtn": "Registrarse",
+        "email": "Correo",
+        "password": "Contraseña",
+        "nickName": "Apodo",
+        "createAccount": "¿No tienes cuenta? Registrate",
+        "forgotPassword": "¿Olvidaste la contraseña?",
+        "validators": {
+            "invalidEmail": "Correo invalido",
+            "requiredEmail": "El correo es requerido",
+            "requiredPassword": "La contraseña es requerida",
+            "passwordMinLength": "Contraseña debe tener al menos {{min}} caracteres",
+            "passwordMaxLength": "Contraseña debe tener maximo {{max}} caracteres",
+            "passwordUpper": "Contraseña debe tener una letra mayuscula",
+            "passwordLower": "Contraseña debe tener una letra minuscula",
+            "passwordSymbol": "Contraseña debe tener un simbolo",
+            "passwordNumber": "Contraseña debe tener un numero",
+            "requiredNickName": "El nombre de usuario es requerido",
+            "nickNameMinLength": "El nombre de usuario requiere minimo {{min}} caracteres",
+            "nickNameMaxLength": "El nombre de usuario requiere maximo {{max}} caracteres"
+        },
+        "accountCreatedMessage": "Cuenta Registrada",
+        "welcomeMessage": "Bienvenid@ {{nickName}} a Arequipet"
+    },
+    "uploadMod": {
+        "title": "Subir Mod", 
+        "name": "Nombre del mod",
+        "version": "Version del Mod",
+        "url": "Url mod",
+        "errors": {
+            "version": "La version es invalida", 
+            "name": "Nombre es invalido"
+        },
+        "popUp":{
+            "warn":{
+                "type": "Seleccione el tipo de mod Server/Client",
+                "name": "Revise el nombre del mod",
+                "version": "Revise la version del mod",
+                "file": "Revise el archivo"
+            }
+        }
+    },
+    "uploadMultiple": {
+        "title": "Subir mod",
+        "dropFiles": "Arrastra y suelta archivos aqui o haz clic para seleccionarlos",
+        "table": {
+            "id": "ID",
+            "name": "Nombre",
+            "version": "Version",
+            "fileName": "Nombre de archivo",
+            "type": "Tipo Mod"
+        }
+    },
+    "listMods": {
+        "title": "Lista de Mods",
+        "addMod": "Agregar mod",
+        "createZip": "Crear .ZIP",
+        "table": {
+            "name": "Nombre",
+            "version": "Version",
+            "fileName": "Archivo",
+            "type": "Tipo Mod"
+        },
+        "popUpDuplicateFile": {
+            "title": "Archivo duplicado",
+            "text": "El archivo {{name}} ya existe en la lista y será ignorado."
+        },
+        "popUpBadFile": {
+            "title": "Cargue un archivo válido",
+            "text": "Rectifique que todos los mods seleccionados sean .Jar"
+        }
+    },
+    "modConfig": {
+        "title":"Editar configuracion de mods",
+        "editModTitle": "Editar {{filename}}"
+    },
+    "serverProperties": "Editar server.properties",
+    "backups": {
+        "title": "Lista de Backups",
+        "creationProgress": "Progreso creacion backup: {{value}}%",
+        "driveProgress": "Subiendo archivo a Google Drive: {{value}}%",
+        "downloadBackup": "Descargando Backup: {{value}}%",
+        "deleteQuestion": "¿Estas seguro de eliminar los backups seleccionados?",
+        "deletingBackups": "Eliminando Backups",
+        "backupErrorTitle": "Ha ocurrido un error eliminando los backups",
+        "createBackups": "Crear Backup",
+        "table": {
+            "fileName": "Nombre",
+            "createdAt": "Fecha de creacion"
+        },
+        "completePopUp": {
+            "title": "Completado",
+            "text": "Se ha creado el backup de forma exitosa"
+        }
+    },
+    "commands": {
+        "title": "Ejecutar comando",
+        "terminalTitle": "Minecraft Terminal escriba help para mas informacion",
+        "descriptions": {
+            "helpTitle": "mine-help",
+            "helpText": "obten los comandos de apoyo"
+        }
+    },
+    "navBar":{
+        "mods": {
+            "main": "Mods",
+            "add": "Agregar",
+            "addMultiple": "Agregar Multiple",
+            "download": "Descargar Mods"
+        },
+        "configuration": {
+            "main":"Configuracion",
+            "serverProperties": "Propiedades del servidor",
+            "modsProperties": "Propiedades de los mods"
+        },
+        "terminal": "Terminal",
+        "backups": "Respaldos",
+        "readyToPlay": "Listo Para Jugar?",
+        "serverStatus": "Estado del servidor"
+    },
+    "commons": {
+        "login": "Login",
+        "dashboard": "Dashboard",
+        "notAvailable": "No disponible",
+        "available": "Disponible",
+        "downloads": "Descargas",
+        "download": "Descargar",
+        "server": "Servidor",
+        "client": "Cliente",
+        "upload": "Subir",
+        "uploadMod": "Cargar mod",
+        "status": "Estado",
+        "delete": "Eliminar",
+        "complete": "Completado",
+        "pending": "Pendiente",
+        "error": "Error",
+        "operationCancel": "Operacion cancelada",
+        "madeBy": "Creado por",
+        "vasitosCorp": "Vasitos Corp",
+        "softwareDev":{
+            "po": "Product owner",
+            "dev": "Desarrollador",
+            "supervisor": "Supervisor",
+            "pe": "Ingeniero de Performance",
+            "ce": "Ingeniero Cloud",
+            "tester": "Test",
+            "designer": "(UI) Designer",
+            "betaTester": "Beta Tester"
+        },
+        "errors": {
+            "genericMessage": "Ha ocurrido un error",
+            "oops": "Oops",
+            "formTitle": "Hey te falto algo en el formulario",
+            "authentication": "No posee permisos"
+        }
+    }
+}

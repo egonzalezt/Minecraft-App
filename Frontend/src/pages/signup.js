@@ -14,8 +14,10 @@ import RadioButtonCheckedTwoToneIcon from '@mui/icons-material/RadioButtonChecke
 import RadioButtonUncheckedTwoToneIcon from '@mui/icons-material/RadioButtonUncheckedTwoTone';
 import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
+import { useTranslation } from 'react-i18next';
 
 function App() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const [isRequired, setRequired] = useState(false);
     const [isMinLength, setMinLength] = useState(false);
@@ -24,15 +26,17 @@ function App() {
     const [isLowercase, setLowercase] = useState(false);
     const [isSpecial, setSpecial] = useState(false);
     const [isNumber, setNumber] = useState(false);
+    const nickNameRanges = {min: 4, max: 50}
+    const passLength = {min: 8, max: 100}
 
     const schema = Yup.object().shape({
         nickName: Yup.string()
-            .min(4, "El nombre de usuario requiere minimo 4 caracteres")
-            .max(50, "El nombre de usuario requiere maximo 50 caracteres")
-            .required("El nombre de usuario es requerido"),
+            .min(nickNameRanges.min, t("auth.validators.nickNameMinLength",{min: nickNameRanges.min}))
+            .max(nickNameRanges.max, t("auth.validators.nickNameMaxLength",{max: nickNameRanges.max}))
+            .required(t("auth.validators.requiredNickName")),
         email: Yup.string()
-            .required("El correo es requerido")
-            .email("Correo invalido"),
+            .required(t("auth.validators.requiredEmail"))
+            .email(t("auth.validators.invalidEmail")),
         password: Yup.string().when('password', (password, field) => {
             if (password == null) {
                 setRequired(false)
@@ -91,15 +95,15 @@ function App() {
                 timer: 3000,
                 timerProgressBar: true,
                 icon: 'success',
-                title: `Cuenta registrada`,
-                text: `Bienvenid@ ${data.nickName} a arequipet.ga`,
+                title: t("auth.accountCreatedMessage"),
+                text: t("auth.welcomeMessage",{nickName: data.nickName})
             }).then(() => navigate("/login"));
         }).catch(err => {
             Swal.fire({
                 timer: 2000,
                 timerProgressBar: true,
                 icon: 'error',
-                title: 'Error',
+                title: t("commons.error"),
                 text: err.response.data.message,
             })
         });
@@ -128,14 +132,15 @@ function App() {
                                         <IconButton component={Link} to={"/"}>
                                             <ArrowBackRoundedIcon />
                                         </IconButton>
-                                        Registro</span>
+                                        {t("auth.signUpTitle")}
+                                    </span>
                                     <input
                                         type="nickName"
                                         name="nickName"
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.nickName}
-                                        placeholder="Apodo"
+                                        placeholder={t("auth.nickName")}
                                         className="form-control inp_text"
                                         id="nickName"
                                     />
@@ -150,7 +155,7 @@ function App() {
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.email}
-                                        placeholder="Correo"
+                                        placeholder={t("auth.email")}
                                         className="form-control inp_text"
                                         id="email"
                                     />
@@ -161,22 +166,22 @@ function App() {
                                         <Fragment>
                                             <Stack direction='column' width="100%" spacing={2} justifyContent="flex-start" alignItems="flex-start" paddingBottom={2}>
                                                 <Typography fontSize={12}>
-                                                    {(isMinLength && isRequired) ? <RadioButtonCheckedTwoToneIcon sx={{ fontSize: 15, color: "green" }} /> : <RadioButtonUncheckedTwoToneIcon sx={{ fontSize: 15, color: "red" }} />} Contraseña debe tener al menos 8 caracteres
+                                                    {(isMinLength && isRequired) ? <RadioButtonCheckedTwoToneIcon sx={{ fontSize: 15, color: "green" }} /> : <RadioButtonUncheckedTwoToneIcon sx={{ fontSize: 15, color: "red" }} />} {t("auth.validators.passwordMinLength",{min: passLength.min})}
                                                 </Typography>
                                                 <Typography fontSize={12}>
-                                                    {(isUppercase && isRequired) ? <RadioButtonCheckedTwoToneIcon sx={{ fontSize: 15, color: "green" }} /> : <RadioButtonUncheckedTwoToneIcon sx={{ fontSize: 15, color: "red" }} />} Contraseña debe tener una letra mayuscula
+                                                    {(isUppercase && isRequired) ? <RadioButtonCheckedTwoToneIcon sx={{ fontSize: 15, color: "green" }} /> : <RadioButtonUncheckedTwoToneIcon sx={{ fontSize: 15, color: "red" }} />} {t("auth.validators.passwordUpper")}
                                                 </Typography>
                                                 <Typography fontSize={12}>
-                                                    {(isMaxLength && isRequired) ? <RadioButtonCheckedTwoToneIcon sx={{ fontSize: 15, color: "green" }} /> : <RadioButtonUncheckedTwoToneIcon sx={{ fontSize: 15, color: "red" }} />} Contraseña debe tener maximo 100 caracteres
+                                                    {(isMaxLength && isRequired) ? <RadioButtonCheckedTwoToneIcon sx={{ fontSize: 15, color: "green" }} /> : <RadioButtonUncheckedTwoToneIcon sx={{ fontSize: 15, color: "red" }} />} {t("auth.validators.passwordMaxLength",{max: passLength.max})}
                                                 </Typography>
                                                 <Typography fontSize={12}>
-                                                    {(isLowercase && isRequired) ? <RadioButtonCheckedTwoToneIcon sx={{ fontSize: 15, color: "green" }} /> : <RadioButtonUncheckedTwoToneIcon sx={{ fontSize: 15, color: "red" }} />} Contraseña debe tener una letra minuscula
+                                                    {(isLowercase && isRequired) ? <RadioButtonCheckedTwoToneIcon sx={{ fontSize: 15, color: "green" }} /> : <RadioButtonUncheckedTwoToneIcon sx={{ fontSize: 15, color: "red" }} />} {t("auth.validators.passwordLower")}
                                                 </Typography>
                                                 <Typography fontSize={12}>
-                                                    {(isSpecial && isRequired) ? <RadioButtonCheckedTwoToneIcon sx={{ fontSize: 15, color: "green" }} /> : <RadioButtonUncheckedTwoToneIcon sx={{ fontSize: 15, color: "red" }} />} Contraseña debe tener un simbolo
+                                                    {(isSpecial && isRequired) ? <RadioButtonCheckedTwoToneIcon sx={{ fontSize: 15, color: "green" }} /> : <RadioButtonUncheckedTwoToneIcon sx={{ fontSize: 15, color: "red" }} />} {t("auth.validators.passwordSymbol")}
                                                 </Typography>
                                                 <Typography fontSize={12}>
-                                                    {(isNumber && isRequired) ? <RadioButtonCheckedTwoToneIcon sx={{ fontSize: 15, color: "green" }} /> : <RadioButtonUncheckedTwoToneIcon sx={{ fontSize: 15, color: "red" }} />} Contraseña debe tener un numero
+                                                    {(isNumber && isRequired) ? <RadioButtonCheckedTwoToneIcon sx={{ fontSize: 15, color: "green" }} /> : <RadioButtonUncheckedTwoToneIcon sx={{ fontSize: 15, color: "red" }} />} {t("auth.validators.passwordNumber")}
                                                 </Typography>
                                             </Stack>
                                         </Fragment>
@@ -187,11 +192,11 @@ function App() {
                                             onChange={handleChange}
                                             onBlur={handleBlur}
                                             value={values.password}
-                                            placeholder="Contraseña"
+                                            placeholder={t("auth.password")}
                                             className="form-control"
                                         />
                                     </Tooltip>
-                                    <button type="submit">Registrarse</button>
+                                    <button type="submit">{t("auth.signUpTitleBtn")}</button>
                                 </form>
                             </div>
                         </div>

@@ -7,11 +7,13 @@ import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 import admin from '../../services/admin';
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 function ModsSettings() {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -79,7 +81,7 @@ function ModsSettings() {
   return (
     <div>
       <Typography variant="h2" gutterBottom>
-        Editar configuracion de mods
+        {t("modConfig.title")}
       </Typography>
       {loading ? (
         <CircularProgress />

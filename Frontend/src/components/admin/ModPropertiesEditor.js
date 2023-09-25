@@ -11,6 +11,7 @@ import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box'; // Import Box component from Mui
 import Container from '@mui/material/Container'; // Import Container component from Mui
+import { useTranslation } from 'react-i18next';
 
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/mode-text';
@@ -25,6 +26,7 @@ function EditModProperties() {
   const [loadingSendData, setLoadingSendData] = useState(false);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
+  const { t } = useTranslation();
 
   const path = searchParams.get('dir');
   const filename = searchParams.get('name');
@@ -95,7 +97,7 @@ function EditModProperties() {
         <IconButton component={Link} to={'/dashboard/edit/mods'}>
           <ArrowBackRoundedIcon />
         </IconButton>
-        Editar {filename}
+        {t("modConfig.editModTitle",{filename})}
       </Typography>
       {loadingGetData ? (
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

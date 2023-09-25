@@ -15,8 +15,11 @@ import { ReactComponent as Logo } from '../kirb.svg';
 import { storeData } from '../states/stores';
 import UserApi from '../services/users';
 import logo from '../img/minecraft_logo.png';
+import LanguagePopover from './Layout/header/LanguagePopover';
+import { useTranslation } from 'react-i18next';
 
 function NavBar() {
+  const { t } = useTranslation();
   const getUser = storeData((state) => state.user);
   const addUser = storeData((state) => state.addUser);
   const [roles, setRoles] = useState([]);
@@ -80,17 +83,22 @@ function NavBar() {
           </Stack>
           <Stack direction={{ xs: 'column', sm: 'row' }} alignItems="center" spacing={2}>
             <Button fullWidth component={Link} to={'/status'}>
-              Server
+              {t("commons.server")}
             </Button>
+
             {getUser == null ? (
-              <Button fullWidth component={Link} to={'/login'}>
-                Login
-              </Button>
+              <>
+                <Button fullWidth component={Link} to={'/login'}>
+                  {t("commons.login")}
+                </Button>
+                <LanguagePopover/>
+              </>
             ) : (
               <>
                 <Button fullWidth onClick={handleReloadDashboard}>
-                  Dashboard
+                  {t("commons.dashboard")}
                 </Button>
+                <LanguagePopover/>
                 <IconButton
                   size="large"
                   aria-label="account of current user"

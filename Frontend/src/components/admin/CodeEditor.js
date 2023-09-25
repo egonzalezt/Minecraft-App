@@ -7,6 +7,7 @@ import AceEditor from 'react-ace';
 import admin from '../../services/admin';
 import { enqueueSnackbar } from 'notistack';
 import Container from '@mui/material/Container';
+import { useTranslation } from 'react-i18next';
 
 import 'ace-builds/src-noconflict/mode-text';
 import 'ace-builds/src-noconflict/theme-monokai';
@@ -14,6 +15,7 @@ import 'ace-builds/src-noconflict/theme-monokai';
 function EditProperties() {
   const [fileContent, setFileContent] = useState('');
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     admin.getServerProperties()
@@ -43,7 +45,7 @@ function EditProperties() {
   return (
     <Container maxWidth="md" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <Typography variant="h2" gutterBottom>
-        Editar server.properties
+        {t("serverProperties")}
       </Typography>
       <AceEditor
         mode="text"

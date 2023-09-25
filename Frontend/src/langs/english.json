@@ -1,0 +1,167 @@
+{
+  "mainPage": {
+    "subTitle": "Let's Play Arequipet",
+    "downloadMods": "Press the button to download the mods, buddy.",
+    "minecraftVersion": "Minecraft Version",
+    "downloadModsButton": "Download Mods",
+    "downloadFabric": "Download Fabric"
+  },
+  "auth": {
+    "loginTitle": "Log In",
+    "signUpTitle": "Sign Up",
+    "signUpTitleBtn": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "nickName": "Nickname",
+    "createAccount": "Don't have an account? Sign Up",
+    "forgotPassword": "Forgot your password?",
+    "validators": {
+      "invalidEmail": "Invalid email",
+      "requiredEmail": "Email is required",
+      "requiredPassword": "Password is required",
+      "passwordMinLength": "Password must be at least {{min}} characters long",
+      "passwordMaxLength": "Password must be at most {{max}} characters long",
+      "passwordUpper": "Password must have an uppercase letter",
+      "passwordLower": "Password must have a lowercase letter",
+      "passwordSymbol": "Password must have a symbol",
+      "passwordNumber": "Password must have a number",
+      "requiredNickName": "Nickname is required",
+      "nickNameMinLength": "Nickname must be at least {{min}} characters long",
+      "nickNameMaxLength": "Nickname must be at most {{max}} characters long"
+    },
+    "accountCreatedMessage": "Account Created",
+    "welcomeMessage": "Welcome, {{nickName}}, to Arequipet"
+  },
+  "uploadMod": {
+    "title": "Upload Mod",
+    "name": "Mod Name",
+    "version": "Mod Version",
+    "url": "Mod URL",
+    "errors": {
+      "version": "The version is invalid",
+      "name": "Name is invalid"
+    },
+    "popUp": {
+      "warn": {
+        "type": "Select the Server/Client mod type",
+        "name": "Check the mod name",
+        "version": "Check the mod version",
+        "file": "Check the file"
+      }
+    }
+  },
+  "uploadMultiple": {
+    "title": "Upload Mod",
+    "dropFiles": "Drag and drop files here or click to select them",
+    "table": {
+      "id": "ID",
+      "name": "Name",
+      "version": "Version",
+      "fileName": "File Name",
+      "type": "Mod Type"
+    }
+  },
+  "listMods": {
+    "title": "Mod List",
+    "addMod": "Add mod",
+    "createZip": "Create .ZIP",
+    "table": {
+      "name": "Name",
+      "version": "Version",
+      "fileName": "File",
+      "type": "Mod Type"
+    },
+    "popUpDuplicateFile": {
+      "title": "Duplicate File",
+      "text": "The file {{name}} already exists in the list and will be ignored."
+    },
+    "popUpBadFile": {
+      "title": "Upload a valid file",
+      "text": "Ensure that all selected mods are .Jar files."
+    }
+  },
+  "modConfig": {
+    "title": "Edit Mod Configuration",
+    "editModTitle": "Edit {{filename}}"
+  },
+  "serverProperties": "Edit server.properties",
+  "backups": {
+    "title": "Backup List",
+    "creationProgress": "Backup creation progress: {{value}}%",
+    "driveProgress": "Uploading to Google Drive: {{value}}%",
+    "downloadBackup": "Downloading Backup: {{value}}%",
+    "deleteQuestion": "Are you sure you want to delete the selected backups?",
+    "deletingBackups": "Deleting Backups",
+    "backupErrorTitle": "An error occurred while deleting the backups",
+    "createBackups": "Create Backup",
+    "table": {
+      "fileName": "Name",
+      "createdAt": "Creation Date"
+    },
+    "completePopUp": {
+      "title": "Completed",
+      "text": "The backup has been created successfully"
+    }
+  },
+  "commands": {
+    "title": "Run Command",
+    "terminalTitle": "Minecraft Terminal - type help for more information",
+    "descriptions": {
+      "helpTitle": "mine-help",
+      "helpText": "get support commands"
+    }
+  },
+  "navBar": {
+    "mods": {
+      "main": "Mods",
+      "add": "Add",
+      "addMultiple": "Add Multiple",
+      "download": "Download Mods"
+    },
+    "configuration": {
+      "main": "Configuration",
+      "serverProperties": "Server Properties",
+      "modsProperties": "Mod Properties"
+    },
+    "terminal": "Terminal",
+    "backups": "Backups",
+    "readyToPlay": "Ready to Play?",
+    "serverStatus": "Server Status"
+  },
+  "commons": {
+    "login": "Login",
+    "dashboard": "Dashboard",
+    "notAvailable": "Not Available",
+    "available": "Available",
+    "downloads": "Downloads",
+    "download": "Download",
+    "server": "Server",
+    "client": "Client",
+    "upload": "Upload",
+    "uploadMod": "Upload Mod",
+    "status": "Status",
+    "delete": "Delete",
+    "complete": "Completed",
+    "pending": "Pending",
+    "error": "Error",
+    "operationCancel": "Operation Canceled",
+    "madeBy": "Made by",
+    "vasitosCorp": "Vasitos Corp",
+    "softwareDev": {
+      "po": "Product Owner",
+      "dev": "Developer",
+      "supervisor": "Supervisor",
+      "pe": "Performance Engineer",
+      "ce": "Cloud Engineer",
+      "tester": "Tester",
+      "designer": "(UI) Designer",
+      "betaTester": "Beta Tester"
+    },
+    "errors": {
+      "genericMessage": "An error has occurred",
+      "oops": "Oops",
+      "formTitle": "Hey, you missed something in the form",
+      "authentication": "You don't have permission"
+    }
+  }
+}

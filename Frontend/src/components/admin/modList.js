@@ -8,45 +8,13 @@ import Swal from 'sweetalert2'
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import { storeSkin } from '../../states/skinStore';
+import { useTranslation } from 'react-i18next';
 
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
 import LinearProgress from '@mui/material/LinearProgress'; // Importar componente LinearProgress
 import SocketClient from '../../socketConnection'
-
-const columns = [
-    {
-        field: 'name',
-        headerName: 'Nombre',
-        minWidth: 300,
-        flex: 1,
-        editable: false,
-    },
-    {
-        field: 'version',
-        headerName: 'Version',
-        minWidth: 150,
-        flex: 1,
-        editable: false,
-    },
-    {
-        field: 'fileName',
-        headerName: 'Archivo',
-        minWidth: 300,
-        flex: 1,
-        editable: false,
-    },
-    {
-        field: 'type',
-        headerName: 'Tipo Mod',
-        editable: false,
-        minWidth: 200,
-        flex: 1,
-        valueGetter: (params) =>
-            params.row.type.join(", "),
-    },
-];
 
 const Toast = Swal.mixin({
     toast: true,
@@ -76,7 +44,41 @@ export default function ModList() {
     const getAnimation = storeSkin(state => state.animation);
     const setSpeed = storeSkin((state) => state.setSpeed);
     const getSpeed = storeSkin(state => state.speed);
+    const { t, i18n } = useTranslation();
 
+    const columns = [
+        {
+            field: 'name',
+            headerName: t("listMods.table.name"),
+            minWidth: 300,
+            flex: 1,
+            editable: false,
+        },
+        {
+            field: 'version',
+            headerName: t("listMods.table.version"),
+            minWidth: 150,
+            flex: 1,
+            editable: false,
+        },
+        {
+            field: 'fileName',
+            headerName: t("listMods.table.fileName"),
+            minWidth: 300,
+            flex: 1,
+            editable: false,
+        },
+        {
+            field: 'type',
+            headerName: t("listMods.table.type"),
+            editable: false,
+            minWidth: 200,
+            flex: 1,
+            valueGetter: (params) =>
+                params.row.type.join(", "),
+        },
+    ];
+    
     const initializeSocket = () => {
         const newSocket = SocketClient;
         setSocket(newSocket);
@@ -247,7 +249,7 @@ export default function ModList() {
                     sx={{ width: "5%", alignItems: "center", alignContent: "center" }}>
                     <DeleteRoundedIcon />
                 </LoadingButton>
-                <Button component={Link} to={"/dashboard/upload"}>Agregar Mod</Button>
+                <Button component={Link} to={"/dashboard/upload"}>{t("listMods.addMod")}</Button>
                 <GridToolbarExport printOptions={{ disableToolbarButton: true }} />
             </GridToolbarContainer>
         );
@@ -257,7 +259,7 @@ export default function ModList() {
         <Box>
             <Grid item xs={12} md={6}>
                 <Typography sx={{ mb: 2 }} variant="h2" component="div">
-                    Lista de Mods
+                {t("listMods.title")}
                 </Typography>
                 <Box sx={{ height: 450, width: '100%' }}>
                     <DataGrid
@@ -294,7 +296,7 @@ export default function ModList() {
                 variant="contained"
                 sx={{ marginTop: "5%", width: "20%" }}
             >
-                Crear .ZIP
+                {t("listMods.createZip")}
             </LoadingButton>
             {message?.value && (
                 <Box sx={{ marginTop: "2%" }}>

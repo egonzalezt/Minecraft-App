@@ -8,6 +8,7 @@ import Swal from 'sweetalert2'
 import IconButton from '@mui/material/IconButton';
 import DownloadIcon from '@mui/icons-material/Download';
 import { storeSkin } from '../../states/skinStore';
+import { useTranslation } from 'react-i18next';
 
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
@@ -45,18 +46,19 @@ export default function BackupList() {
     const getAnimation = storeSkin(state => state.animation);
     const setSpeed = storeSkin((state) => state.setSpeed);
     const getSpeed = storeSkin(state => state.speed);
+    const { t } = useTranslation();
 
     const columns = [
         {
             field: 'fileName',
-            headerName: 'Nombre',
+            headerName: t("backups.table.fileName"),
             minWidth: 300,
             flex: 1,
             editable: false,
         },
         {
             field: 'createdAt',
-            headerName: 'Fecha de creacion',
+            headerName: t("backups.table.createdAt"),
             minWidth: 150,
             flex: 1,
             editable: false,
@@ -65,7 +67,7 @@ export default function BackupList() {
             field: "download",
             minWidth: 150,
             flex: 1,
-            headerName: "Descargar",
+            headerName: t("commons.download"),
             sortable: false,
             renderCell: (cellValues) => {
                 return (
@@ -160,8 +162,8 @@ export default function BackupList() {
         socket.on('authentication-error', () => {
             Swal.fire({
                 icon: 'error',
-                title: 'Oops...',
-                text: 'No posee permisos',
+                title: `${t("commons.errors.oops")}...`,
+                text: t("commons.errors.authentication"),
             });
             setLoadingZipCreation(false);
         });
@@ -178,15 +180,15 @@ export default function BackupList() {
                 setAnimation(1);
                 Swal.fire({
                     icon: 'success',
-                    title: 'Completado',
-                    text: 'Se ha creado el backup de forma exitosa',
+                    title: t("backups.completePopUp.title"),
+                    text: t("backups.completePopUp.text"),
                 }).then(() => window.location.reload());
             }
             if (data?.type === 'statusFail' && data?.error) {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Oops...',
-                    text: 'Ha ocurrido un error',
+                    title: `${t("commons.errors.oops")}...`,
+                    text: t("commons.errors.genericMessage"),
                 });
             }
 
@@ -253,7 +255,7 @@ export default function BackupList() {
     async function removeBackups() {
         setIsLoading(true);
         Swal.fire({
-            title: '¿Estas seguro de eliminar los backups seleccionados?',
+            title: t("backups.deleteQuestion"),
             showDenyButton: true,
             showCancelButton: true,
             confirmButtonText: 'Si',
@@ -264,13 +266,13 @@ export default function BackupList() {
                 await BackupsApi.deleteBackups(selectedBackups).then(async res => {
                     await Toast.fire({
                         icon: 'info',
-                        title: 'Eliminando Backups'
+                        title: t("backups.deletingBackups")
                     })
                     setDeletingBackups(false);
                     searchData(currentPage);
                     Swal.fire({
                         icon: 'success',
-                        title: 'Completado',
+                        title: t("commons.complete"),
                         text: res.data.message,
                     }).then(() => setIsLoading(false));
                 });
@@ -278,15 +280,15 @@ export default function BackupList() {
                 setIsLoading(false);
                 await Toast.fire({
                     icon: 'info',
-                    title: 'Operacion cancelada'
+                    title: t("commmons.operationCancel")
                 })
             }
         }).catch(() => {
             setDeletingBackups(false);
             Swal.fire({
                 icon: 'error',
-                title: 'Oops...',
-                text: 'Ha ocurrido un error elimiando los backups',
+                title: t("commons.errors.oops"),
+                text: t("backups.backupErrorTitle"),
             })
         });
     }
@@ -313,7 +315,7 @@ export default function BackupList() {
             <Box >
                 <Grid item xs={12} md={6}>
                     <Typography sx={{ mb: 2 }} variant="h2" component="div">
-                        Lista de Backups
+                        {t("backups.title")}
                     </Typography>
                     <Box sx={{ height: 450, width: '100%' }}>
                         <DataGrid
@@ -350,13 +352,13 @@ export default function BackupList() {
                     variant="contained"
                     sx={{ marginTop: "5%", width: "20%" }}
                 >
-                    Crear Backup
+                    {t("backups.createBackups")}
                 </LoadingButton>
 
                 {(message?.value && message.type === "statusPercentZip") && (
                     <Box sx={{ marginTop: "2%" }}>
                         <Typography variant="body1" gutterBottom>
-                            Progreso creacion backup: {message.value}%
+                            {t("backups.creationProgress",{value: message.value})}
                         </Typography>
                         <LinearProgress variant="determinate" value={message.value} />
                     </Box>
@@ -373,7 +375,7 @@ export default function BackupList() {
                 {(message?.value && message.type === "statusPercentGdrive") && (
                     <Box sx={{ marginTop: "2%" }}>
                         <Typography variant="body1" gutterBottom>
-                            Subiendo archivo a Google Drive: {message.value}%
+                            {t("backups.driveProgress",{value: message.value})}
                         </Typography>
                         <LinearProgress variant="determinate" value={message.value} />
                     </Box>
@@ -391,7 +393,7 @@ export default function BackupList() {
                     (
                         <Box sx={{ marginTop: "2%" }}>
                             <Typography variant="body1" gutterBottom>
-                                Descargando Backup: {downloadProgress}%
+                                {t("backups.downloadBackup",{value: message.value})}
                             </Typography>
                             <LinearProgress variant="determinate" value={downloadProgress} />
                         </Box>

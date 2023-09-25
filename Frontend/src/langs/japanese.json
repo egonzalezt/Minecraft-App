@@ -1,0 +1,167 @@
+{
+    "mainPage": {
+        "subTitle": "アレキペトで遊びましょう",
+        "downloadMods": "Modsをダウンロードするボタンを押してください。",
+        "minecraftVersion": "Minecraftのバージョン",
+        "downloadModsButton": "Modsをダウンロード",
+        "downloadFabric": "Fabricをダウンロード"
+    },
+    "auth": {
+        "loginTitle": "ログイン",
+        "signUpTitle": "新規登録",
+        "signUpTitleBtn": "新規登録",
+        "email": "メールアドレス",
+        "password": "パスワード",
+        "nickName": "ニックネーム",
+        "createAccount": "アカウントをお持ちでないですか？ 登録する",
+        "forgotPassword": "パスワードをお忘れですか？",
+        "validators": {
+            "invalidEmail": "無効なメールアドレス",
+            "requiredEmail": "メールアドレスは必須です",
+            "requiredPassword": "パスワードは必須です",
+            "passwordMinLength": "パスワードは{{min}}文字以上である必要があります",
+            "passwordMaxLength": "パスワードは{{max}}文字以下である必要があります",
+            "passwordUpper": "パスワードに大文字のアルファベットが必要です",
+            "passwordLower": "パスワードに小文字のアルファベットが必要です",
+            "passwordSymbol": "パスワードに記号が必要です",
+            "passwordNumber": "パスワードに数字が必要です",
+            "requiredNickName": "ニックネームは必須です",
+            "nickNameMinLength": "ニックネームは{{min}}文字以上である必要があります",
+            "nickNameMaxLength": "ニックネームは{{max}}文字以下である必要があります"
+        },
+        "accountCreatedMessage": "アカウントが作成されました",
+        "welcomeMessage": "{{nickName}}さん、Arequipetへようこそ"
+    },
+    "uploadMod": {
+        "title": "モッドをアップロード",
+        "name": "モッド名",
+        "version": "モッドのバージョン",
+        "url": "モッドのURL",
+        "errors": {
+            "version": "バージョンが無効です",
+            "name": "名前が無効です"
+        },
+        "popUp": {
+            "warn": {
+                "type": "Server/Clientモッドのタイプを選択してください",
+                "name": "モッド名を確認してください",
+                "version": "モッドのバージョンを確認してください",
+                "file": "ファイルを確認してください"
+            }
+        }
+    },
+    "uploadMultiple": {
+        "title": "モッドをアップロード",
+        "dropFiles": "ファイルをここにドラッグアンドドロップするか、選択するためにクリックしてください",
+        "table": {
+            "id": "ID",
+            "name": "名前",
+            "version": "バージョン",
+            "fileName": "ファイル名",
+            "type": "モッドのタイプ"
+        }
+    },
+    "listMods": {
+        "title": "モッドリスト",
+        "addMod": "モッドを追加",
+        "createZip": ".ZIPを作成",
+        "table": {
+            "name": "名前",
+            "version": "バージョン",
+            "fileName": "ファイル",
+            "type": "モッドのタイプ"
+        },
+        "popUpDuplicateFile": {
+            "title": "重複するファイル",
+            "text": "{{name}} ファイルはすでにリストに存在し、無視されます。"
+        },
+        "popUpBadFile": {
+            "title": "有効なファイルをアップロードしてください",
+            "text": "すべての選択したモッドが .Jar ファイルであることを確認してください。"
+        }
+    },
+    "modConfig": {
+        "title": "モッドの設定を編集",
+        "editModTitle": "{{filename}} を編集"
+    },
+    "serverProperties": "server.properties を編集",
+    "backups": {
+        "title": "バックアップリスト",
+        "creationProgress": "バックアップの作成進捗: {{value}}%",
+        "driveProgress": "Google Drive へのアップロード中: {{value}}%",
+        "downloadBackup": "バックアップのダウンロード中: {{value}}%",
+        "deleteQuestion": "選択したバックアップを削除してもよろしいですか？",
+        "deletingBackups": "バックアップの削除中",
+        "backupErrorTitle": "バックアップを削除中にエラーが発生しました",
+        "createBackups": "バックアップを作成",
+        "table": {
+            "fileName": "名前",
+            "createdAt": "作成日"
+        },
+        "completePopUp": {
+            "title": "完了",
+            "text": "バックアップは正常に作成されました"
+        }
+    },
+    "commands": {
+        "title": "コマンドを実行",
+        "terminalTitle": "マインクラフトターミナル - 詳細情報については help を入力してください",
+        "descriptions": {
+            "helpTitle": "mine-help",
+            "helpText": "サポートコマンドを取得"
+        }
+    },
+    "navBar": {
+        "mods": {
+            "main": "モッズ",
+            "add": "追加",
+            "addMultiple": "複数追加",
+            "download": "モッドをダウンロード"
+        },
+        "configuration": {
+            "main": "設定",
+            "serverProperties": "サーバー設定",
+            "modsProperties": "モッド設定"
+        },
+        "terminal": "ターミナル",
+        "backups": "バックアップ",
+        "readyToPlay": "プレイの準備ができましたか？",
+        "serverStatus": "サーバーステータス"
+    },
+    "commons": {
+        "login": "ログイン",
+        "dashboard": "ダッシュボード",
+        "notAvailable": "利用不可",
+        "available": "利用可能",
+        "downloads": "ダウンロード",
+        "download": "ダウンロード",
+        "server": "サーバー",
+        "client": "クライアント",
+        "upload": "アップロード",
+        "uploadMod": "モッドをアップロード",
+        "status": "ステータス",
+        "delete": "削除",
+        "complete": "完了",
+        "pending": "保留中",
+        "error": "エラー",
+        "operationCancel": "操作がキャンセルされました",
+        "madeBy": "制作:",
+        "vasitosCorp": "Vasitos Corp",
+        "softwareDev": {
+            "po": "プロダクトオーナー",
+            "dev": "開発者",
+            "supervisor": "スーパーバイザー",
+            "pe": "パフォーマンスエンジニア",
+            "ce": "クラウドエンジニア",
+            "tester": "テスター",
+            "designer": "(UI) デザイナー",
+            "betaTester": "ベータテスター"
+        },
+        "errors": {
+            "genericMessage": "エラーが発生しました",
+            "oops": "おっと",
+            "formTitle": "フォームに何か抜けています",
+            "authentication": "アクセス権がありません"
+        }
+    }
+}

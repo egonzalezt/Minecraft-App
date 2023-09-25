@@ -4,8 +4,9 @@ import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { initApmAgent } from './apm'
-
+import './langs/i18n'
 initApmAgent();
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
