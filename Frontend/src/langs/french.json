@@ -33,6 +33,7 @@
             "nickNameMinLength": "Le pseudo doit avoir au minimum {{min}} caractères",
             "nickNameMaxLength": "Le pseudo doit avoir au maximum {{max}} caractères"
         },
+        "successLogin": "Connexion réussie",
         "accountCreatedMessage": "Compte créé",
         "welcomeMessage": "Bienvenue {{nickName}} sur Arequipet"
     },
@@ -133,6 +134,8 @@
         "serverStatus": "État du serveur"
     },
     "commons": {
+        "home": "Accueil",
+        "logout": "Déconnexion",
         "login": "Connexion",
         "dashboard": "Tableau de bord",
         "notAvailable": "Indisponible",
@@ -166,6 +169,13 @@
             "oops": "Oops",
             "formTitle": "Hé, vous avez oublié quelque chose dans le formulaire",
             "authentication": "Vous n'avez pas les autorisations nécessaires"
-        }
+        },
+        "langs":{
+            "spanish": "Espagnol",
+            "english": "Anglais",
+            "japanese": "Japonais",
+            "french": "Français",
+            "russian": "Russe"
+        }        
     }
 }

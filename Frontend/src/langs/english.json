@@ -33,6 +33,7 @@
       "nickNameMinLength": "Nickname must be at least {{min}} characters long",
       "nickNameMaxLength": "Nickname must be at most {{max}} characters long"
     },
+    "successLogin": "Successful login",
     "accountCreatedMessage": "Account Created",
     "welcomeMessage": "Welcome, {{nickName}}, to Arequipet"
   },
@@ -133,6 +134,8 @@
     "serverStatus": "Server Status"
   },
   "commons": {
+    "home": "Home",
+    "logout": "Log out",
     "login": "Login",
     "dashboard": "Dashboard",
     "notAvailable": "Not Available",
@@ -166,6 +169,13 @@
       "oops": "Oops",
       "formTitle": "Hey, you missed something in the form",
       "authentication": "You don't have permission"
-    }
+    },
+    "langs":{
+      "spanish": "Spanish",
+      "english": "English",
+      "japanese": "Japanese",
+      "french": "French",
+      "russian": "Russian"
+    }  
   }
 }

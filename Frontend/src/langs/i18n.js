@@ -7,10 +7,14 @@ import jpTranslation from './japanese.json'
 import frTranslation from './french.json'
 import ruTranslation from './russian.json'
 
+const storedLang = localStorage.getItem("selectedLanguage");
+const fallbackLang = 'es';
+const defaultLang = storedLang || fallbackLang;
+
 i18n.use(initReactI18next).init({
     debug: true,
-    lng: 'es',
-    fallbackLng: 'es',
+    lng: defaultLang,
+    fallbackLng: fallbackLang,
     interpolation: {
         escapeValue: false,
     },

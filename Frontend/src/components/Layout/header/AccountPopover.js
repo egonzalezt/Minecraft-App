@@ -7,22 +7,21 @@ import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton, Popover 
 import { storeData } from '../../../states/stores';
 // api
 import UserApi from '../../../services/users';
-// ----------------------------------------------------------------------
-
-const MENU_OPTIONS = [
-  {
-    label: 'Home',
-    url: '/',
-    icon: 'eva:home-fill',
-  },
-];
-
+import { useTranslation } from 'react-i18next';
 // ----------------------------------------------------------------------
 
 export default function AccountPopover() {
   const [open, setOpen] = useState(null);
   const [user, setUser] = useState({ nickName: "Kirb", email: "kirb@vasitos.com" });
+  const { t } = useTranslation();
 
+  const MENU_OPTIONS = [
+    {
+      label: t("commons.home"),
+      url: '/',
+      icon: 'eva:home-fill',
+    },
+  ];
   const getUser = storeData(state => state.user);
   const navigate = useNavigate();
 
@@ -125,7 +124,7 @@ export default function AccountPopover() {
         <Divider sx={{ borderStyle: 'dashed' }} />
 
         <MenuItem onClick={handleLogOut} sx={{ m: 1 }}>
-          Logout
+          {t("commons.logout")}
         </MenuItem>
       </Popover>
     </>

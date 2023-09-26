@@ -36,8 +36,8 @@ function Login() {
                     timer: 1000,
                     timerProgressBar: true,
                     icon: 'success',
-                    title: `Inicio de sesion exitoso`,
-                    text: `Bienvenido ${res.data.userNickName} a arequipet.ga`,
+                    title: t("auth.successLogin"),
+                    text: t("auth.welcomeMessage",{nickName: res.data.userNickName}),
                 }).then(() => {
                     navigate("/dashboard");
                     window.location.reload();

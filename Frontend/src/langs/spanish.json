@@ -33,6 +33,7 @@
             "nickNameMinLength": "El nombre de usuario requiere minimo {{min}} caracteres",
             "nickNameMaxLength": "El nombre de usuario requiere maximo {{max}} caracteres"
         },
+        "successLogin": "Inicio de sesion exitoso",
         "accountCreatedMessage": "Cuenta Registrada",
         "welcomeMessage": "Bienvenid@ {{nickName}} a Arequipet"
     },
@@ -133,6 +134,8 @@
         "serverStatus": "Estado del servidor"
     },
     "commons": {
+        "home": "Pagina principal",
+        "logout": "Cerrar sesion",
         "login": "Login",
         "dashboard": "Dashboard",
         "notAvailable": "No disponible",
@@ -166,6 +169,13 @@
             "oops": "Oops",
             "formTitle": "Hey te falto algo en el formulario",
             "authentication": "No posee permisos"
+        },
+        "langs":{
+            "spanish": "Español",
+            "english": "Ingles",
+            "japanese": "Japones",
+            "french": "Frances",
+            "russian": "Ruso"
         }
     }
 }

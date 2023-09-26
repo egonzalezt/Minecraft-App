@@ -33,6 +33,7 @@
             "nickNameMinLength": "Имя пользователя должно содержать не менее {{min}} символов",
             "nickNameMaxLength": "Имя пользователя должно содержать не более {{max}} символов"
         },
+        "successLogin": "Успешный вход",
         "accountCreatedMessage": "Учетная запись создана",
         "welcomeMessage": "Добро пожаловать, {{nickName}}, на Arequipet"
     },
@@ -133,6 +134,8 @@
         "serverStatus": "Статус сервера"
     },
     "commons": {
+        "home": "Главная",
+        "logout": "Выход",
         "login": "Войти",
         "dashboard": "Панель управления",
         "notAvailable": "Недоступно",
@@ -166,6 +169,13 @@
             "oops": "Упс",
             "formTitle": "Прошу прощения, вы что-то забыли в форме",
             "authentication": "У вас нет прав доступа"
-        }
+        },
+        "langs":{
+            "spanish": "Испанский",
+            "english": "Английский",
+            "japanese": "Японский",
+            "french": "Французский",
+            "russian": "Русский"
+        }        
     }
 }

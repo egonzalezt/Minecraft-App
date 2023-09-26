@@ -33,6 +33,7 @@
             "nickNameMinLength": "ニックネームは{{min}}文字以上である必要があります",
             "nickNameMaxLength": "ニックネームは{{max}}文字以下である必要があります"
         },
+        "successLogin": "ログイン成功",
         "accountCreatedMessage": "アカウントが作成されました",
         "welcomeMessage": "{{nickName}}さん、Arequipetへようこそ"
     },
@@ -133,6 +134,8 @@
         "serverStatus": "サーバーステータス"
     },
     "commons": {
+        "home": "ホーム",
+        "logout": "ログアウト",
         "login": "ログイン",
         "dashboard": "ダッシュボード",
         "notAvailable": "利用不可",
@@ -166,6 +169,13 @@
             "oops": "おっと",
             "formTitle": "フォームに何か抜けています",
             "authentication": "アクセス権がありません"
-        }
+        },
+        "langs":{
+            "spanish": "スペイン語",
+            "english": "英語",
+            "japanese": "日本語",
+            "french": "フランス語",
+            "russian": "ロシア語"
+        }        
     }
 }

@@ -124,7 +124,7 @@ function NavBar() {
                   open={Boolean(anchorEl)}
                   onClose={handleClose}
                 >
-                  <MenuItem onClick={handleLogOut}>LogOut</MenuItem>
+                  <MenuItem onClick={handleLogOut}>{t("commons.logout")}</MenuItem>
                 </Menu>
               </>
             )}
