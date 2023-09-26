@@ -20,7 +20,7 @@ function NotFound() {
                 <Typography variant="h5">
                     {t("404.message")}
                 </Typography>
-                <Button component={Link} to={"/"}>Home</Button>
+                <Button component={Link} to={"/"}>{t("commons.home")}</Button>
             </Stack>
         </div>
     );
