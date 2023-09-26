@@ -6,6 +6,10 @@
     "downloadModsButton": "Download Mods",
     "downloadFabric": "Download Fabric"
   },
+  "404": {
+    "title": "Error: 404 Not Found",
+    "message": "The webpage you are looking for might have been removed, had it's name changed, or is temporarily unavailable."  
+  },
   "auth": {
     "loginTitle": "Log In",
     "signUpTitle": "Sign Up",

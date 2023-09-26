@@ -4,19 +4,21 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import styles from '../styles/credits.css'
 import minecraftLogo from '../img/minecraft.png';
+import { useTranslation } from 'react-i18next';
 
 
 function NotFound() {
+    const { t } = useTranslation();
+
     return (
         <div className="backgroundDirt">
             <Stack justifyContent="space-between" alignItems="center" className="creditsScroll" paddingTop={4}>
                 <img alt="Minecraft" src={minecraftLogo} width="60%" />
                 <Typography variant="h4" sx={{ color: 'yellow' }}>
-                    Error: 404 Not Found
+                    {t("404.title")}
                 </Typography>
                 <Typography variant="h5">
-                    The webpage you are looking for might have been removed, had its
-                    name changed, or is temporarily unavailable.
+                    {t("404.message")}
                 </Typography>
                 <Button component={Link} to={"/"}>Home</Button>
             </Stack>

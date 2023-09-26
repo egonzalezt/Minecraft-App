@@ -1,0 +1,171 @@
+{
+    "mainPage": {
+        "subTitle": "Allons jouer à Arequipet",
+        "downloadMods": "Appuyez sur le bouton pour télécharger les mods.",
+        "minecraftVersion": "Version de Minecraft",
+        "downloadModsButton": "Télécharger les mods",
+        "downloadFabric": "Télécharger Fabric"
+    },
+    "404": {
+        "title": "Erreur : 404 Non trouvé",
+        "message": "La page web que vous recherchez a peut-être été supprimée, son nom a été modifié ou est temporairement indisponible."
+    },    
+    "auth": {
+        "loginTitle": "Se connecter",
+        "signUpTitle": "Inscription",
+        "signUpTitleBtn": "S'inscrire",
+        "email": "E-mail",
+        "password": "Mot de passe",
+        "nickName": "Pseudo",
+        "createAccount": "Vous n'avez pas de compte ? Inscrivez-vous",
+        "forgotPassword": "Mot de passe oublié ?",
+        "validators": {
+            "invalidEmail": "E-mail invalide",
+            "requiredEmail": "L'e-mail est requis",
+            "requiredPassword": "Le mot de passe est requis",
+            "passwordMinLength": "Le mot de passe doit avoir au moins {{min}} caractères",
+            "passwordMaxLength": "Le mot de passe doit avoir au maximum {{max}} caractères",
+            "passwordUpper": "Le mot de passe doit contenir une lettre majuscule",
+            "passwordLower": "Le mot de passe doit contenir une lettre minuscule",
+            "passwordSymbol": "Le mot de passe doit contenir un symbole",
+            "passwordNumber": "Le mot de passe doit contenir un chiffre",
+            "requiredNickName": "Le pseudo est requis",
+            "nickNameMinLength": "Le pseudo doit avoir au minimum {{min}} caractères",
+            "nickNameMaxLength": "Le pseudo doit avoir au maximum {{max}} caractères"
+        },
+        "accountCreatedMessage": "Compte créé",
+        "welcomeMessage": "Bienvenue {{nickName}} sur Arequipet"
+    },
+    "uploadMod": {
+        "title": "Télécharger un mod",
+        "name": "Nom du mod",
+        "version": "Version du mod",
+        "url": "URL du mod",
+        "errors": {
+            "version": "Version invalide",
+            "name": "Nom invalide"
+        },
+        "popUp": {
+            "warn": {
+                "type": "Sélectionnez le type de mod Serveur/Client",
+                "name": "Vérifiez le nom du mod",
+                "version": "Vérifiez la version du mod",
+                "file": "Vérifiez le fichier"
+            }
+        }
+    },
+    "uploadMultiple": {
+        "title": "Télécharger plusieurs mods",
+        "dropFiles": "Glissez et déposez des fichiers ici ou cliquez pour les sélectionner",
+        "table": {
+            "id": "ID",
+            "name": "Nom",
+            "version": "Version",
+            "fileName": "Nom du fichier",
+            "type": "Type de mod"
+        }
+    },
+    "listMods": {
+        "title": "Liste des mods",
+        "addMod": "Ajouter un mod",
+        "createZip": "Créer un fichier .ZIP",
+        "table": {
+            "name": "Nom",
+            "version": "Version",
+            "fileName": "Nom du fichier",
+            "type": "Type de mod"
+        },
+        "popUpDuplicateFile": {
+            "title": "Fichier en double",
+            "text": "Le fichier {{name}} existe déjà dans la liste et sera ignoré."
+        },
+        "popUpBadFile": {
+            "title": "Téléchargez un fichier valide",
+            "text": "Vérifiez que tous les mods sélectionnés sont au format .Jar"
+        }
+    },
+    "modConfig": {
+        "title": "Modifier la configuration des mods",
+        "editModTitle": "Modifier {{filename}}"
+    },
+    "serverProperties": "Modifier les propriétés du serveur",
+    "backups": {
+        "title": "Liste des sauvegardes",
+        "creationProgress": "Progression de la création de la sauvegarde : {{value}}%",
+        "driveProgress": "Téléchargement du fichier sur Google Drive : {{value}}%",
+        "downloadBackup": "Téléchargement de la sauvegarde : {{value}}%",
+        "deleteQuestion": "Êtes-vous sûr de vouloir supprimer les sauvegardes sélectionnées ?",
+        "deletingBackups": "Suppression des sauvegardes",
+        "backupErrorTitle": "Une erreur s'est produite lors de la suppression des sauvegardes",
+        "createBackups": "Créer une sauvegarde",
+        "table": {
+            "fileName": "Nom",
+            "createdAt": "Date de création"
+        },
+        "completePopUp": {
+            "title": "Terminé",
+            "text": "La sauvegarde a été créée avec succès"
+        }
+    },
+    "commands": {
+        "title": "Exécuter une commande",
+        "terminalTitle": "Terminal Minecraft - tapez 'help' pour plus d'informations",
+        "descriptions": {
+            "helpTitle": "mine-help",
+            "helpText": "Obtenez les commandes d'aide"
+        }
+    },
+    "navBar": {
+        "mods": {
+            "main": "Mods",
+            "add": "Ajouter",
+            "addMultiple": "Ajouter plusieurs",
+            "download": "Télécharger des mods"
+        },
+        "configuration": {
+            "main": "Configuration",
+            "serverProperties": "Propriétés du serveur",
+            "modsProperties": "Propriétés des mods"
+        },
+        "terminal": "Terminal",
+        "backups": "Sauvegardes",
+        "readyToPlay": "Prêt à jouer ?",
+        "serverStatus": "État du serveur"
+    },
+    "commons": {
+        "login": "Connexion",
+        "dashboard": "Tableau de bord",
+        "notAvailable": "Indisponible",
+        "available": "Disponible",
+        "downloads": "Téléchargements",
+        "download": "Télécharger",
+        "server": "Serveur",
+        "client": "Client",
+        "upload": "Télécharger",
+        "uploadMod": "Télécharger un mod",
+        "status": "État",
+        "delete": "Supprimer",
+        "complete": "Terminé",
+        "pending": "En attente",
+        "error": "Erreur",
+        "operationCancel": "Opération annulée",
+        "madeBy": "Créé par",
+        "vasitosCorp": "Vasitos Corp",
+        "softwareDev": {
+            "po": "Chef de produit",
+            "dev": "Développeur",
+            "supervisor": "Superviseur",
+            "pe": "Ingénieur des performances",
+            "ce": "Ingénieur Cloud",
+            "tester": "Testeur",
+            "designer": "Designer (UI)",
+            "betaTester": "Bêta-testeur"
+        },
+        "errors": {
+            "genericMessage": "Une erreur s'est produite",
+            "oops": "Oops",
+            "formTitle": "Hé, vous avez oublié quelque chose dans le formulaire",
+            "authentication": "Vous n'avez pas les autorisations nécessaires"
+        }
+    }
+}

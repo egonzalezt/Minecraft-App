@@ -19,6 +19,16 @@ const LANGS = [
         label: 'Japanese',
         icon: '/assets/icons/flags/ic_flag_jp.svg',
     },
+    {
+        value: 'fr',
+        label: 'French',
+        icon: '/assets/icons/flags/ic_flag_fr.svg',
+    },
+    {
+        value: 'ru',
+        label: 'Russian',
+        icon: '/assets/icons/flags/ic_flag_ru.svg',
+    },
 ];
 
 export default function LanguagePopover() {

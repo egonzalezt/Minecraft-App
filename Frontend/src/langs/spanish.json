@@ -6,6 +6,10 @@
         "downloadModsButton": "Descargar mods",
         "downloadFabric": "Descargar fabric"
     },
+    "404": {
+        "title": "Error: 404 No Encontrado",
+        "message": "La página web que estás buscando podría haber sido eliminada, haber cambiado de nombre o estar temporalmente no disponible."
+    },
     "auth": {
         "loginTitle": "Ingresar",
         "signUpTitle": "Registro",

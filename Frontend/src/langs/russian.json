@@ -1,0 +1,171 @@
+{
+    "mainPage": {
+        "subTitle": "Давай играть в Arequipet",
+        "downloadMods": "Нажмите кнопку, чтобы скачать моды.",
+        "minecraftVersion": "Версия Minecraft",
+        "downloadModsButton": "Скачать моды",
+        "downloadFabric": "Скачать Fabric"
+    },
+    "404": {
+        "title": "Ошибка: 404 Страница не найдена",
+        "message": "Веб-страница, которую вы ищете, могла быть удалена, переименована или временно недоступна."
+    },    
+    "auth": {
+        "loginTitle": "Войти",
+        "signUpTitle": "Регистрация",
+        "signUpTitleBtn": "Зарегистрироваться",
+        "email": "Электронная почта",
+        "password": "Пароль",
+        "nickName": "Псевдоним",
+        "createAccount": "У вас нет аккаунта? Зарегистрируйтесь",
+        "forgotPassword": "Забыли пароль?",
+        "validators": {
+            "invalidEmail": "Недопустимая электронная почта",
+            "requiredEmail": "Требуется электронная почта",
+            "requiredPassword": "Требуется пароль",
+            "passwordMinLength": "Пароль должен содержать не менее {{min}} символов",
+            "passwordMaxLength": "Пароль должен содержать не более {{max}} символов",
+            "passwordUpper": "Пароль должен содержать заглавную букву",
+            "passwordLower": "Пароль должен содержать строчную букву",
+            "passwordSymbol": "Пароль должен содержать символ",
+            "passwordNumber": "Пароль должен содержать цифру",
+            "requiredNickName": "Требуется имя пользователя",
+            "nickNameMinLength": "Имя пользователя должно содержать не менее {{min}} символов",
+            "nickNameMaxLength": "Имя пользователя должно содержать не более {{max}} символов"
+        },
+        "accountCreatedMessage": "Учетная запись создана",
+        "welcomeMessage": "Добро пожаловать, {{nickName}}, на Arequipet"
+    },
+    "uploadMod": {
+        "title": "Загрузить мод",
+        "name": "Название мода",
+        "version": "Версия мода",
+        "url": "URL мода",
+        "errors": {
+            "version": "Недопустимая версия",
+            "name": "Недопустимое название"
+        },
+        "popUp": {
+            "warn": {
+                "type": "Выберите тип мода Сервер/Клиент",
+                "name": "Проверьте название мода",
+                "version": "Проверьте версию мода",
+                "file": "Проверьте файл"
+            }
+        }
+    },
+    "uploadMultiple": {
+        "title": "Загрузить несколько модов",
+        "dropFiles": "Перетащите файлы сюда или щелкните, чтобы выбрать их",
+        "table": {
+            "id": "ID",
+            "name": "Название",
+            "version": "Версия",
+            "fileName": "Имя файла",
+            "type": "Тип мода"
+        }
+    },
+    "listMods": {
+        "title": "Список модов",
+        "addMod": "Добавить мод",
+        "createZip": "Создать .ZIP",
+        "table": {
+            "name": "Название",
+            "version": "Версия",
+            "fileName": "Файл",
+            "type": "Тип мода"
+        },
+        "popUpDuplicateFile": {
+            "title": "Дублированный файл",
+            "text": "Файл {{name}} уже существует в списке и будет проигнорирован."
+        },
+        "popUpBadFile": {
+            "title": "Загрузите допустимый файл",
+            "text": "Проверьте, что все выбранные моды имеют формат .Jar"
+        }
+    },
+    "modConfig": {
+        "title": "Изменить настройки модов",
+        "editModTitle": "Изменить {{filename}}"
+    },
+    "serverProperties": "Изменить свойства сервера",
+    "backups": {
+        "title": "Список резервных копий",
+        "creationProgress": "Прогресс создания резервной копии: {{value}}%",
+        "driveProgress": "Загрузка файла на Google Drive: {{value}}%",
+        "downloadBackup": "Загрузка резервной копии: {{value}}%",
+        "deleteQuestion": "Вы уверены, что хотите удалить выбранные резервные копии?",
+        "deletingBackups": "Удаление резервных копий",
+        "backupErrorTitle": "При удалении резервных копий произошла ошибка",
+        "createBackups": "Создать резервную копию",
+        "table": {
+            "fileName": "Имя",
+            "createdAt": "Дата создания"
+        },
+        "completePopUp": {
+            "title": "Завершено",
+            "text": "Резервная копия успешно создана"
+        }
+    },
+    "commands": {
+        "title": "Выполнить команду",
+        "terminalTitle": "Терминал Minecraft - введите 'help' для получения дополнительной информации",
+        "descriptions": {
+            "helpTitle": "mine-help",
+            "helpText": "Получите справку по командам"
+        }
+    },
+    "navBar": {
+        "mods": {
+            "main": "Моды",
+            "add": "Добавить",
+            "addMultiple": "Добавить несколько",
+            "download": "Скачать моды"
+        },
+        "configuration": {
+            "main": "Настройка",
+            "serverProperties": "Свойства сервера",
+            "modsProperties": "Свойства модов"
+        },
+        "terminal": "Терминал",
+        "backups": "Резервные копии",
+        "readyToPlay": "Готовы к игре?",
+        "serverStatus": "Статус сервера"
+    },
+    "commons": {
+        "login": "Войти",
+        "dashboard": "Панель управления",
+        "notAvailable": "Недоступно",
+        "available": "Доступно",
+        "downloads": "Загрузки",
+        "download": "Скачать",
+        "server": "Сервер",
+        "client": "Клиент",
+        "upload": "Загрузить",
+        "uploadMod": "Загрузить мод",
+        "status": "Статус",
+        "delete": "Удалить",
+        "complete": "Завершено",
+        "pending": "В ожидании",
+        "error": "Ошибка",
+        "operationCancel": "Операция отменена",
+        "madeBy": "Создано",
+        "vasitosCorp": "Vasitos Corp",
+        "softwareDev": {
+            "po": "Владелец продукта",
+            "dev": "Разработчик",
+            "supervisor": "Супервайзер",
+            "pe": "Инженер по производительности",
+            "ce": "Инженер облачных вычислений",
+            "tester": "Тестировщик",
+            "designer": "Дизайнер (UI)",
+            "betaTester": "Бета-тестировщик"
+        },
+        "errors": {
+            "genericMessage": "Произошла ошибка",
+            "oops": "Упс",
+            "formTitle": "Прошу прощения, вы что-то забыли в форме",
+            "authentication": "У вас нет прав доступа"
+        }
+    }
+}
