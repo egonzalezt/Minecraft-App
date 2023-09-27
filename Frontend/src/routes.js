@@ -55,6 +55,9 @@ export default function Router({ user, setIsRoutesReady, isRoutesReady }) {
         } else if (isAdmin) {
             setPermittedRoutes(adminRoutes);
         }
+        else{
+            setPermittedRoutes(userRoutes);
+        }
         setIsRoutesReady(true);
     }, []);
 

@@ -7,7 +7,15 @@ class UserApi {
     }
 
     signup(data) {
-        return axios.post("/user/signup",data)
+        const selectedLanguage = localStorage.getItem("selectedLanguage");
+        const language = selectedLanguage !== null ? selectedLanguage : "es";
+        const headers = {
+            lang: language
+        };
+        const config = {
+            headers: headers
+        };
+        return axios.post("/user/signup",data, config)
     }
 
     requestPasswordReset(data) {

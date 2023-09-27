@@ -4,7 +4,6 @@ const findUserById = require('../database/repositories/user/userFindId')
 const { generateTokens } = require('../utils/generateToken');
 const { generateWelcomeMailHtml } = require('../utils/mails/welcomeMail');
 const restorePasswordMailHtml = require('../utils/mails/restorePassword');
-
 const sendEmail = require('../email/sendEmail');
 const bcrypt = require('bcrypt');
 const { generateResetToken } = require('../database/repositories/resetToken/generateResetToken');
@@ -16,9 +15,34 @@ const successPasswordResetMailHtml = require('../utils/mails/successPasswordRese
 const fetch = require('node-fetch');
 const atob = require('atob');
 
-async function registerUser(req, res) {
+const emailResetSubjects = {
+    es: "Recuperación de cuenta",
+    en: "Password Reset",
+    jp: "パスワードリセット",
+    fr: "Réinitialisation du mot de passe",
+    ru: "Восстановление учетной записи"
+};
 
+const emailSuccessResetSubjects = {
+    es: "Contraseña recuperada de forma exitosa",
+    en: "Password successfully recovered.",
+    jp: "パスワードが正常に回復しました。",
+    fr: "Mot de passe récupéré avec succès.",
+    ru: "Пароль успешно восстановлен."
+};
+
+const emailWelcomeSubjects = {
+    es: "Bienvenido a arequipet",
+    en: "Welcome to arequipet",
+    jp: "アレキペットへようこそ",
+    fr: "Bienvenue à arequipet",
+    ru: "Добро пожаловать в arequipet"
+};
+
+async function registerUser(req, res) {
     const user = await findUser(req.body.email);
+    const lang = req.headers['lang'] || 'es';
+    const clientURL = process.env.BASEURL;
     if (user) {
         return res
             .status(400)
@@ -28,8 +52,9 @@ async function registerUser(req, res) {
         const hashPassword = await bcrypt.hash(req.body.password, salt);
         const { email, nickName } = req.body
         await save(email, hashPassword, nickName).then((result) => {
-            let html = generateWelcomeMailHtml(nickName);
-            sendEmail(email, "Bienvenido a arequipet", html);
+            let html = generateWelcomeMailHtml(clientURL,nickName, lang);
+            const subject = emailWelcomeSubjects[lang] || emailWelcomeSubjects.es;
+            sendEmail(email, subject, html);
             return res.status(201).json({ error: false, message: "Account created successfully" });
         }).catch((err) => {
             return res.status(500).json({ error: true, message: "Internal Server Error" });
@@ -82,13 +107,15 @@ async function getUserInfo(req, res) {
 
 async function requestPasswordReset(req, res) {
     const email = req.body.email;
+    const lang = req.body.lang;
     const user = await findUser(email);
     if (user) {
         const hash = await generateResetToken(user);
         const clientURL = process.env.BASEURL;
         const url = `${clientURL}passwordReset?token=${hash}&userid=${user._id}`
-        const html = restorePasswordMailHtml(url);
-        sendEmail(email, "Recuperación de cuenta", html).then((isMailSent) => {
+        const html = restorePasswordMailHtml(url, lang);
+        const subject = emailResetSubjects[lang] || emailResetSubjects.es;
+        sendEmail(email, subject, html).then((isMailSent) => {
             return res.status(201).json({ error: false, message: "Email sent successfully" });
         }).catch(() => {
             return res.status(500).json({ error: true, message: "Fail sending email" });
@@ -101,7 +128,7 @@ async function requestPasswordReset(req, res) {
 }
 
 async function resetPassword(req, res) {
-    const { token, userid, password } = req.body;
+    const { token, userid, password, lang } = req.body;
     const resetToken = await findResetToken(userid);
     if (resetToken) {
         const isValid = await bcrypt.compare(token, resetToken.resetToken);
@@ -119,8 +146,9 @@ async function resetPassword(req, res) {
         const isNewUserValid = await findUserById(userid);
         if (isNewUserValid) {
             await deleteResetToken(resetToken.resetToken);
-            const html = successPasswordResetMailHtml();
-            sendEmail(isNewUserValid.email, "Contraseña recuperada de forma exitosa", html);
+            const html = successPasswordResetMailHtml(lang);
+            const subject = emailSuccessResetSubjects[lang] || emailSuccessResetSubjects.es;
+            sendEmail(isNewUserValid.email, subject, html);
             return res.status(201).json({ error: false, message: "Password updated successfully" });
         } else {
             return res.status(500).json({ error: true, message: "Internal Server Error" });
@@ -151,8 +179,8 @@ async function getSkin(req, res) {
         res.send({ error: false, skinURL, message: "Skin found" });
     } catch (error) {
         return res
-        .status(404)
-        .json({ error: true, message: "No Skin found" });
+            .status(404)
+            .json({ error: true, message: "No Skin found" });
     }
 }
 module.exports = {

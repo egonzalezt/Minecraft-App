@@ -1,5 +1,9 @@
-function successPasswordResetMailHtml()
+const translations = require('./successPasswordReset.json');
+
+function successPasswordResetMailHtml(lang)
 {
+    const selectedIdioms = translations[lang] || translations["es"];
+
     return `<!doctype html>
     <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
         xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -206,7 +210,7 @@ function successPasswordResetMailHtml()
     
                                                 <div
                                                     style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:38px;font-weight:bold;line-height:1;text-align:center;color:#555;">
-                                                    Felicidades!
+                                                    ${selectedIdioms.congratulations}
                                                 </div>
     
                                             </td>
@@ -218,7 +222,7 @@ function successPasswordResetMailHtml()
     
                                                 <div
                                                     style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:18px;line-height:1;text-align:center;color:#555;">
-                                                    Su contraseña se ha actualizado de forma exitosa.
+                                                    ${selectedIdioms.message}
                                                 </div>
     
                                             </td>

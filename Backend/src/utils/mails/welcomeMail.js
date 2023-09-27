@@ -1,6 +1,7 @@
+const translations = require('./welcome.json');
 
-
-const generateWelcomeMailHtml = (name) => {
+const generateWelcomeMailHtml = (url, name, lang) => {
+    const selectedIdioms = translations[lang] || translations["es"];
     return `<!doctype html>
     <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
         xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -206,7 +207,7 @@ const generateWelcomeMailHtml = (name) => {
     
                                                 <div
                                                     style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:28px;font-weight:bold;line-height:1;text-align:center;color:#555;">
-                                                    Bienvenido a Arequipet
+                                                    ${selectedIdioms.welcome}
                                                 </div>
     
                                             </td>
@@ -217,11 +218,9 @@ const generateWelcomeMailHtml = (name) => {
     
                                                 <div
                                                     style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:16px;line-height:22px;text-align:left;color:#555;">
-                                                    Hola ${name}!<br></br>
+                                                    ${selectedIdioms.hello} ${name}!<br></br>
     
-                                                    Con tu nueva cuenta de Arequipet podrás obtener información detallada
-                                                    del servidor, descargar mods y obtener las ultimas actualizaciones de
-                                                    nuestro servidor
+                                                    ${selectedIdioms.message}
                                                 </div>
                                             </td>
                                         </tr>
@@ -236,9 +235,9 @@ const generateWelcomeMailHtml = (name) => {
                                                         <td align="center" bgcolor="#2F67F6" role="presentation"
                                                             style="border:none;border-radius:3px;color:#ffffff;cursor:auto;padding:15px 25px;"
                                                             valign="middle">
-                                                            <a href="https://arequipet.ga/login"
+                                                            <a href="${url}login"
                                                                 style="background:#2F67F6;color:#ffffff;font-family:'Helvetica Neue',Arial,sans-serif;font-size:15px;font-weight:normal;line-height:120%;Margin:0;text-decoration:none;text-transform:none;">
-                                                                inicia sesión en Arequipet
+                                                                ${selectedIdioms.loginMessage}
                                                             </a>
                                                         </td>
                                                     </tr>

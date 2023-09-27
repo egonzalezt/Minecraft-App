@@ -1,5 +1,9 @@
-function restorePasswordMailHtml(url)
+const translations = require('./restorePassword.json');
+
+function restorePasswordMailHtml(url, lang)
 {
+    const selectedIdioms = translations[lang] || translations["es"];
+
     return `<!doctype html>
     <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
         xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -206,7 +210,7 @@ function restorePasswordMailHtml(url)
     
                                                 <div
                                                     style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:38px;font-weight:bold;line-height:1;text-align:center;color:#555;">
-                                                    Oops!
+                                                    ${selectedIdioms.oops}
                                                 </div>
     
                                             </td>
@@ -218,7 +222,7 @@ function restorePasswordMailHtml(url)
     
                                                 <div
                                                     style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:18px;line-height:1;text-align:center;color:#555;">
-                                                    Parece que olvidaste la contraseña.
+                                                    ${selectedIdioms.subTitle}
                                                 </div>
     
                                             </td>
@@ -260,7 +264,7 @@ function restorePasswordMailHtml(url)
                                                             valign="middle">
                                                             <a
                                                                 href=${url} style="background:#2F67F6;color:#ffffff;font-family:'Helvetica Neue',Arial,sans-serif;font-size:15px;font-weight:normal;line-height:120%;Margin:0;text-decoration:none;text-transform:none;">
-                                                                Reestablecer contraseña
+                                                                ${selectedIdioms.resetPassword}
                                                             </a>
                                                         </td>
                                                     </tr>
@@ -275,8 +279,7 @@ function restorePasswordMailHtml(url)
     
                                                 <div
                                                     style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:16px;line-height:20px;text-align:center;color:#7F8FA4;">
-                                                    Si no solicitaste el reinicio de contraseña, solo ignora este correo. De
-                                                    lo contrario por favor presione el botón para reiniciar su contraseña, tienes 1 hora para completar esta acción.
+                                                    ${selectedIdioms.message}
                                                 </div>
     
                                             </td>

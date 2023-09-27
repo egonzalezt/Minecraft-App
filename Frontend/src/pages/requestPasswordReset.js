@@ -18,6 +18,9 @@ function App() {
     });
 
     function submit(data) {
+        const selectedLanguage = localStorage.getItem("selectedLanguage");
+        const language = selectedLanguage !== null ? selectedLanguage : "es";
+        data.lang = language;
         UserApi.requestPasswordReset(data).then(res => {
             Swal.fire({
                 icon: 'success',

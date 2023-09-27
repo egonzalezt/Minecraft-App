@@ -1,0 +1,32 @@
+{
+    "es":{
+        "welcome": "Bienvenido a Arequipet",
+        "hello": "Hola",
+        "message": "Con tu nueva cuenta de Arequipet podrás obtener información detallada del servidor, descargar mods y obtener las ultimas actualizaciones de nuestro servidor.",
+        "loginMessage": "Inicia sesión en Arequipet"
+    },
+    "en":{
+        "welcome": "Welcome to Arequipet",
+        "hello": "Hello",
+        "message": "With your new Arequipet account, you can access detailed server information, download mods, and get the latest updates from our server.",
+        "loginMessage": "Log in to Arequipet"
+    },
+    "jp":{
+        "welcome": "アレキペットへようこそ",
+        "hello": "こんにちは",
+        "message": "新しいArequipetアカウントで、詳細なサーバー情報にアクセスし、MODをダウンロードし、サーバーの最新情報を入手できます。",
+        "loginMessage": "アレキペトにログインしてください。"
+    },
+    "fr":{
+        "welcome": "Bienvenue à Arequipet",
+        "hello": "Bonjour",
+        "message": "Avec votre nouveau compte Arequipet, vous pouvez accéder aux informations détaillées du serveur, télécharger des mods et obtenir les dernières mises à jour de notre serveur.",
+        "loginMessage": "Connectez-vous à Arequipet"
+    },
+    "ru":{
+        "welcome": "Добро пожаловать в Arequipet",
+        "hello": "Здравствуйте",
+        "message": "С вашей новой учетной записью Arequipet вы можете получить доступ к подробной информации о сервере, загрузить моды и получать последние обновления с нашего сервера.",
+        "loginMessage": "Войдите в систему на Arequipet"
+    }
+}

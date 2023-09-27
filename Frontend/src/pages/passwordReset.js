@@ -29,7 +29,6 @@ function App() {
     const [isNumber, setNumber] = useState(false);
     const [token, setToken] = useState(null);
     const [id, setId] = useState(null);
-    const nickNameRanges = {min: 4, max: 50}
     const passLength = {min: 8, max: 100}
     const schema = Yup.object().shape({
         password: Yup.string().when('password', (password, field) => {
@@ -87,7 +86,6 @@ function App() {
     function submit(data) {
         data.token = token;
         data.userid = id;
-
         UserApi.resetPassword(data).then(res => {
             Swal.fire({
                 timer: 3000,
