@@ -19,6 +19,14 @@
         "nickName": "Pseudo",
         "createAccount": "Vous n'avez pas de compte ? Inscrivez-vous",
         "forgotPassword": "Mot de passe oublié ?",
+        "changePassword": "Changer le mot de passe",
+        "updatePasswordError": "Une erreur s'est produite lors de la demande de modification du mot de passe. Veuillez refaire la demande de modification. Si le problème persiste, contactez les administrateurs.",
+        "emailSent": "Email envoyé",
+        "emailSentDescription": "Un e-mail a été envoyé à votre adresse e-mail. Si vous trouvez l'e-mail dans votre boîte de réception avec pour objet 'Récupération de compte', veuillez vérifier votre dossier spam.",
+        "passwordUpdatedSuccess": "Mot de passe mis à jour avec succès.",
+        "expiredRequest": "Aucune demande de changement de mot de passe associée n'a été trouvée. Cela peut être dû à l'expiration du délai d'une heure ou à la création d'une nouvelle demande de changement de mot de passe.",
+        "passwordRecover": "Récupération de mot de passe",
+        "newPassword": "Nouveau mot de passe",
         "validators": {
             "invalidEmail": "E-mail invalide",
             "requiredEmail": "L'e-mail est requis",
@@ -134,6 +142,7 @@
         "serverStatus": "État du serveur"
     },
     "commons": {
+        "update": "Mise à jour",
         "home": "Accueil",
         "logout": "Déconnexion",
         "login": "Connexion",

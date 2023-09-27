@@ -19,6 +19,14 @@
     "nickName": "Nickname",
     "createAccount": "Don't have an account? Sign Up",
     "forgotPassword": "Forgot your password?",
+    "changePassword": "Change password",
+    "updatePasswordError": "An error occurred while requesting a password change. Please request the change again. If the problem persists, contact the administrators.",
+    "emailSent": "Email Sent",
+    "emailSentDescription": "An email has been sent to your email address. If you find the email in your inbox with the subject 'Account Recovery,' please check your spam folder.",
+    "passwordUpdatedSuccess": "Password updated successfully.",
+    "expiredRequest": "No associated password change request was found. This may be because the 1-hour time limit has expired or a new password change request has been made.",
+    "passwordRecover": "Password Recovery",
+    "newPassword": "New Password",
     "validators": {
       "invalidEmail": "Invalid email",
       "requiredEmail": "Email is required",
@@ -134,6 +142,7 @@
     "serverStatus": "Server Status"
   },
   "commons": {
+    "update": "Update",
     "home": "Home",
     "logout": "Log out",
     "login": "Login",

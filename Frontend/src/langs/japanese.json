@@ -19,6 +19,14 @@
         "nickName": "ニックネーム",
         "createAccount": "アカウントをお持ちでないですか？ 登録する",
         "forgotPassword": "パスワードをお忘れですか？",
+        "changePassword": "パスワード変更",
+        "updatePasswordError": "パスワードの変更リクエスト中にエラーが発生しました。もう一度変更をリクエストしてください。問題が解決しない場合、管理者に連絡してください。",
+        "emailSent": "メール送信済み",
+        "emailSentDescription": "お客様のメールアドレスにメールが送信されました。 'アカウントの回復' という件名のメールが受信トレイに表示された場合、スパムフォルダも確認してください。",
+        "passwordUpdatedSuccess": "パスワードが正常に更新されました。",
+        "expiredRequest": "パスワード変更の関連リクエストが見つかりませんでした。これは1時間の制限時間が切れたか、新しいパスワード変更リクエストが行われたためかもしれません。",
+        "passwordRecover": "パスワードの復旧",
+        "newPassword": "新しいパスワード",
         "validators": {
             "invalidEmail": "無効なメールアドレス",
             "requiredEmail": "メールアドレスは必須です",
@@ -134,6 +142,7 @@
         "serverStatus": "サーバーステータス"
     },
     "commons": {
+        "update": "アップデート",
         "home": "ホーム",
         "logout": "ログアウト",
         "login": "ログイン",

@@ -7,20 +7,22 @@ import UserApi from '../services/users'
 import { Link } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
+import { useTranslation } from 'react-i18next';
 
 function App() {
+    const { t } = useTranslation();
     const schema = Yup.object().shape({
         email: Yup.string()
-            .required("El correo es requerido")
-            .email("Correo invalido"),
+            .required(t("auth.validators.requiredEmail"))
+            .email(t("auth.validators.invalidEmail")),
     });
 
     function submit(data) {
         UserApi.requestPasswordReset(data).then(res => {
             Swal.fire({
                 icon: 'success',
-                title: 'Correo enviado',
-                text: 'Se envió un mail a su dirección de correo electrónico, si encuentra el correo en su bandeja con el título "Recuperación de cuenta" por favor revise spam.',
+                title: t("auth.emailSent"),
+                text: t("auth.emailSentDescription"),
             });
         }).catch(err => {
             if (err.response.status === 404) {
@@ -35,7 +37,7 @@ function App() {
                     timerProgressBar: true,
                     icon: 'error',
                     title: 'Error',
-                    text: "Ocurrió al solicitar el cambio de contraseña solicite el cambio nuevamente, si el problema persiste contacte a los administradores.",
+                    text: t("auth.updatePasswordError"),
                 });
             }
 
@@ -65,7 +67,7 @@ function App() {
                                         <IconButton component={Link} to={"/"}>
                                             <ArrowBackRoundedIcon />
                                         </IconButton>
-                                        Cambio de contraseña
+                                        {t("auth.changePassword")}
                                     </span>
                                     
                                     <input
@@ -74,7 +76,7 @@ function App() {
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.email}
-                                        placeholder="Correo"
+                                        placeholder={t("auth.email")}
                                         className="form-control inp_text"
                                         id="email"
                                     />
@@ -82,7 +84,7 @@ function App() {
                                         {errors.email && touched.email && errors.email}
                                     </p>
 
-                                    <button type="submit">Actualizar</button>
+                                    <button type="submit">{t("commons.update")}</button>
                                 </form>
                             </div>
                         </div>

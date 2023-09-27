@@ -15,8 +15,10 @@ import RadioButtonCheckedTwoToneIcon from '@mui/icons-material/RadioButtonChecke
 import RadioButtonUncheckedTwoToneIcon from '@mui/icons-material/RadioButtonUncheckedTwoTone';
 import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
+import { useTranslation } from 'react-i18next';
 
 function App() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const [isRequired, setRequired] = useState(false);
     const [isMinLength, setMinLength] = useState(false);
@@ -27,6 +29,8 @@ function App() {
     const [isNumber, setNumber] = useState(false);
     const [token, setToken] = useState(null);
     const [id, setId] = useState(null);
+    const nickNameRanges = {min: 4, max: 50}
+    const passLength = {min: 8, max: 100}
     const schema = Yup.object().shape({
         password: Yup.string().when('password', (password, field) => {
             if (password == null) {
@@ -89,14 +93,14 @@ function App() {
                 timer: 3000,
                 timerProgressBar: true,
                 icon: 'success',
-                title: `Contraseña actualizada exitosamente`,
+                title: t("auth.passwordUpdatedSuccess"),
             }).then(() => navigate("/login"));
         }).catch(err => {
             if (err.response.status === 404) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: "No se encontró solicitud asociada para cambio de contraseña esto se debe porque el tiempo de 1hora establecido expiro o se solicitó un nuevo cambio de contraseña.",
+                    text: t("auth.expiredRequest"),
                 });
             } else {
                 Swal.fire({
@@ -145,28 +149,28 @@ function App() {
                                         <IconButton component={Link} to={"/"}>
                                             <ArrowBackRoundedIcon />
                                         </IconButton>
-                                        Recuperacion de contraseña
+                                        {t("auth.passwordRecover")}
                                     </span>
                                     <Tooltip title={
                                         <Fragment>
                                             <Stack direction='column' width="100%" spacing={2} justifyContent="flex-start" alignItems="flex-start" paddingBottom={2}>
                                                 <Typography fontSize={12}>
-                                                    {(isMinLength && isRequired) ? <RadioButtonCheckedTwoToneIcon sx={{ fontSize: 15, color: "green" }} /> : <RadioButtonUncheckedTwoToneIcon sx={{ fontSize: 15, color: "red" }} />} Contraseña debe tener al menos 8 caracteres
+                                                    {(isMinLength && isRequired) ? <RadioButtonCheckedTwoToneIcon sx={{ fontSize: 15, color: "green" }} /> : <RadioButtonUncheckedTwoToneIcon sx={{ fontSize: 15, color: "red" }} />} {t("auth.validators.passwordMinLength",{min: passLength.min})}
                                                 </Typography>
                                                 <Typography fontSize={12}>
-                                                    {(isUppercase && isRequired) ? <RadioButtonCheckedTwoToneIcon sx={{ fontSize: 15, color: "green" }} /> : <RadioButtonUncheckedTwoToneIcon sx={{ fontSize: 15, color: "red" }} />} Contraseña debe tener una letra mayuscula
+                                                    {(isUppercase && isRequired) ? <RadioButtonCheckedTwoToneIcon sx={{ fontSize: 15, color: "green" }} /> : <RadioButtonUncheckedTwoToneIcon sx={{ fontSize: 15, color: "red" }} />} {t("auth.validators.passwordUpper")}
                                                 </Typography>
                                                 <Typography fontSize={12}>
-                                                    {(isMaxLength && isRequired) ? <RadioButtonCheckedTwoToneIcon sx={{ fontSize: 15, color: "green" }} /> : <RadioButtonUncheckedTwoToneIcon sx={{ fontSize: 15, color: "red" }} />} Contraseña debe tener maximo 100 caracteres
+                                                    {(isMaxLength && isRequired) ? <RadioButtonCheckedTwoToneIcon sx={{ fontSize: 15, color: "green" }} /> : <RadioButtonUncheckedTwoToneIcon sx={{ fontSize: 15, color: "red" }} />} {t("auth.validators.passwordMaxLength",{max: passLength.max})}
                                                 </Typography>
                                                 <Typography fontSize={12}>
-                                                    {(isLowercase && isRequired) ? <RadioButtonCheckedTwoToneIcon sx={{ fontSize: 15, color: "green" }} /> : <RadioButtonUncheckedTwoToneIcon sx={{ fontSize: 15, color: "red" }} />} Contraseña debe tener una letra minuscula
+                                                    {(isLowercase && isRequired) ? <RadioButtonCheckedTwoToneIcon sx={{ fontSize: 15, color: "green" }} /> : <RadioButtonUncheckedTwoToneIcon sx={{ fontSize: 15, color: "red" }} />} {t("auth.validators.passwordLower")}
                                                 </Typography>
                                                 <Typography fontSize={12}>
-                                                    {(isSpecial && isRequired) ? <RadioButtonCheckedTwoToneIcon sx={{ fontSize: 15, color: "green" }} /> : <RadioButtonUncheckedTwoToneIcon sx={{ fontSize: 15, color: "red" }} />} Contraseña debe tener un simbolo
+                                                    {(isSpecial && isRequired) ? <RadioButtonCheckedTwoToneIcon sx={{ fontSize: 15, color: "green" }} /> : <RadioButtonUncheckedTwoToneIcon sx={{ fontSize: 15, color: "red" }} />} {t("auth.validators.passwordSymbol")}
                                                 </Typography>
                                                 <Typography fontSize={12}>
-                                                    {(isNumber && isRequired) ? <RadioButtonCheckedTwoToneIcon sx={{ fontSize: 15, color: "green" }} /> : <RadioButtonUncheckedTwoToneIcon sx={{ fontSize: 15, color: "red" }} />} Contraseña debe tener un numero
+                                                    {(isNumber && isRequired) ? <RadioButtonCheckedTwoToneIcon sx={{ fontSize: 15, color: "green" }} /> : <RadioButtonUncheckedTwoToneIcon sx={{ fontSize: 15, color: "red" }} />} {t("auth.validators.passwordNumber")}
                                                 </Typography>
                                             </Stack>
                                         </Fragment>
@@ -177,12 +181,12 @@ function App() {
                                             onChange={handleChange}
                                             onBlur={handleBlur}
                                             value={values.password}
-                                            placeholder="Nueva contraseña"
+                                            placeholder={t("auth.newPassword")}
                                             className="form-control"
                                         />
                                     </Tooltip>
 
-                                    <button type="submit">Actualizar</button>
+                                    <button type="submit">{t("commons.update")}</button>
                                 </form>
                             </div>
                         </div>
