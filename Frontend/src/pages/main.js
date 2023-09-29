@@ -23,10 +23,10 @@ function Main() {
                         {t("mainPage.downloadMods")}
                     </Typography>
                     <Typography>
-                        {t("mainPage.minecraftVersion")} 1.19.2
+                        {t("mainPage.minecraftVersion")} 1.20.1
                     </Typography>
                     <Typography>
-                        Fabric 0.11.2
+                        Fabric 0.14.22
                     </Typography>
                     <Typography>
                         Turip Ip Ip

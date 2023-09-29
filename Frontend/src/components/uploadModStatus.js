@@ -22,6 +22,7 @@ function UploadModStatus({ file, onComponentFinish }) {
             formData.append('file', file.file);
             formData.append('name', file.customName);
             formData.append('url', '');
+            formData.append('category', 'mod');
 
             const config = {
                 onUploadProgress: (progressEvent) => {

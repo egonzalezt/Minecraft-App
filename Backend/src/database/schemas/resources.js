@@ -1,14 +1,14 @@
 const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
-const {modType} = require('./modEnum')
-
+const {resourceType} = require('./resourcesEnum')
+const {categoryType} = require('./categoryEnum')
 //Schemas
 
 const modsSchema  = new Schema({
     name:{
         type:String,
-        require:true,
+        require:true
     },
     fileName:{
         type:String,
@@ -17,15 +17,19 @@ const modsSchema  = new Schema({
     },
     version:{
         type:String,
-        require:true,
+        require:true
     },
     url:{
-        type:String,
+        type:String
     },
     type: {
         type: [String],
-        enum: modType,
+        enum: resourceType
     },
+    category: {
+        type: String,
+        enum: categoryType
+    }
 },{timestamps: true})
 
-module.exports = mongoose.model("Mods", modsSchema );
+module.exports = mongoose.model("Resources", modsSchema );

@@ -340,7 +340,7 @@ function UploadMod() {
                         id: index,
                         name: file.name,
                         customName: file.customName || '',
-                        version: file.version || '1.19.2',
+                        version: file.version || '1.20.1',
                         status: file.status || t("commons.pending"),
                         isClientChecked: checkValue(file.isClientChecked),
                         isServerChecked: checkValue(file.isServerChecked),

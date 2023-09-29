@@ -1,4 +1,4 @@
-const schema = require('../../schemas/mods');
+const schema = require('../../schemas/resources');
 
 /**
  * @param {string[]} fileNames

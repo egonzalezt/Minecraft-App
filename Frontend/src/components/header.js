@@ -30,7 +30,7 @@ function Header() {
             </Typography>
             <Stack direction={{ xs: 'column', sm: 'row' }} alignItems="center" spacing={2}>
                 <Button onClick={troll} href={"/api/v1/mods/download"}>{t("mainPage.downloadModsButton")}</Button>
-                <Button href={"https://maven.fabricmc.net/net/fabricmc/fabric-installer/0.11.2/fabric-installer-0.11.2.exe"}>{t("mainPage.downloadFabric")}</Button>
+                <Button href={"https://meta.fabricmc.net/v2/versions/loader/1.20.1/0.14.22/0.11.2/server/jar"}>{t("mainPage.downloadFabric")}</Button>
             </Stack>
             <iframe ref={iframeRef} id="rick" hidden={hidden} title="maincra" src="https://www.youtube.com/embed/dQw4w9WgXcQ" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
         </Stack>

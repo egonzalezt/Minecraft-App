@@ -56,7 +56,7 @@ function Status() {
             </Grid>
             <Grid xs={12}>
                 <Typography variant="h3" sx={{ marginBottom: "2%" }}>
-                    1.19.2
+                    1.20.1
                 </Typography>
             </Grid>
 

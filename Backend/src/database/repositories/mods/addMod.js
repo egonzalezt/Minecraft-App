@@ -1,4 +1,4 @@
-const schema = require('../../schemas/mods')
+const schema = require('../../schemas/resources')
 
 /**
  * @param {string} name
@@ -6,22 +6,23 @@ const schema = require('../../schemas/mods')
  * @param {string} version
  * @param {string} type
  * @param {string} url
-
+ * @param {string} category
  */
-function saveMod(name,fileName,version,type,url)
+function saveMod(name,fileName,version,type,url,category)
 {
     let values = {
         "name": name,
         "fileName": fileName,
         "version": version,
         "type":type,
-        "url":url
+        "url":url,
+        "category":category
     };
 
-    var mod = new schema(values);
+    var resource = new schema(values);
 
     let result = new Promise((resolve, reject) => {
-        mod.save(function(err,result){
+        resource.save(function(err,result){
             if (err){
                 reject(err);
             }

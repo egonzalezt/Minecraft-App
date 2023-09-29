@@ -7,7 +7,7 @@ const findModFileNameById = require('../database/repositories/mods/findModFileNa
 const getModsPaginate = require('../database/repositories/mods/getModsPaginated');
 const saveMod = require('../database/repositories/mods/addMod');
 const findModByFileName = require('../database/repositories/mods/findModByFileName')
-const { modType } = require('../database/schemas/modEnum');
+const { resourceType } = require('../database/schemas/resourcesEnum');
 const copyModsAndCreateZip = require('../utils/copyModsAndCreateZip')
 const findModsByFileNames = require('../database/repositories/mods/findModsByFileNames')
 async function createModsFile(req, res) {
@@ -72,19 +72,20 @@ async function addMods(req, res) {
     const version = req.body.version;
     const file = req.files.file;
     const url = req.body.url;
+    const category = req.body.category
     const client = (req.body.client).toLowerCase() == 'true' ? true : false;
     const server = (req.body.server).toLowerCase() == 'true' ? true : false;
     const type = []
     try {
         if (client && server) {
-            type.push(modType.Server);
-            type.push(modType.Client);
+            type.push(resourceType.Server);
+            type.push(resourceType.Client);
             file.mv(process.env.MODSPATH + fileName)
         } else if (server) {
-            type.push(modType.Server);
+            type.push(resourceType.Server);
             file.mv(process.env.MODSPATH + fileName)
         } else {
-            type.push(modType.Client);
+            type.push(resourceType.Client);
             file.mv(process.env.CLIENTMODSPATH + fileName)
         }
     } catch (e) {
@@ -93,7 +94,7 @@ async function addMods(req, res) {
             .json({ error: true, message: "Error saving the mod" });
     }
 
-    var result = await saveMod(name, fileName, version, type, url);
+    var result = await saveMod(name, fileName, version, type, url, category);
     if (result) {
         return res.status(200)
             .json({ error: false, message: "Mod saved successfully" });

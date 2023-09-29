@@ -69,6 +69,7 @@ function UploadMod() {
         formData.append('file', file);
         formData.append('name', name);
         formData.append('url', url)
+        formData.append('category', "mod")
         AdminApi.upload(formData).then(res => {
             setLoading(false);
             Swal.fire({
