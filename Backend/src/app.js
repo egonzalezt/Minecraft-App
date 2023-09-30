@@ -2,6 +2,7 @@ const cors = require('cors');
 const express = require('express');
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
+const pathCreate = require('./utils/folderCreator')
 require('express-async-errors');
 require('dotenv').config();
 require('./config/database');
@@ -12,8 +13,16 @@ if(process.env.ENABLEAPM==1)
     var apm = require('elastic-apm-node').start()
 }
 
-//routes
+const paths = [
+    process.env.CLIENTMODSPATH,
+    process.env.ZIPPATH,
+    process.env.BACKUPPATH,
+    process.env.TEMPMODS,
+]
 
+pathCreate(paths);
+
+//routes
 const modsRouter = require('./routes/downloader');
 const adminRouter = require('./routes/adminRouter');
 const userRouter = require('./routes/userRouter');
