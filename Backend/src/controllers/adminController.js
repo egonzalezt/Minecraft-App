@@ -127,6 +127,7 @@ async function removeMod(req, res) {
                     fs.unlink(modFullPath, async (err) => {
                         if (err) {
                             failedToDeleteSomeMods = true;
+                            await deleteMod(modId);
                         } else {
                             await deleteMod(modId);
                         }
@@ -139,7 +140,7 @@ async function removeMod(req, res) {
 
         if (modsNotFound) {
             return res.status(200)
-                .json({ error: false, message: "Some mods could not be removed because .Jar file not found" });
+                .json({ error: false, message: "Some Resources are not found, It was manually removed" });
         }
         else if (failedToDeleteSomeMods) {
             return res.status(200)

@@ -126,11 +126,11 @@ export default function ModList() {
     async function removeMods() {
         setIsLoading(true);
         Swal.fire({
-            title: '¿Estas seguro de eliminar los mods seleccionados?',
+            title: t("listMods.deleteMods"),
             showDenyButton: true,
             showCancelButton: true,
-            confirmButtonText: 'Si',
-            denyButtonText: `Nel`,
+            confirmButtonText: t("commons.yes"),
+            denyButtonText: t("commons.no"),
         }).then(async (result) => {
             if (result.isConfirmed) {
                 setDeletingMods(true)

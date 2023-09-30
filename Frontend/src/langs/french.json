@@ -74,10 +74,13 @@
             "type": "Type de mod"
         }
     },
+    "socketServerConnectionLost": "La connexion au serveur a été perdue.",
     "listMods": {
         "title": "Liste des mods",
         "addMod": "Ajouter un mod",
         "createZip": "Créer un fichier .ZIP",
+        "newResource": "Nouvelle ressource",
+        "deleteMods": "Êtes-vous sûr de vouloir supprimer les mods sélectionnés ?",
         "table": {
             "name": "Nom",
             "version": "Version",
@@ -142,6 +145,11 @@
         "serverStatus": "État du serveur"
     },
     "commons": {
+        "yes": "Oui",
+        "no": "Non",
+        "players": "Joueurs",
+        "on": "Allumé",
+        "off": "Éteint",
         "update": "Mise à jour",
         "home": "Accueil",
         "logout": "Déconnexion",

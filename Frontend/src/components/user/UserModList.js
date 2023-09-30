@@ -56,7 +56,7 @@ export default function UserModList() {
                         onClick={async () => await downloadMod(cellValues)}
                     >
                         {days_difference <= 2 &&
-                            <Typography>Nuevo Mod</Typography>
+                            <Typography>{t("listMods.newResource")}</Typography>
                         }
                         <DownloadIcon />
                     </IconButton>

@@ -129,7 +129,7 @@ export default function Nav({ openNav, onCloseNav }) {
     });
 
     socket.on('disconnect', () => {
-      enqueueSnackbar(`Se ha perdido la conexión con el servidor`, { variant: 'warning' });
+      enqueueSnackbar(t("socketServerConnectionLost"), { variant: 'warning' });
     });
 
     return () => {

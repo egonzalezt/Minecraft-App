@@ -74,10 +74,13 @@
             "type": "モッドのタイプ"
         }
     },
+    "socketServerConnectionLost": "サーバーへの接続が失われました。" ,
     "listMods": {
         "title": "モッドリスト",
         "addMod": "モッドを追加",
         "createZip": ".ZIPを作成",
+        "newResource": "新しいリソース",
+        "deleteMods": "選択したモッドを削除してもよろしいですか？",
         "table": {
             "name": "名前",
             "version": "バージョン",
@@ -142,6 +145,11 @@
         "serverStatus": "サーバーステータス"
     },
     "commons": {
+        "yes": "はい",
+        "no": "いいえ",
+        "players": "プレイヤー",
+        "on": "オン",
+        "off": "オフ",
         "update": "アップデート",
         "home": "ホーム",
         "logout": "ログアウト",

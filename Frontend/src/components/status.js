@@ -11,6 +11,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import Skeleton from '@mui/material/Skeleton';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTranslation } from 'react-i18next';
 
 import axios from "axios";
 
@@ -26,6 +27,7 @@ function Status() {
     const [status, setStatus] = useState(false);
     const [loading, setLoading] = useState(true);
     const matches = useMediaQuery('(min-width:700px)');
+    const { t } = useTranslation();
 
     useEffect(() => {
         setLoading(true);
@@ -90,7 +92,7 @@ function Status() {
                                             color: status ? '#4caf50' : '#d9182e',
                                         }}
                                     />
-                                    {status ? "Prendido" : "Apagado"}
+                                    {status ? t("commons.off") : t("commons.on")}
                                 </Typography>
                                 <Typography variant="body2" color="text.secondary">
                                     {online}/{max}
@@ -103,7 +105,7 @@ function Status() {
                         <Accordion>
                             <AccordionSummary
                                 expandIcon={<ExpandMoreIcon />}>
-                                <Typography>Jugadores</Typography>
+                                <Typography>{t("commons.players")}</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
                                 {players.map(((player, index) =>

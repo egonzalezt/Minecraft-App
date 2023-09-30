@@ -74,10 +74,13 @@
       "type": "Mod Type"
     }
   },
+  "socketServerConnectionLost": "The connection to the server has been lost.",
   "listMods": {
     "title": "Mod List",
     "addMod": "Add mod",
     "createZip": "Create .ZIP",
+    "newResource": "New Resource",
+    "deleteMods": "Are you sure you want to delete the selected mods?",
     "table": {
       "name": "Name",
       "version": "Version",
@@ -142,6 +145,11 @@
     "serverStatus": "Server Status"
   },
   "commons": {
+    "yes": "Yes",
+    "no": "No",
+    "players": "Players",
+    "on": "On",
+    "off": "Off",
     "update": "Update",
     "home": "Home",
     "logout": "Log out",

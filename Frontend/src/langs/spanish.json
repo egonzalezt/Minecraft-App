@@ -78,6 +78,8 @@
         "title": "Lista de Mods",
         "addMod": "Agregar mod",
         "createZip": "Crear .ZIP",
+        "deleteMods": "¿Estas seguro de eliminar los mods seleccionados?",
+        "newResource": "Nuevo Recurso",
         "table": {
             "name": "Nombre",
             "version": "Version",
@@ -97,6 +99,7 @@
         "title":"Editar configuracion de mods",
         "editModTitle": "Editar {{filename}}"
     },
+    "socketServerConnectionLost": "Se ha perdido la conexión con el servidor",
     "serverProperties": "Editar server.properties",
     "backups": {
         "title": "Lista de Backups",
@@ -142,6 +145,11 @@
         "serverStatus": "Estado del servidor"
     },
     "commons": {
+        "yes": "Si",
+        "no": "No",
+        "players": "Jugadores",
+        "on": "Prendido",
+        "off": "Apagado",
         "update": "Actualizar",
         "home": "Pagina principal",
         "logout": "Cerrar sesion",
