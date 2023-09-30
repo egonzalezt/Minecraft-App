@@ -92,7 +92,7 @@ function Status() {
                                             color: status ? '#4caf50' : '#d9182e',
                                         }}
                                     />
-                                    {status ? t("commons.off") : t("commons.on")}
+                                    {status ? t("commons.on") : t("commons.off")}
                                 </Typography>
                                 <Typography variant="body2" color="text.secondary">
                                     {online}/{max}
