@@ -29,7 +29,7 @@ function Status() {
 
     useEffect(() => {
         setLoading(true);
-        axios.get("https://api.mcsrvstat.us/2/arequipet.server.vasitos.software").then(response => {
+        axios.get("https://api.mcsrvstat.us/2/arequipet.server.vasitos.org").then(response => {
             setImage(response.data.icon)
             setPlayers(response.data.players.list ? response.data.players.list : ["Sin jugadores"])
             setMax(response.data.players.max)
@@ -51,7 +51,7 @@ function Status() {
 
             <Grid xs={12}>
                 <Typography variant="h2" sx={{ marginBottom: "2%", overflowWrap: "break-word" }}>
-                    arequipet.server.vasitos.software
+                    arequipet.server.vasitos.org
                 </Typography>
             </Grid>
             <Grid xs={12}>
