@@ -51,9 +51,11 @@
         "version": "Версия мода",
         "url": "URL мода",
         "errors": {
-            "version": "Недопустимая версия",
-            "name": "Недопустимое название"
+            "version": "Версия недействительна",
+            "name": "Имя недействительно",
+            "upload": "При загрузке мода {{fileName}} произошла ошибка"
         },
+        "successful": "Мод {{fileName}} успешно загружен",
         "popUp": {
             "warn": {
                 "type": "Выберите тип мода Сервер/Клиент",
@@ -72,6 +74,9 @@
             "version": "Версия",
             "fileName": "Имя файла",
             "type": "Тип мода"
+        },
+        "errors": {
+            "verifyMods": "При проверке существующих модов произошла ошибка. Пожалуйста, попробуйте снова."
         }
     },
     "socketServerConnectionLost": "Соединение с сервером потеряно.",
@@ -98,7 +103,12 @@
     },
     "modConfig": {
         "title": "Изменить настройки модов",
-        "editModTitle": "Изменить {{filename}}"
+        "editModTitle": "Изменить {{filename}}",
+        "successful": "{{filename}} успешно обновлен",
+        "errors": {
+            "update": "Ошибка при обновлении {{filename}}",
+            "retrieve": "Не удалось получить конфигурацию"
+        }
     },
     "serverProperties": "Изменить свойства сервера",
     "backups": {
@@ -168,8 +178,10 @@
         "complete": "Завершено",
         "pending": "В ожидании",
         "error": "Ошибка",
+        "loading": "Загрузка...",
         "operationCancel": "Операция отменена",
         "madeBy": "Создано",
+        "defaultVariable": "{{variable}} по умолчанию",
         "vasitosCorp": "Vasitos Corp",
         "softwareDev": {
             "po": "Владелец продукта",

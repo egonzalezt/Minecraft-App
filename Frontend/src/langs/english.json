@@ -52,8 +52,10 @@
     "url": "Mod URL",
     "errors": {
       "version": "The version is invalid",
-      "name": "Name is invalid"
+      "name": "Name is invalid",
+      "upload": "An error occurred while uploading the mod {{fileName}}"
     },
+    "successful": "The mod {{fileName}} has been uploaded successfully",
     "popUp": {
       "warn": {
         "type": "Select the Server/Client mod type",
@@ -72,6 +74,9 @@
       "version": "Version",
       "fileName": "File Name",
       "type": "Mod Type"
+    },
+    "errors": {
+        "verifyMods": "An error occurred while checking for existing mods. Please try again."
     }
   },
   "socketServerConnectionLost": "The connection to the server has been lost.",
@@ -98,7 +103,13 @@
   },
   "modConfig": {
     "title": "Edit Mod Configuration",
-    "editModTitle": "Edit {{filename}}"
+    "editModTitle": "Edit {{filename}}",
+    "successful": "{{filename}} updated successfully",
+    "errors": {
+      "update": "Error updating {{filename}}",
+      "retrieve": "Failed to retrieve the configuration"
+    }
+    
   },
   "serverProperties": "Edit server.properties",
   "backups": {
@@ -168,8 +179,10 @@
     "complete": "Completed",
     "pending": "Pending",
     "error": "Error",
+    "loading": "Loading...",
     "operationCancel": "Operation Canceled",
     "madeBy": "Made by",
+    "defaultVariable": "{{variable}} by default",
     "vasitosCorp": "Vasitos Corp",
     "softwareDev": {
       "po": "Product Owner",

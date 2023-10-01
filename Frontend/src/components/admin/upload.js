@@ -17,7 +17,7 @@ import AdminApi from '../../services/admin';
 
 function UploadMod() {
     const navigate = useNavigate();
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const [file, setFile] = useState(null);
     const [name, setName] = useState("");
     const [url, setUrl] = useState("");
@@ -76,8 +76,8 @@ function UploadMod() {
                 timer: 3000,
                 timerProgressBar: true,
                 icon: 'success',
-                title: `Mod creado`,
-                text: `El mod  ${name} se a creado correctamente`,
+                title: t("commons.complete"),
+                text: t("uploadMod.successful", {fileName: name}),
             }).then(() => navigate("/dashboard/admin"));
         }).catch(err => {
             setLoading(false);
@@ -85,7 +85,7 @@ function UploadMod() {
                 timer: 3000,
                 timerProgressBar: true,
                 icon: 'error',
-                title: 'Error',
+                title: t("commons.error"),
                 text: err.response.data.message,
             })
         });
@@ -106,8 +106,8 @@ function UploadMod() {
                 timer: 3000,
                 timerProgressBar: true,
                 icon: 'warning',
-                title: `Cargue un archivo valido`,
-                text: `Rectifique que haya seleccionado el mod y no otro archivo`,
+                title: t("listMods.popUpBadFile.title"),
+                text: t("listMods.popUpBadFile.text"),
             })
         }
     };

@@ -52,8 +52,10 @@
         "url": "モッドのURL",
         "errors": {
             "version": "バージョンが無効です",
-            "name": "名前が無効です"
+            "name": "名前が無効です",
+            "upload": "モッドのアップロード中にエラーが発生しました：{{fileName}}"
         },
+        "successful": "モッド{{fileName}}は正常にアップロードされました",
         "popUp": {
             "warn": {
                 "type": "Server/Clientモッドのタイプを選択してください",
@@ -72,6 +74,9 @@
             "version": "バージョン",
             "fileName": "ファイル名",
             "type": "モッドのタイプ"
+        },
+        "errors": {
+            "verifyMods": "既存のモッドの確認中にエラーが発生しました。もう一度お試しください。"
         }
     },
     "socketServerConnectionLost": "サーバーへの接続が失われました。" ,
@@ -98,7 +103,12 @@
     },
     "modConfig": {
         "title": "モッドの設定を編集",
-        "editModTitle": "{{filename}} を編集"
+        "editModTitle": "{{filename}} を編集",
+        "successful": "{{filename}} は正常に更新されました",
+        "errors": {
+            "update": "{{filename}} の更新中にエラーが発生しました",
+            "retrieve": "設定の取得に失敗しました"
+        }
     },
     "serverProperties": "server.properties を編集",
     "backups": {
@@ -168,8 +178,10 @@
         "complete": "完了",
         "pending": "保留中",
         "error": "エラー",
+        "loading": "読み込み中...",
         "operationCancel": "操作がキャンセルされました",
         "madeBy": "制作:",
+        "defaultVariable": "{{variable}} デフォルトで",
         "vasitosCorp": "Vasitos Corp",
         "softwareDev": {
             "po": "プロダクトオーナー",
