@@ -35,14 +35,6 @@ function ModsSettings() {
     navigate(`/dashboard/edit/mod?${query}`);
   };
 
-  const renderTree = (data) => (
-    <TreeItem key={data.name} nodeId={data.name} label={data.name}>
-      {Array.isArray(data.children)
-        ? data.children.map((child) => renderTree(child))
-        : null}
-    </TreeItem>
-  );
-
   const renderData = (data) =>
     Object.keys(data).map((key) => {
       const value = data[key];
@@ -70,7 +62,7 @@ function ModsSettings() {
         );
       } else {
         return (
-          <TreeItem key={key} nodeId={key} label={key}>
+          <TreeItem key={key} nodeId={key} label={key} sx={{ borderBottom: 1 }}>
             {renderData(value)}
           </TreeItem>
         );
@@ -92,7 +84,7 @@ function ModsSettings() {
             defaultCollapseIcon={<ExpandMoreIcon />}
             defaultExpandIcon={<ChevronRightIcon />}
             multiSelect
-            sx={{ height: '100%', flexGrow: 1, overflowY: 'auto', textAlign:'start' }}
+            sx={{ height: '100%', flexGrow: 1, overflowY: 'auto', textAlign: 'start' }}
           >
             {data && renderData(data)}
           </TreeView>

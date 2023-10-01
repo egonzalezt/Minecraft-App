@@ -10,7 +10,7 @@ import { useLocation, Link } from 'react-router-dom';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box'; // Import Box component from Mui
-import Container from '@mui/material/Container'; // Import Container component from Mui
+import Stack from '@mui/material/Stack'; // Import Stack component from Mui
 import { useTranslation } from 'react-i18next';
 
 import 'ace-builds/src-noconflict/mode-json';
@@ -67,7 +67,7 @@ function EditModProperties() {
           setFileContent(responseData.toString());
         })
         .catch((error) => {
-          enqueueSnackbar(`No se pudo obtener la configuracion`, { variant: 'error' });
+          enqueueSnackbar(t("modConfig.errors.retrieve"), { variant: 'error' });
         })
         .finally(() => {
           setLoadingGetData(false);
@@ -81,10 +81,10 @@ function EditModProperties() {
     admin
       .updateModProperties(filename, path, fileContent)
       .then(() => {
-        enqueueSnackbar(`server.properties actualizado de forma exitosa`, { variant: 'success' });
+        enqueueSnackbar(t("modConfig.successful", { filename }), { variant: 'success' });
       })
       .catch((error) => {
-        enqueueSnackbar(`Fallo la actualizacion de server.properties`, { variant: 'error' });
+        enqueueSnackbar(t("modConfig.errors.update", { filename }), { variant: 'error' });
       })
       .finally(() => {
         setLoadingSendData(false); // Set loading state to false after sending data
@@ -92,20 +92,21 @@ function EditModProperties() {
   };
 
   return (
-    <Container maxWidth="md" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <Stack direction="column" justifyContent="space-between" alignItems="center" spacing={2}>
       <Typography variant="h2" gutterBottom>
         <IconButton component={Link} to={'/dashboard/edit/mods'}>
           <ArrowBackRoundedIcon />
         </IconButton>
-        {t("modConfig.editModTitle",{filename})}
+        {t("modConfig.editModTitle", { filename })}
       </Typography>
       {loadingGetData ? (
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <CircularProgress />
-          <Typography variant="body1">Obteniendo datos...</Typography>
+          <Typography variant="h1">{t("commons.loading")}</Typography>
         </Box>
       ) : (
         <AceEditor
+          width='95%'
           mode={getFileMode(filename)}
           theme="monokai"
           name="file-editor"
@@ -114,7 +115,7 @@ function EditModProperties() {
           onChange={(newValue) => {
             setFileContent(newValue);
           }}
-          style={{ fontSize: '20px' }}
+          fontSize={18}
           highlightActiveLine={true}
           setOptions={{
             showLineNumbers: true,
@@ -136,10 +137,10 @@ function EditModProperties() {
         {loadingSendData ? (
           <CircularProgress size={24} color="inherit" />
         ) : (
-          'Subir'
+          t("commons.upload")
         )}
       </LoadingButton>
-    </Container>
+    </Stack>
   );
 }
 
