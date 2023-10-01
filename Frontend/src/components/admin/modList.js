@@ -44,7 +44,7 @@ export default function ModList() {
     const getAnimation = storeSkin(state => state.animation);
     const setSpeed = storeSkin((state) => state.setSpeed);
     const getSpeed = storeSkin(state => state.speed);
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     const columns = [
         {
@@ -203,12 +203,12 @@ export default function ModList() {
             }
 
             if (data?.type === 'statusPercent') {
-                if(getAnimation!=2){
+                if(getAnimation!==2){
                     setAnimation(2);
                 }
                 var speedValue = parseInt(data.value);
                 var currentSpeed = parseInt(getSpeed);
-                if(speedValue != currentSpeed){
+                if(speedValue !== currentSpeed){
                     let newSpeed = speedValue/100;
                     setSpeed(newSpeed);
                 }

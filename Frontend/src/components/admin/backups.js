@@ -193,23 +193,23 @@ export default function BackupList() {
             }
 
             if (data?.type === 'statusPercentZip') {
-                if(getAnimation!=1){
+                if(getAnimation!==1){
                     setAnimation(1);
                 }
                 var speedValue = parseInt(data.value);
                 var currentSpeed = parseInt(getSpeed);
-                if(speedValue != currentSpeed){
+                if(speedValue !== currentSpeed){
                     let newSpeed = speedValue/100;
                     setSpeed(newSpeed);
                 }
             } 
             if (data?.type === 'statusPercentGdrive') {
-                if(getAnimation!=2){
+                if(getAnimation!==2){
                     setAnimation(2);
                 }
                 var speedValue = parseInt(data.value);
                 var currentSpeed = parseInt(getSpeed);
-                if(speedValue != currentSpeed){
+                if(speedValue !== currentSpeed){
                     let newSpeed = speedValue/100;
                     setSpeed(newSpeed);
                 }
