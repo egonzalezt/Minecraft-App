@@ -17,7 +17,6 @@ function Server() {
       setCaretPosition,
       setBeforeCaretText,
       setAfterCaretText,
-      editorInput, setEditorInput,
     } = useContext(TerminalContext)
     const [theme, setTheme] = React.useState("matrix");
     const [controlBar, setControlBar] = React.useState(true);
@@ -27,21 +26,15 @@ function Server() {
     const commands = {
       help: (
         <span>
-          <strong>clear</strong> - clears the console. <br />
-          <strong>change_prompt &lt;PROMPT&gt;</strong> - Change the prompt of the
-          terminal. <br />
-          <strong>change_theme &lt;THEME&gt;</strong> - Changes the theme of the
-          terminal. Allowed themes - light, dark, material-light, material-dark,
+          <strong>clear</strong> - {t("terminal.clearMessage")}<br />
+          <strong>change_prompt &lt;{t("terminal.prompt")}&gt;</strong> - {t("terminal.promptMessage")}<br />
+          <strong>change_theme &lt;{t("terminal.theme")}&gt;</strong> - {t("terminal.themeMessage")} - light, dark, material-light, material-dark,
           material-ocean, matrix and dracula. <br />
-          <strong>toggle_control_bar</strong> - Hides / Display the top control
-          bar. <br />
-          <strong>toggle_control_buttons</strong> - Hides / Display the top
-          buttons on control bar. <br />
-          <strong>evaluate_math_expression &lt;EXPR&gt;</strong> - Evaluates a
-          mathematical expression (eg, <strong>4*4</strong>) by hitting a public
-          API, api.mathjs.org.
-          <strong>mine_help</strong> - Get minecraft help commands <br />
-          <strong>m &lt;PROMPT&gt;</strong> run a minecraft server command<br />
+          <strong>toggle_control_bar</strong> - {t("terminal.toggleControlBarMessage")}<br />
+          <strong>toggle_control_buttons</strong> - {t("terminal.buttonsControlBarMessage")}<br />
+          <strong>evaluate_math_expression &lt;EXPR&gt;</strong> - {t("terminal.mathExpressionMessage")} (eg, <strong>4*4</strong>)
+          <strong>mine_help</strong> - {t("terminal.minecraftHelpMessage")} <br />
+          <strong>m &lt;PROMPT&gt;</strong> {t("terminal.runMinecraftCommandMessage")}<br />
         </span>
       ),
   

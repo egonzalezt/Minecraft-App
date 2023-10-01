@@ -1,10 +1,10 @@
 {
-    "mainPage":{
+    "mainPage": {
         "subTitle": "Vamo a jugar Arequipet",
-        "downloadMods": "Presione el boton para descargar los mods men.",
-        "minecraftVersion": "Version de maincra",
+        "downloadMods": "Presione el botón para descargar los mods, men.",
+        "minecraftVersion": "Versión de Maincra",
         "downloadModsButton": "Descargar mods",
-        "downloadFabric": "Descargar fabric"
+        "downloadFabric": "Descargar Fabric"
     },
     "404": {
         "title": "Error: 404 No Encontrado",
@@ -17,61 +17,61 @@
         "email": "Correo",
         "password": "Contraseña",
         "nickName": "Apodo",
-        "createAccount": "¿No tienes cuenta? Registrate",
+        "createAccount": "¿No tienes cuenta? Regístrate",
         "forgotPassword": "¿Olvidaste la contraseña?",
         "changePassword": "Cambio de contraseña",
-        "updatePasswordError": "Ocurrió al solicitar el cambio de contraseña solicite el cambio nuevamente, si el problema persiste contacte a los administradores.",
+        "updatePasswordError": "Ocurrió un error al solicitar el cambio de contraseña. Solicite el cambio nuevamente; si el problema persiste, contacte a los administradores.",
         "emailSent": "Correo enviado",
-        "emailSentDescription": "Se envió un mail a su dirección de correo electrónico, si encuentra el correo en su bandeja con el título 'Recuperación de cuenta' por favor revise spam.",
+        "emailSentDescription": "Se envió un correo a su dirección de correo electrónico. Si encuentra el correo en su bandeja con el título 'Recuperación de cuenta', por favor revise la carpeta de spam.",
         "passwordUpdatedSuccess": "Contraseña actualizada exitosamente",
-        "expiredRequest": "No se encontró solicitud asociada para cambio de contraseña esto se debe porque el tiempo de 1 hora establecido expiro o se solicitó un nuevo cambio de contraseña.",
-        "passwordRecover": "Recuperacion de contraseña",
+        "expiredRequest": "No se encontró solicitud asociada para el cambio de contraseña. Esto se debe a que el tiempo de 1 hora establecido ha expirado o se solicitó un nuevo cambio de contraseña.",
+        "passwordRecover": "Recuperación de contraseña",
         "newPassword": "Nueva contraseña",
         "validators": {
-            "invalidEmail": "Correo invalido",
+            "invalidEmail": "Correo inválido",
             "requiredEmail": "El correo es requerido",
             "requiredPassword": "La contraseña es requerida",
-            "passwordMinLength": "Contraseña debe tener al menos {{min}} caracteres",
-            "passwordMaxLength": "Contraseña debe tener maximo {{max}} caracteres",
-            "passwordUpper": "Contraseña debe tener una letra mayuscula",
-            "passwordLower": "Contraseña debe tener una letra minuscula",
-            "passwordSymbol": "Contraseña debe tener un simbolo",
-            "passwordNumber": "Contraseña debe tener un numero",
+            "passwordMinLength": "La contraseña debe tener al menos {{min}} caracteres",
+            "passwordMaxLength": "La contraseña debe tener máximo {{max}} caracteres",
+            "passwordUpper": "La contraseña debe tener una letra mayúscula",
+            "passwordLower": "La contraseña debe tener una letra minúscula",
+            "passwordSymbol": "La contraseña debe tener un símbolo",
+            "passwordNumber": "La contraseña debe tener un número",
             "requiredNickName": "El nombre de usuario es requerido",
-            "nickNameMinLength": "El nombre de usuario requiere minimo {{min}} caracteres",
-            "nickNameMaxLength": "El nombre de usuario requiere maximo {{max}} caracteres"
+            "nickNameMinLength": "El nombre de usuario requiere como mínimo {{min}} caracteres",
+            "nickNameMaxLength": "El nombre de usuario requiere como máximo {{max}} caracteres"
         },
-        "successLogin": "Inicio de sesion exitoso",
+        "successLogin": "Inicio de sesión exitoso",
         "accountCreatedMessage": "Cuenta Registrada",
-        "welcomeMessage": "Bienvenid@ {{nickName}} a Arequipet"
+        "welcomeMessage": "¡Bienvenido/a {{nickName}} a Arequipet"
     },
     "uploadMod": {
-        "title": "Subir Mod", 
+        "title": "Subir Mod",
         "name": "Nombre del mod",
-        "version": "Version del Mod",
-        "url": "Url mod",
+        "version": "Versión del Mod",
+        "url": "URL del mod",
         "errors": {
-            "version": "La version es invalida", 
-            "name": "Nombre es invalido",
-            "upload": "Ocurrio un error al subir el mod {{fileName}}"
+            "version": "La versión es inválida",
+            "name": "Nombre es inválido",
+            "upload": "Ocurrió un error al subir el mod {{fileName}}"
         },
         "successful": "El mod {{fileName}} se ha subido exitosamente",
-        "popUp":{
-            "warn":{
+        "popUp": {
+            "warn": {
                 "type": "Seleccione el tipo de mod Server/Client",
                 "name": "Revise el nombre del mod",
-                "version": "Revise la version del mod",
+                "version": "Revise la versión del mod",
                 "file": "Revise el archivo"
             }
         }
     },
     "uploadMultiple": {
         "title": "Subir mod",
-        "dropFiles": "Arrastra y suelta archivos aqui o haz clic para seleccionarlos",
+        "dropFiles": "Arrastra y suelta archivos aquí o haz clic para seleccionarlos",
         "table": {
             "id": "ID",
             "name": "Nombre",
-            "version": "Version",
+            "version": "Versión",
             "fileName": "Nombre de archivo",
             "type": "Tipo Mod"
         },
@@ -83,11 +83,11 @@
         "title": "Lista de Mods",
         "addMod": "Agregar mod",
         "createZip": "Crear .ZIP",
-        "deleteMods": "¿Estas seguro de eliminar los mods seleccionados?",
+        "deleteMods": "¿Estás seguro de eliminar los mods seleccionados?",
         "newResource": "Nuevo Recurso",
         "table": {
             "name": "Nombre",
-            "version": "Version",
+            "version": "Versión",
             "fileName": "Archivo",
             "type": "Tipo Mod"
         },
@@ -101,7 +101,7 @@
         }
     },
     "modConfig": {
-        "title":"Editar configuración de mods",
+        "title": "Editar configuración de mods",
         "editModTitle": "Editar {{filename}}",
         "successful": "{{filename}} actualizado de forma exitosa",
         "errors": {
@@ -113,16 +113,16 @@
     "serverProperties": "Editar server.properties",
     "backups": {
         "title": "Lista de Backups",
-        "creationProgress": "Progreso creacion backup: {{value}}%",
+        "creationProgress": "Progreso creación backup: {{value}}%",
         "driveProgress": "Subiendo archivo a Google Drive: {{value}}%",
         "downloadBackup": "Descargando Backup: {{value}}%",
-        "deleteQuestion": "¿Estas seguro de eliminar los backups seleccionados?",
+        "deleteQuestion": "¿Estás seguro de eliminar los backups seleccionados?",
         "deletingBackups": "Eliminando Backups",
         "backupErrorTitle": "Ha ocurrido un error eliminando los backups",
         "createBackups": "Crear Backup",
         "table": {
             "fileName": "Nombre",
-            "createdAt": "Fecha de creacion"
+            "createdAt": "Fecha de creación"
         },
         "completePopUp": {
             "title": "Completado",
@@ -131,40 +131,53 @@
     },
     "commands": {
         "title": "Ejecutar comando",
-        "terminalTitle": "Minecraft Terminal escriba help para mas informacion",
+        "terminalTitle": "Minecraft Terminal, escriba 'help' para más información",
         "descriptions": {
             "helpTitle": "mine-help",
-            "helpText": "obten los comandos de apoyo"
+            "helpText": "obtén los comandos de apoyo"
         }
     },
-    "navBar":{
+    "navBar": {
         "mods": {
             "main": "Mods",
             "add": "Agregar",
-            "addMultiple": "Agregar Multiple",
+            "addMultiple": "Agregar Múltiple",
             "download": "Descargar Mods"
         },
         "configuration": {
-            "main":"Configuracion",
+            "main": "Configuración",
             "serverProperties": "Propiedades del servidor",
             "modsProperties": "Propiedades de los mods"
         },
         "terminal": "Terminal",
         "backups": "Respaldos",
-        "readyToPlay": "Listo Para Jugar?",
+        "readyToPlay": "¿Listo Para Jugar?",
         "serverStatus": "Estado del servidor"
     },
+    "terminal": {
+        "clearMessage": "Limpiar la consola",
+        "prompt": "comando",
+        "promptMessage": "Cambiar el prompt del terminal.",
+        "theme": "tema",
+        "themeMessage": "Cambia el tema del terminal. Temas permitidos",
+        "toggleControlBarMessage": "Oculta / Muestra la barra de control superior.",
+        "buttonsControlBarMessage": "Oculta / Muestra los botones de la barra de control.",
+        "mathExpressionMessage": "Evalúa una expresión matemática",
+        "minecraftHelpMessage": "Obtener comandos de ayuda de Minecraft",
+        "runMinecraftCommandMessage": "Ejecutar un comando de servidor de Minecraft"
+    },
     "commons": {
-        "yes": "Si",
+        "help": "ayuda",
+        "yes": "Sí",
         "no": "No",
         "players": "Jugadores",
-        "on": "Prendido",
+        "on": "Encendido",
         "off": "Apagado",
         "update": "Actualizar",
-        "home": "Pagina principal",
-        "logout": "Cerrar sesion",
-        "login": "Login",
-        "dashboard": "Dashboard",
+        "home": "Página principal",
+        "logout": "Cerrar sesión",
+        "login": "Inicio de sesión",
+        "dashboard": "Panel de control",
         "notAvailable": "No disponible",
         "available": "Disponible",
         "downloads": "Descargas",
@@ -179,31 +192,30 @@
         "pending": "Pendiente",
         "error": "Error",
         "loading": "Cargando...",
-        "operationCancel": "Operacion cancelada",
+        "operationCancel": "Operación cancelada",
         "madeBy": "Creado por",
-        "defaultVariable": "{{variable}} por defecto",
         "vasitosCorp": "Vasitos Corp",
-        "softwareDev":{
+        "softwareDev": {
             "po": "Product owner",
             "dev": "Desarrollador",
             "supervisor": "Supervisor",
             "pe": "Ingeniero de Performance",
             "ce": "Ingeniero Cloud",
-            "tester": "Test",
-            "designer": "(UI) Designer",
+            "tester": "Tester",
+            "designer": "Diseñador (UI)",
             "betaTester": "Beta Tester"
         },
         "errors": {
             "genericMessage": "Ha ocurrido un error",
             "oops": "Oops",
-            "formTitle": "Hey te falto algo en el formulario",
+            "formTitle": "Hey, te faltó algo en el formulario",
             "authentication": "No posee permisos"
         },
-        "langs":{
+        "langs": {
             "spanish": "Español",
-            "english": "Ingles",
-            "japanese": "Japones",
-            "french": "Frances",
+            "english": "Inglés",
+            "japanese": "Japonés",
+            "french": "Francés",
             "russian": "Ruso"
         }
     }

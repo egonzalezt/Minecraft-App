@@ -1,124 +1,124 @@
 {
     "mainPage": {
-        "subTitle": "アレキペトで遊びましょう",
-        "downloadMods": "Modsをダウンロードするボタンを押してください。",
-        "minecraftVersion": "Minecraftのバージョン",
-        "downloadModsButton": "Modsをダウンロード",
+        "subTitle": "アレキペトで遊ぼう",
+        "downloadMods": "モッズをダウンロードするにはボタンを押してください。",
+        "minecraftVersion": "Minecraftバージョン",
+        "downloadModsButton": "モッズをダウンロード",
         "downloadFabric": "Fabricをダウンロード"
     },
     "404": {
-        "title": "エラー：404 Not Found",
+        "title": "エラー：404 見つかりません",
         "message": "お探しのウェブページは削除されたか、名前が変更されたか、一時的に利用できない可能性があります。"
-    },    
+    },
     "auth": {
         "loginTitle": "ログイン",
-        "signUpTitle": "新規登録",
-        "signUpTitleBtn": "新規登録",
-        "email": "メールアドレス",
+        "signUpTitle": "登録",
+        "signUpTitleBtn": "登録",
+        "email": "メール",
         "password": "パスワード",
         "nickName": "ニックネーム",
-        "createAccount": "アカウントをお持ちでないですか？ 登録する",
+        "createAccount": "アカウントをお持ちでないですか？ 登録してください",
         "forgotPassword": "パスワードをお忘れですか？",
-        "changePassword": "パスワード変更",
-        "updatePasswordError": "パスワードの変更リクエスト中にエラーが発生しました。もう一度変更をリクエストしてください。問題が解決しない場合、管理者に連絡してください。",
-        "emailSent": "メール送信済み",
-        "emailSentDescription": "お客様のメールアドレスにメールが送信されました。 'アカウントの回復' という件名のメールが受信トレイに表示された場合、スパムフォルダも確認してください。",
-        "passwordUpdatedSuccess": "パスワードが正常に更新されました。",
-        "expiredRequest": "パスワード変更の関連リクエストが見つかりませんでした。これは1時間の制限時間が切れたか、新しいパスワード変更リクエストが行われたためかもしれません。",
-        "passwordRecover": "パスワードの復旧",
+        "changePassword": "パスワードの変更",
+        "updatePasswordError": "パスワードの変更リクエスト中にエラーが発生しました。もう一度変更リクエストをしてください。問題が解決しない場合は、管理者に連絡してください。",
+        "emailSent": "メールが送信されました",
+        "emailSentDescription": "メールがメールボックスに「アカウントの復元」というタイトルで表示された場合、メールが送信されました。スパムフォルダも確認してください。",
+        "passwordUpdatedSuccess": "パスワードが正常に更新されました",
+        "expiredRequest": "パスワード変更のリクエストが関連付けられていません。これは1時間の制限時間が切れたか、新しいパスワード変更がリクエストされたためです。",
+        "passwordRecover": "パスワードの回復",
         "newPassword": "新しいパスワード",
         "validators": {
-            "invalidEmail": "無効なメールアドレス",
-            "requiredEmail": "メールアドレスは必須です",
+            "invalidEmail": "無効なメール",
+            "requiredEmail": "メールは必須です",
             "requiredPassword": "パスワードは必須です",
-            "passwordMinLength": "パスワードは{{min}}文字以上である必要があります",
-            "passwordMaxLength": "パスワードは{{max}}文字以下である必要があります",
+            "passwordMinLength": "パスワードは少なくとも{{min}}文字必要です",
+            "passwordMaxLength": "パスワードは最大{{max}}文字です",
             "passwordUpper": "パスワードに大文字のアルファベットが必要です",
             "passwordLower": "パスワードに小文字のアルファベットが必要です",
-            "passwordSymbol": "パスワードに記号が必要です",
+            "passwordSymbol": "パスワードにシンボルが必要です",
             "passwordNumber": "パスワードに数字が必要です",
-            "requiredNickName": "ニックネームは必須です",
-            "nickNameMinLength": "ニックネームは{{min}}文字以上である必要があります",
-            "nickNameMaxLength": "ニックネームは{{max}}文字以下である必要があります"
+            "requiredNickName": "ユーザー名は必須です",
+            "nickNameMinLength": "ユーザー名は少なくとも{{min}}文字必要です",
+            "nickNameMaxLength": "ユーザー名は最大{{max}}文字です"
         },
-        "successLogin": "ログイン成功",
-        "accountCreatedMessage": "アカウントが作成されました",
-        "welcomeMessage": "{{nickName}}さん、Arequipetへようこそ"
+        "successLogin": "ログインに成功しました",
+        "accountCreatedMessage": "アカウントが登録されました",
+        "welcomeMessage": "Arequipetへようこそ、{{nickName}}さん"
     },
     "uploadMod": {
-        "title": "モッドをアップロード",
-        "name": "モッド名",
-        "version": "モッドのバージョン",
-        "url": "モッドのURL",
+        "title": "Modをアップロード",
+        "name": "Mod名",
+        "version": "Modバージョン",
+        "url": "Mod URL",
         "errors": {
-            "version": "バージョンが無効です",
-            "name": "名前が無効です",
-            "upload": "モッドのアップロード中にエラーが発生しました：{{fileName}}"
+            "version": "無効なバージョン",
+            "name": "無効な名前",
+            "upload": "{{fileName}}のModをアップロード中にエラーが発生しました"
         },
-        "successful": "モッド{{fileName}}は正常にアップロードされました",
+        "successful": "{{fileName}}のModが正常にアップロードされました",
         "popUp": {
             "warn": {
-                "type": "Server/Clientモッドのタイプを選択してください",
-                "name": "モッド名を確認してください",
-                "version": "モッドのバージョンを確認してください",
+                "type": "Server/Client Modタイプを選択してください",
+                "name": "Mod名を確認してください",
+                "version": "Modバージョンを確認してください",
                 "file": "ファイルを確認してください"
             }
         }
     },
     "uploadMultiple": {
-        "title": "モッドをアップロード",
-        "dropFiles": "ファイルをここにドラッグアンドドロップするか、選択するためにクリックしてください",
+        "title": "Modをアップロード",
+        "dropFiles": "ここにファイルをドラッグ＆ドロップするか、選択するにはクリックしてください",
         "table": {
             "id": "ID",
             "name": "名前",
             "version": "バージョン",
             "fileName": "ファイル名",
-            "type": "モッドのタイプ"
+            "type": "Modタイプ"
         },
         "errors": {
-            "verifyMods": "既存のモッドの確認中にエラーが発生しました。もう一度お試しください。"
+            "verifyMods": "既存のModを確認中にエラーが発生しました。もう一度お試しください。"
         }
     },
-    "socketServerConnectionLost": "サーバーへの接続が失われました。" ,
     "listMods": {
-        "title": "モッドリスト",
-        "addMod": "モッドを追加",
+        "title": "Modのリスト",
+        "addMod": "Modを追加",
         "createZip": ".ZIPを作成",
+        "deleteMods": "選択したModを削除してもよろしいですか？",
         "newResource": "新しいリソース",
-        "deleteMods": "選択したモッドを削除してもよろしいですか？",
         "table": {
             "name": "名前",
             "version": "バージョン",
             "fileName": "ファイル",
-            "type": "モッドのタイプ"
+            "type": "Modタイプ"
         },
         "popUpDuplicateFile": {
-            "title": "重複するファイル",
-            "text": "{{name}} ファイルはすでにリストに存在し、無視されます。"
+            "title": "重複ファイル",
+            "text": "{{name}}ファイルはすでにリストに存在し、無視されます。"
         },
         "popUpBadFile": {
             "title": "有効なファイルをアップロードしてください",
-            "text": "すべての選択したモッドが .Jar ファイルであることを確認してください。"
+            "text": "選択したすべてのModが.Jarファイルであることを確認してください"
         }
     },
     "modConfig": {
-        "title": "モッドの設定を編集",
-        "editModTitle": "{{filename}} を編集",
-        "successful": "{{filename}} は正常に更新されました",
+        "title": "Mod設定を編集",
+        "editModTitle": "{{filename}}を編集",
+        "successful": "{{filename}}が正常に更新されました",
         "errors": {
-            "update": "{{filename}} の更新中にエラーが発生しました",
-            "retrieve": "設定の取得に失敗しました"
+            "update": "{{filename}}の更新中にエラーが発生しました",
+            "retrieve": "設定を取得できませんでした"
         }
     },
-    "serverProperties": "server.properties を編集",
+    "socketServerConnectionLost": "サーバーへの接続が失われました",
+    "serverProperties": "server.propertiesを編集",
     "backups": {
-        "title": "バックアップリスト",
-        "creationProgress": "バックアップの作成進捗: {{value}}%",
-        "driveProgress": "Google Drive へのアップロード中: {{value}}%",
-        "downloadBackup": "バックアップのダウンロード中: {{value}}%",
+        "title": "バックアップのリスト",
+        "creationProgress": "バックアップの作成進捗：{{value}}%",
+        "driveProgress": "Google Driveへのファイルアップロード：{{value}}%",
+        "downloadBackup": "バックアップのダウンロード：{{value}}%",
         "deleteQuestion": "選択したバックアップを削除してもよろしいですか？",
         "deletingBackups": "バックアップの削除中",
-        "backupErrorTitle": "バックアップを削除中にエラーが発生しました",
+        "backupErrorTitle": "バックアップの削除中にエラーが発生しました",
         "createBackups": "バックアップを作成",
         "table": {
             "fileName": "名前",
@@ -131,7 +131,7 @@
     },
     "commands": {
         "title": "コマンドを実行",
-        "terminalTitle": "マインクラフトターミナル - 詳細情報については help を入力してください",
+        "terminalTitle": "Minecraftターミナル、詳細については 'help' を入力してください",
         "descriptions": {
             "helpTitle": "mine-help",
             "helpText": "サポートコマンドを取得"
@@ -139,29 +139,42 @@
     },
     "navBar": {
         "mods": {
-            "main": "モッズ",
+            "main": "Mods",
             "add": "追加",
             "addMultiple": "複数追加",
-            "download": "モッドをダウンロード"
+            "download": "Modをダウンロード"
         },
         "configuration": {
             "main": "設定",
             "serverProperties": "サーバー設定",
-            "modsProperties": "モッド設定"
+            "modsProperties": "Mod設定"
         },
         "terminal": "ターミナル",
         "backups": "バックアップ",
         "readyToPlay": "プレイの準備ができましたか？",
         "serverStatus": "サーバーステータス"
     },
+    "terminal": {
+        "clearMessage": "コンソールをクリア",
+        "prompt": "コマンド",
+        "promptMessage": "ターミナルのプロンプトを変更します。",
+        "theme": "テーマ",
+        "themeMessage": "ターミナルのテーマを変更します。許可されているテーマ",
+        "toggleControlBarMessage": "上部のコントロールバーの表示/非表示を切り替えます。",
+        "buttonsControlBarMessage": "コントロールバーボタンの表示/非表示を切り替えます。",
+        "mathExpressionMessage": "数学的式を評価",
+        "minecraftHelpMessage": "Minecraftからのヘルプコマンドを取得",
+        "runMinecraftCommandMessage": "Minecraftサーバーコマンドを実行"
+    },
     "commons": {
+        "help": "ヘルプ",
         "yes": "はい",
         "no": "いいえ",
         "players": "プレイヤー",
         "on": "オン",
         "off": "オフ",
-        "update": "アップデート",
-        "home": "ホーム",
+        "update": "更新",
+        "home": "ホームページ",
         "logout": "ログアウト",
         "login": "ログイン",
         "dashboard": "ダッシュボード",
@@ -172,7 +185,7 @@
         "server": "サーバー",
         "client": "クライアント",
         "upload": "アップロード",
-        "uploadMod": "モッドをアップロード",
+        "uploadMod": "Modをアップロード",
         "status": "ステータス",
         "delete": "削除",
         "complete": "完了",
@@ -180,8 +193,7 @@
         "error": "エラー",
         "loading": "読み込み中...",
         "operationCancel": "操作がキャンセルされました",
-        "madeBy": "制作:",
-        "defaultVariable": "{{variable}} デフォルトで",
+        "madeBy": "製作者",
         "vasitosCorp": "Vasitos Corp",
         "softwareDev": {
             "po": "プロダクトオーナー",
@@ -190,21 +202,21 @@
             "pe": "パフォーマンスエンジニア",
             "ce": "クラウドエンジニア",
             "tester": "テスター",
-            "designer": "(UI) デザイナー",
+            "designer": "デザイナー（UI）",
             "betaTester": "ベータテスター"
         },
         "errors": {
             "genericMessage": "エラーが発生しました",
             "oops": "おっと",
-            "formTitle": "フォームに何か抜けています",
-            "authentication": "アクセス権がありません"
+            "formTitle": "おっと、フォームで何かを見逃しました",
+            "authentication": "権限がありません"
         },
-        "langs":{
+        "langs": {
             "spanish": "スペイン語",
             "english": "英語",
             "japanese": "日本語",
             "french": "フランス語",
             "russian": "ロシア語"
-        }        
+        }
     }
 }

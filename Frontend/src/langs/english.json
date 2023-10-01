@@ -1,14 +1,14 @@
 {
   "mainPage": {
     "subTitle": "Let's Play Arequipet",
-    "downloadMods": "Press the button to download the mods, buddy.",
-    "minecraftVersion": "Minecraft Version",
-    "downloadModsButton": "Download Mods",
+    "downloadMods": "Press the button to download the mods, dude.",
+    "minecraftVersion": "Maincra Version",
+    "downloadModsButton": "Download mods",
     "downloadFabric": "Download Fabric"
   },
   "404": {
     "title": "Error: 404 Not Found",
-    "message": "The webpage you are looking for might have been removed, had it's name changed, or is temporarily unavailable."  
+    "message": "The web page you're looking for might have been deleted, renamed, or temporarily unavailable."
   },
   "auth": {
     "loginTitle": "Log In",
@@ -17,33 +17,33 @@
     "email": "Email",
     "password": "Password",
     "nickName": "Nickname",
-    "createAccount": "Don't have an account? Sign Up",
-    "forgotPassword": "Forgot your password?",
-    "changePassword": "Change password",
+    "createAccount": "Don't have an account? Sign up",
+    "forgotPassword": "Forgot password?",
+    "changePassword": "Change Password",
     "updatePasswordError": "An error occurred while requesting a password change. Please request the change again. If the problem persists, contact the administrators.",
     "emailSent": "Email Sent",
-    "emailSentDescription": "An email has been sent to your email address. If you find the email in your inbox with the subject 'Account Recovery,' please check your spam folder.",
-    "passwordUpdatedSuccess": "Password updated successfully.",
-    "expiredRequest": "No associated password change request was found. This may be because the 1-hour time limit has expired or a new password change request has been made.",
+    "emailSentDescription": "An email has been sent to your email address. If you find the email in your inbox with the title 'Account Recovery,' please check your spam folder.",
+    "passwordUpdatedSuccess": "Password updated successfully",
+    "expiredRequest": "No associated password change request found. This is because the 1-hour time limit has expired or a new password change was requested.",
     "passwordRecover": "Password Recovery",
     "newPassword": "New Password",
     "validators": {
       "invalidEmail": "Invalid email",
       "requiredEmail": "Email is required",
       "requiredPassword": "Password is required",
-      "passwordMinLength": "Password must be at least {{min}} characters long",
-      "passwordMaxLength": "Password must be at most {{max}} characters long",
+      "passwordMinLength": "Password must have at least {{min}} characters",
+      "passwordMaxLength": "Password must have a maximum of {{max}} characters",
       "passwordUpper": "Password must have an uppercase letter",
       "passwordLower": "Password must have a lowercase letter",
       "passwordSymbol": "Password must have a symbol",
       "passwordNumber": "Password must have a number",
-      "requiredNickName": "Nickname is required",
-      "nickNameMinLength": "Nickname must be at least {{min}} characters long",
-      "nickNameMaxLength": "Nickname must be at most {{max}} characters long"
+      "requiredNickName": "Username is required",
+      "nickNameMinLength": "Username requires at least {{min}} characters",
+      "nickNameMaxLength": "Username requires a maximum of {{max}} characters"
     },
     "successLogin": "Successful login",
-    "accountCreatedMessage": "Account Created",
-    "welcomeMessage": "Welcome, {{nickName}}, to Arequipet"
+    "accountCreatedMessage": "Account registered",
+    "welcomeMessage": "Welcome {{nickName}} to Arequipet"
   },
   "uploadMod": {
     "title": "Upload Mod",
@@ -51,11 +51,11 @@
     "version": "Mod Version",
     "url": "Mod URL",
     "errors": {
-      "version": "The version is invalid",
-      "name": "Name is invalid",
+      "version": "Invalid version",
+      "name": "Invalid name",
       "upload": "An error occurred while uploading the mod {{fileName}}"
     },
-    "successful": "The mod {{fileName}} has been uploaded successfully",
+    "successful": "Mod {{fileName}} uploaded successfully",
     "popUp": {
       "warn": {
         "type": "Select the Server/Client mod type",
@@ -66,7 +66,7 @@
     }
   },
   "uploadMultiple": {
-    "title": "Upload Mod",
+    "title": "Upload Mods",
     "dropFiles": "Drag and drop files here or click to select them",
     "table": {
       "id": "ID",
@@ -76,16 +76,15 @@
       "type": "Mod Type"
     },
     "errors": {
-        "verifyMods": "An error occurred while checking for existing mods. Please try again."
+      "verifyMods": "An error occurred while verifying existing mods. Please try again."
     }
   },
-  "socketServerConnectionLost": "The connection to the server has been lost.",
   "listMods": {
-    "title": "Mod List",
+    "title": "List of Mods",
     "addMod": "Add mod",
     "createZip": "Create .ZIP",
-    "newResource": "New Resource",
     "deleteMods": "Are you sure you want to delete the selected mods?",
+    "newResource": "New Resource",
     "table": {
       "name": "Name",
       "version": "Version",
@@ -98,7 +97,7 @@
     },
     "popUpBadFile": {
       "title": "Upload a valid file",
-      "text": "Ensure that all selected mods are .Jar files."
+      "text": "Make sure all selected mods are .Jar files"
     }
   },
   "modConfig": {
@@ -107,15 +106,15 @@
     "successful": "{{filename}} updated successfully",
     "errors": {
       "update": "Error updating {{filename}}",
-      "retrieve": "Failed to retrieve the configuration"
+      "retrieve": "Configuration could not be retrieved"
     }
-    
   },
+  "socketServerConnectionLost": "Connection to the server has been lost",
   "serverProperties": "Edit server.properties",
   "backups": {
-    "title": "Backup List",
+    "title": "List of Backups",
     "creationProgress": "Backup creation progress: {{value}}%",
-    "driveProgress": "Uploading to Google Drive: {{value}}%",
+    "driveProgress": "Uploading file to Google Drive: {{value}}%",
     "downloadBackup": "Downloading Backup: {{value}}%",
     "deleteQuestion": "Are you sure you want to delete the selected backups?",
     "deletingBackups": "Deleting Backups",
@@ -127,12 +126,12 @@
     },
     "completePopUp": {
       "title": "Completed",
-      "text": "The backup has been created successfully"
+      "text": "The backup has been successfully created"
     }
   },
   "commands": {
     "title": "Run Command",
-    "terminalTitle": "Minecraft Terminal - type help for more information",
+    "terminalTitle": "Minecraft Terminal, type 'help' for more information",
     "descriptions": {
       "helpTitle": "mine-help",
       "helpText": "get support commands"
@@ -155,16 +154,29 @@
     "readyToPlay": "Ready to Play?",
     "serverStatus": "Server Status"
   },
+  "terminal": {
+    "clearMessage": "Clear the console",
+    "prompt": "command",
+    "promptMessage": "Change the terminal prompt.",
+    "theme": "theme",
+    "themeMessage": "Change the terminal theme. Allowed themes",
+    "toggleControlBarMessage": "Toggle show/hide the top control bar.",
+    "buttonsControlBarMessage": "Toggle show/hide the control bar buttons.",
+    "mathExpressionMessage": "Evaluate a mathematical expression",
+    "minecraftHelpMessage": "Get help commands from Minecraft",
+    "runMinecraftCommandMessage": "Run a Minecraft server command"
+  },
   "commons": {
+    "help": "help",
     "yes": "Yes",
     "no": "No",
     "players": "Players",
     "on": "On",
     "off": "Off",
     "update": "Update",
-    "home": "Home",
-    "logout": "Log out",
-    "login": "Login",
+    "home": "Home Page",
+    "logout": "Log Out",
+    "login": "Log In",
     "dashboard": "Dashboard",
     "notAvailable": "Not Available",
     "available": "Available",
@@ -176,13 +188,12 @@
     "uploadMod": "Upload Mod",
     "status": "Status",
     "delete": "Delete",
-    "complete": "Completed",
+    "complete": "Complete",
     "pending": "Pending",
     "error": "Error",
     "loading": "Loading...",
-    "operationCancel": "Operation Canceled",
+    "operationCancel": "Operation Cancelled",
     "madeBy": "Made by",
-    "defaultVariable": "{{variable}} by default",
     "vasitosCorp": "Vasitos Corp",
     "softwareDev": {
       "po": "Product Owner",
@@ -195,17 +206,17 @@
       "betaTester": "Beta Tester"
     },
     "errors": {
-      "genericMessage": "An error has occurred",
+      "genericMessage": "An error occurred",
       "oops": "Oops",
       "formTitle": "Hey, you missed something in the form",
-      "authentication": "You don't have permission"
+      "authentication": "You don't have permissions"
     },
-    "langs":{
+    "langs": {
       "spanish": "Spanish",
       "english": "English",
       "japanese": "Japanese",
       "french": "French",
       "russian": "Russian"
-    }  
+    }
   }
 }
