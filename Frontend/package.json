@@ -24,11 +24,11 @@
     "react-i18next": "^13.2.2",
     "react-router-dom": "^6.4.5",
     "react-scripts": "5.0.1",
+    "react-terminal-es": "^1.0.0",
     "simplebar-react": "^3.2.4",
     "skinview3d": "^3.0.0-alpha.1",
     "socket.io-client": "^4.6.2",
     "sweetalert2": "^11.6.15",
-    "terminal-in-react": "^4.3.1",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11",
     "zustand": "^4.1.5"
