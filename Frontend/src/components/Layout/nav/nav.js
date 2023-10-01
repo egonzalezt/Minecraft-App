@@ -29,6 +29,7 @@ import TerminalIcon from '@mui/icons-material/Terminal';
 import BackupIcon from '@mui/icons-material/Backup';
 import SettingsIcon from '@mui/icons-material/Settings';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
+import stoneBackground from '../../../img/stones.jpg'
 // I28S
 import { useTranslation } from 'react-i18next';
 // ----------------------------------------------------------------------
@@ -268,7 +269,7 @@ export default function Nav({ openNav, onCloseNav }) {
   const renderContent = (
     <Box
       sx={{
-        backgroundImage: `url(${"../img/stones.jpg"})`,
+        backgroundImage: `url(${stoneBackground})`,
         height: '100%',
         overflowY: 'scroll',
         '& .simplebar-content': { display: 'flex', flexDirection: 'column' },
