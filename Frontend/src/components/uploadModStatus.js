@@ -6,10 +6,12 @@ import { ReactComponent as JavaIcon } from '../img/java-icon.svg';
 import CircularProgress from '@mui/material/CircularProgress';
 import AdminApi from '../services/admin';
 import { enqueueSnackbar } from 'notistack';
+import { useTranslation } from 'react-i18next';
 
 function UploadModStatus({ file, onComponentFinish }) {
     const [uploadProgress, setUploadProgress] = useState(0);
     const [isComponentMounted, setComponentMounted] = useState(true);
+    const { t } = useTranslation();
 
     const handleUpload = async () => {
         let status = false;
@@ -32,9 +34,9 @@ function UploadModStatus({ file, onComponentFinish }) {
             };
             await AdminApi.upload(formData, config);
             status = true;
-            enqueueSnackbar(`El mod ${file.name} se ha subido exitosamente`, { variant: 'success' });
+            enqueueSnackbar(t("uploadMod.successful", { fileName: file.name }), { variant: 'success' });
         } catch (error) {
-            enqueueSnackbar(`Ocurrio un error al subir el mod ${file.name}`, { variant: 'error' });
+            enqueueSnackbar(t("uploadMod.errors.upload", { fileName: file.name }), { variant: 'error' });
             status = false;
         } finally {
             setComponentMounted(false);

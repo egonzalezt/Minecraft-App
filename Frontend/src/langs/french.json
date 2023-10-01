@@ -51,9 +51,11 @@
         "version": "Version du mod",
         "url": "URL du mod",
         "errors": {
-            "version": "Version invalide",
-            "name": "Nom invalide"
+            "version": "La version est invalide",
+            "name": "Le nom est invalide",
+            "upload": "Une erreur s'est produite lors du téléchargement du mod {{fileName}}"
         },
+        "successful": "Le mod {{fileName}} a été téléchargé avec succès",
         "popUp": {
             "warn": {
                 "type": "Sélectionnez le type de mod Serveur/Client",
@@ -72,6 +74,9 @@
             "version": "Version",
             "fileName": "Nom du fichier",
             "type": "Type de mod"
+        },
+        "errors": {
+            "verifyMods": "Une erreur s'est produite lors de la vérification des mods existants. Veuillez réessayer."
         }
     },
     "socketServerConnectionLost": "La connexion au serveur a été perdue.",
@@ -98,7 +103,12 @@
     },
     "modConfig": {
         "title": "Modifier la configuration des mods",
-        "editModTitle": "Modifier {{filename}}"
+        "editModTitle": "Modifier {{filename}}",
+        "successful": "{{filename}} mis à jour avec succès",
+        "errors": {
+            "update": "Erreur lors de la mise à jour de {{filename}}",
+            "retrieve": "Impossible de récupérer la configuration"
+        } 
     },
     "serverProperties": "Modifier les propriétés du serveur",
     "backups": {
@@ -168,8 +178,10 @@
         "complete": "Terminé",
         "pending": "En attente",
         "error": "Erreur",
+        "loading": "Chargement...",
         "operationCancel": "Opération annulée",
         "madeBy": "Créé par",
+        "defaultVariable": "{{variable}} par défaut",
         "vasitosCorp": "Vasitos Corp",
         "softwareDev": {
             "po": "Chef de produit",

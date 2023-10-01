@@ -6,7 +6,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import AceEditor from 'react-ace';
 import admin from '../../services/admin';
 import { enqueueSnackbar } from 'notistack';
-import Container from '@mui/material/Container';
+import Stack from '@mui/material/Stack';
 import { useTranslation } from 'react-i18next';
 
 import 'ace-builds/src-noconflict/mode-text';
@@ -23,7 +23,7 @@ function EditProperties() {
         setFileContent(response.data);
       })
       .catch(error => {
-        enqueueSnackbar(`No se pudo obtener la configuracion`, { variant: 'error' });
+        enqueueSnackbar(t("modConfig.errors.retrieve"), { variant: 'error' });
       });
   }, []);
 
@@ -32,10 +32,10 @@ function EditProperties() {
 
     admin.updateServerProperties(fileContent)
       .then(() => {
-        enqueueSnackbar(`server.properties actualizado de forma exitosa`, { variant: 'success' });
+        enqueueSnackbar(t("modConfig.successful", { filename: "server.properties" }), { variant: 'success' });
       })
-      .catch(error => {
-        enqueueSnackbar(`Fallo la actualizacion de server.properties`, { variant: 'error' });
+      .catch((error) => {
+        enqueueSnackbar(t("modConfig.errors.update", { filename: "server.properties" }), { variant: 'error' });
       })
       .finally(() => {
         setLoading(false);
@@ -43,11 +43,12 @@ function EditProperties() {
   };
 
   return (
-    <Container maxWidth="md" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <Stack direction="column" justifyContent="space-between" alignItems="center" spacing={2}>
       <Typography variant="h2" gutterBottom>
         {t("serverProperties")}
       </Typography>
       <AceEditor
+        width='95%'
         mode="text"
         theme="monokai"
         name="file-editor"
@@ -56,7 +57,7 @@ function EditProperties() {
         onChange={(newValue) => {
           setFileContent(newValue);
         }}
-        style={{ fontSize: '20px' }}
+        fontSize={18}
         highlightActiveLine={true}
         setOptions={{
           showLineNumbers: true,
@@ -74,9 +75,9 @@ function EditProperties() {
         disableElevation
         disabled={loading}
       >
-        {loading ? <CircularProgress size={24} color="inherit" /> : 'Subir'}
+        {loading ? <CircularProgress size={24} color="inherit" /> : t("commons.upload")}
       </LoadingButton>
-    </Container>
+    </Stack>
   );
 }
 

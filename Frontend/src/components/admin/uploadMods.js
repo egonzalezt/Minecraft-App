@@ -4,7 +4,10 @@ import Grid from '@mui/material/Grid';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { DataGrid } from '@mui/x-data-grid';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import Stack from '@mui/material/Stack';
+import { DataGrid, GridToolbarContainer } from '@mui/x-data-grid';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 import Swal from 'sweetalert2';
@@ -27,8 +30,10 @@ function UploadMod() {
     const [loading, setLoading] = useState(false);
     const inputRef = useRef(null);
     const [open, setOpen] = useState(true);
+    const [defaultType, setDefaultType] = useState('both');
+    const [defaultVersion, setDefaultVersion] = useState('1.20.1');
     const [totalFiles, setTotalFiles] = useState(0);
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const navigate = useNavigate();
 
     const handleClick = () => {
@@ -42,12 +47,12 @@ function UploadMod() {
     const createFileObject = (file) => {
         return {
             name: file.name,
-            version: '1.19.2',
+            version: defaultVersion,
             isClientChecked: true,
             isServerChecked: true,
             customName: file.name.split('.jar')[0],
             file: file,
-            status: 'Pendiente'
+            status: t("commons.pending")
         };
     };
 
@@ -66,11 +71,11 @@ function UploadMod() {
                 for (const file of validFiles) {
                     const alreadyAdded = modsResponse[file.name];
                     if (alreadyAdded) {
-                        enqueueSnackbar(t("listMods.popUpDuplicateFile.text",{name: file.name}), { variant: 'warning' });
+                        enqueueSnackbar(t("listMods.popUpDuplicateFile.text", { name: file.name }), { variant: 'warning' });
                     } else {
                         const isDuplicate = files.some((existingFile) => existingFile.name === file.name);
                         if (isDuplicate) {
-                            enqueueSnackbar(t("listMods.popUpDuplicateFile.text",{name: file.name}), { variant: 'warning' });
+                            enqueueSnackbar(t("listMods.popUpDuplicateFile.text", { name: file.name }), { variant: 'warning' });
                         } else {
                             newFiles.push(file);
                         }
@@ -84,8 +89,8 @@ function UploadMod() {
                     timer: 3000,
                     timerProgressBar: true,
                     icon: 'error',
-                    title: 'Error en la solicitud',
-                    text: 'Ocurrió un error al verificar los mods existentes. Por favor, inténtelo de nuevo.',
+                    title: t("commons.errors.genericMessage"),
+                    text: t("uploadMultiple.errors.verifyMods"),
                 });
             }
         } else {
@@ -93,8 +98,8 @@ function UploadMod() {
                 timer: 3000,
                 timerProgressBar: true,
                 icon: 'warning',
-                title: 'Cargue un archivo válido',
-                text: 'Verifique que todos los mods seleccionados sean archivos .jar',
+                title: t("listMods.popUpBadFile.title"),
+                text: t("listMods.popUpBadFile.text"),
             });
         }
     };
@@ -180,7 +185,7 @@ function UploadMod() {
                         timerProgressBar: true,
                         icon: 'warning',
                         title: t("listMods.popUpDuplicateFile.title"),
-                        text: t("listMods.popUpDuplicateFile.text",{name: file.name})
+                        text: t("listMods.popUpDuplicateFile.text", { name: file.name })
                     });
                 }
                 return !isDuplicate;
@@ -192,7 +197,7 @@ function UploadMod() {
                 timer: 3000,
                 timerProgressBar: true,
                 icon: 'warning',
-                title: t("listMods.popUpBadFile.text"),
+                title: t("listMods.popUpBadFile.title"),
                 text: t("listMods.popUpBadFile.text"),
             });
         }
@@ -262,7 +267,6 @@ function UploadMod() {
                 <Button
                     variant="contained"
                     onClick={() => handleDeleteFile(params.row.id)}
-                    loadingPosition="start"
                     startIcon={<DeleteIcon />}
                     style={{ backgroundColor: 'transparent' }}
                     disableElevation
@@ -277,6 +281,68 @@ function UploadMod() {
             navigate(`/dashboard/admin`);
         }
     }, [totalFiles, loading]);
+
+    function handleDefaultModTypeChange(event) {
+        const newValue = event.target.value;
+
+        const valueMap = {
+            server: { isServerChecked: true, isClientChecked: false },
+            client: { isServerChecked: false, isClientChecked: true },
+            both: { isServerChecked: true, isClientChecked: true },
+        };
+
+        if (valueMap[newValue]) {
+            setDefaultType(newValue);
+            setFiles((prevFiles) => {
+                return prevFiles.map((file) => ({
+                    ...file,
+                    ...valueMap[newValue],
+                }));
+            });
+        }
+    }
+
+    function handleDefaultModVersionChange(event) {
+        const newValue = event.target.value;
+        setDefaultVersion(newValue);
+        setFiles((prevFiles) =>
+            prevFiles.map((file) => ({
+                ...file,
+                version: newValue,
+            }))
+        );
+    }
+
+    function CustomToolbar() {
+        return files.length > 0 ? (
+            <GridToolbarContainer sx={{ justifyContent: "space-between" }}>
+                <Stack minWidth="20%">
+                    <Typography variant="p">
+                        {t("commons.defaultVariable", { variable: t("listMods.table.type") })}
+                    </Typography>
+                    <Select
+                        id="select-mod-type"
+                        value={defaultType}
+                        onChange={handleDefaultModTypeChange}
+                    >
+                        <MenuItem value={"client"}>{t("commons.client")}</MenuItem>
+                        <MenuItem value={"server"}>{t("commons.server")}</MenuItem>
+                        <MenuItem value={"both"}>{t("commons.client")} - {t("commons.server")}</MenuItem>
+                    </Select>
+                </Stack>
+                <Stack maxWidth="20%">
+                    <Typography variant="p">
+                        {t("commons.defaultVariable", { variable: t("uploadMultiple.table.version") })}
+                    </Typography>
+                    <TextField
+                        value={defaultVersion}
+                        onChange={handleDefaultModVersionChange}
+                        autoFocus
+                    />
+                </Stack>
+            </GridToolbarContainer>
+        ) : undefined;
+    }
 
     return (
         <div>
@@ -320,7 +386,7 @@ function UploadMod() {
                         }
                     }}>
                     <Typography paragraph>
-                    {t("uploadMultiple.dropFiles")}
+                        {t("uploadMultiple.dropFiles")}
                     </Typography>
                     <input
                         ref={inputRef}
@@ -335,16 +401,24 @@ function UploadMod() {
                     />
                 </Grid>
 
-                <Grid item xs={12} style={{ height: 400 }}>
-                    <DataGrid columns={columns} rows={files.map((file, index) => ({
-                        id: index,
-                        name: file.name,
-                        customName: file.customName || '',
-                        version: file.version || '1.20.1',
-                        status: file.status || t("commons.pending"),
-                        isClientChecked: checkValue(file.isClientChecked),
-                        isServerChecked: checkValue(file.isServerChecked),
-                    }))} autoHeight pageSize={5} rowsPerPageOptions={[5]} />
+                <Grid item xs={12} justifyContent="space-between" style={{ height: 400 }}>
+                    <DataGrid
+                        columns={columns}
+                        rows={files.map((file, index) => ({
+                            id: index,
+                            name: file.name,
+                            customName: file.customName || '',
+                            version: file.version || defaultVersion,
+                            status: file.status || t("commons.pending"),
+                            isClientChecked: checkValue(file.isClientChecked),
+                            isServerChecked: checkValue(file.isServerChecked),
+                        }))}
+                        pageSize={5}
+                        rowsPerPageOptions={[5]}
+                        components={{
+                            Toolbar: CustomToolbar,
+                        }}
+                    />
                 </Grid>
 
                 {files.length > 0 && (
