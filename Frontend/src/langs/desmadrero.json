@@ -1,0 +1,224 @@
+{
+    "mainPage":{
+        "subTitle": "Bamo a juga Arekipe",
+        "downloadMods": "Boton deskarga nob",
+        "minecraftVersion": "Maincra 1.argo",
+        "downloadModsButton": "Descarga mod",
+        "downloadFabric": "Descarga favri"
+    },
+    "404": {
+        "title": "Error: 404 Nosta",
+        "message": "Nosta men entienda"
+    },
+    "auth": {
+        "loginTitle": "Pa entra",
+        "signUpTitle": "Registrese nob",
+        "signUpTitleBtn": "Aki pal registo",
+        "email": "Koreo",
+        "password": "Kontrasena",
+        "nickName": "Apodo",
+        "createAccount": "Si  no tiene kuenta, se regitra jaja",
+        "forgotPassword": "No makuerdo kontrasena",
+        "changePassword": "Kanviar kontrasena",
+        "updatePasswordError": "No sabemo trabaja, hable kn alguien jaja",
+        "emailSent": "Coreo enviado",
+        "emailSentDescription": "Meil en su coreo, cuidao sta spam.",
+        "passwordUpdatedSuccess": "Kontraceña bien",
+        "expiredRequest": "Pida otra bez la wea",
+        "passwordRecover": "Recuperar kontrasena",
+        "newPassword": "Nueba kontrasena",
+        "validators": {
+            "invalidEmail": "Koreo inbalido",
+            "requiredEmail": "El Koreo farta",
+            "requiredPassword": "La kontrasena farta",
+            "passwordMinLength": "kontrasena debe tener al menos {{min}} caracteres",
+            "passwordMaxLength": "kontrasena debe tener maximo {{max}} caracteres",
+            "passwordUpper": "kontrasena debe tener una letra mayuscula",
+            "passwordLower": "kontrasena debe tener una letra minuscula",
+            "passwordSymbol": "kontrasena debe tener un simbolo",
+            "passwordNumber": "kontrasena debe tener un numero",
+            "requiredNickName": "El nonbre de usuario farta",
+            "nickNameMinLength": "El nonbre de usuario requiere minimo {{min}} caracteres",
+            "nickNameMaxLength": "El nonbre de usuario requiere maximo {{max}} caracteres"
+        },
+        "successLogin": "Inisio de secion esitoso",
+        "accountCreatedMessage": "Kuenta Rejistrada",
+        "welcomeMessage": "Vienbenid@ {{nickName}} Arequipet"
+    },
+    "uploadMod": {
+        "title": "Suvir Mod", 
+        "name": "Nonbre del mod",
+        "version": "Bersion del Mod",
+        "url": "Url mod",
+        "errors": {
+            "version": "La bersion es inbalida", 
+            "name": "Nonvre es imvalido",
+            "upload": "Ocurrió un error al subir el mod {{fileName}}"
+        },
+        "successful": "El mod {{fileName}} se ha subido exitosamente",
+        "popUp":{
+            "warn":{
+                "type": "Selesione el tipo de mod Server/Client",
+                "name": "Rebise el nonbre del mod",
+                "version": "Rebise la bersion del mod",
+                "file": "Rebise el arxivo"
+            }
+        }
+    },
+    "uploadMultiple": {
+        "title": "Suvir mod",
+        "dropFiles": "Arastra y suelta archivos aqui o haz clic para selesionarlos",
+        "table": {
+            "id": "ID",
+            "name": "Nonbre",
+            "version": "Bersion",
+            "fileName": "Nonbre de archivo",
+            "type": "Tipo Mod"
+        },
+        "errors": {
+            "verifyMods": "Okurrio un error al verifikar los mods existentes. Por favor, inténtelo de nuevo."
+        }
+    },
+    "listMods": {
+        "title": "Lista de Mods",
+        "addMod": "Ajrejar mod",
+        "createZip": "Krear .ZIP",
+        "deleteMods": "¿Estas seguro de eliminar los mods selesionados?",
+        "newResource": "Nuebo Rekurso",
+        "table": {
+            "name": "Nombre",
+            "version": "Bersion",
+            "fileName": "Arxivo",
+            "type": "Tipo Mod"
+        },
+        "popUpDuplicateFile": {
+            "title": "Archibo duplicado",
+            "text": "El archibo {{name}} ya esiste en la lista y sera iknorado."
+        },
+        "popUpBadFile": {
+            "title": "Cargue un arxivo balido",
+            "text": "Rektifike k todos los mods selesionados sean .Jar"
+        }
+    },
+    "modConfig": {
+        "title":"Edita konfigurasion de mods",
+        "editModTitle": "Edita {{filename}}",
+        "successful": "{{filename}} aktualizado de forma exitosa",
+        "errors": {
+            "update": "Error al actualizar {{filename}}",
+            "retrieve": "No se pudo obtener la configuración"
+        }
+    },
+    "socketServerConnectionLost": "Se a perdio la conesion kn e serbido",
+    "serverProperties": "Edita serber.properties",
+    "backups": {
+        "title": "Lista de Bakups",
+        "creationProgress": "Progreso kreasion bacup: {{value}}%",
+        "driveProgress": "Suviendo arxivo a Gugle Draib: {{value}}%",
+        "downloadBackup": "Deskargand Bakup: {{value}}%",
+        "deleteQuestion": "¿ta seguro?",
+        "deletingBackups": "Eliminando Bakups, no saves lo k isiste jaja",
+        "backupErrorTitle": "A ocurrio un erro eliminando los bacups",
+        "createBackups": "Krear Bakup",
+        "table": {
+            "fileName": "Nonbre",
+            "createdAt": "Fexa de kreasion"
+        },
+        "completePopUp": {
+            "title": "Conpletado",
+            "text": "Se a kreado el bakup de forma esitosa"
+        }
+    },
+    "commands": {
+        "title": "Egecutar komando",
+        "terminalTitle": "Minecraft Terminal ekriba help pa ma informasion",
+        "descriptions": {
+            "helpTitle": "mine-help",
+            "helpText": "obten los comandos de apoyo"
+        }
+    },
+    "navBar":{
+        "mods": {
+            "main": "Mods",
+            "add": "Agrega",
+            "addMultiple": "Agrega Muxos",
+            "download": "Deskarga Mods"
+        },
+        "configuration": {
+            "main":"Configurasion",
+            "serverProperties": "Propiedades del serbidor",
+            "modsProperties": "Propiedades de los mods"
+        },
+        "terminal": "Trminal",
+        "backups": "Rspaldos",
+        "readyToPlay": "Listo Pa Juga?",
+        "serverStatus": "Stado del serbidor"
+    },
+    "terminal": {
+        "helpMessage": "Eskribe \"help\" pa visualizar todos los komandos disponivles.",
+        "clearMessage": "Limpiar la consola",
+        "prompt": "comando",
+        "promptMessage": "kambiar el prompt del terminal.",
+        "theme": "tema",
+        "themeMessage": "kambia el tema del terminal. Temas permitidos",
+        "toggleControlBarMessage": "Okulta / Muestra la barra de control superior.",
+        "buttonsControlBarMessage": "Okulta / Muestra los botones de la barra de control.",
+        "mathExpressionMessage": "Evalúa una expresión matemática",
+        "minecraftHelpMessage": "Obtener comandos de ayuda de Minecraft",
+        "runMinecraftCommandMessage": "Ejecutar un comando de servidor de Minecraft"
+    },
+    "commons": {
+        "help": "ayuda",
+        "yes": "Ci",
+        "no": "No",
+        "players": "Jugadore",
+        "on": "Prendio",
+        "off": "Apagao",
+        "update": "Aktualisa",
+        "home": "Pajina prinsipal",
+        "logout": "Serar secion",
+        "login": "Lojin",
+        "dashboard": "Dashboar",
+        "notAvailable": "No disponivle",
+        "available": "Disponivle",
+        "downloads": "Deskargas",
+        "download": "Deskargr",
+        "server": "Serbidor",
+        "client": "Kliente",
+        "upload": "Suvir",
+        "uploadMod": "Krgar mod",
+        "status": "Stao",
+        "delete": "Eliminar",
+        "complete": "Kompletao",
+        "pending": "Pndient",
+        "error": "Error",
+        "loading": "Cargando...",
+        "operationCancel": "Operasion knselada",
+        "madeBy": "Kreado por",
+        "vasitosCorp": "Basitos Corp",
+        "softwareDev":{
+            "po": "Produc ouner",
+            "dev": "Desaroyador",
+            "supervisor": "Superbisor",
+            "pe": "Injeniero de Performans",
+            "ce": "Injeniero Klou",
+            "tester": "Tes",
+            "designer": "(UI) Decikne",
+            "betaTester": "Veta Teste"
+        },
+        "errors": {
+            "genericMessage": "Ha ocurio un erro",
+            "oops": "jaja bromita",
+            "formTitle": "te farta argo fijese ermano",
+            "authentication": "No tienes tanto poder aki"
+        },
+        "langs":{
+            "spanish": "Españo",
+            "english": "Ingle",
+            "japanese": "Chino d isla",
+            "french": "Robot",
+            "russian": "Ruso",
+            "desmadrero": "Desmadrero"
+        }
+    }
+}

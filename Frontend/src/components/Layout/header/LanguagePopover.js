@@ -32,6 +32,11 @@ export default function LanguagePopover() {
             label: t("commons.langs.russian"),
             icon: '/assets/icons/flags/ic_flag_ru.svg',
         },
+        {
+            value: 'des',
+            label: t("commons.langs.desmadrero"),
+            icon: '/assets/icons/flags/ic_flag_des.svg',
+        },
     ];
     const [selectedLang, setSelectedLang] = useState(LANGS[0]);
 

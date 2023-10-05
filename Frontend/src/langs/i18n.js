@@ -6,7 +6,7 @@ import esTranslation from './spanish.json'
 import jpTranslation from './japanese.json'
 import frTranslation from './french.json'
 import ruTranslation from './russian.json'
-
+import desTranslation from './desmadrero.json'
 const storedLang = localStorage.getItem("selectedLanguage");
 const fallbackLang = 'es';
 const defaultLang = storedLang || fallbackLang;
@@ -33,6 +33,9 @@ i18n.use(initReactI18next).init({
         },
         ru: {
             translation: ruTranslation
+        },
+        des: {
+            translation: desTranslation
         }
     },
 });

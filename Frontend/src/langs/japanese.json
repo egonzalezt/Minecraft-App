@@ -155,6 +155,7 @@
         "serverStatus": "サーバーステータス"
     },
     "terminal": {
+        "helpMessage": "利用可能なすべてのコマンドを表示するには「help」と入力してください。",
         "clearMessage": "コンソールをクリア",
         "prompt": "コマンド",
         "promptMessage": "ターミナルのプロンプトを変更します。",
@@ -216,7 +217,8 @@
             "english": "英語",
             "japanese": "日本語",
             "french": "フランス語",
-            "russian": "ロシア語"
+            "russian": "ロシア語",
+            "desmadrero": "暴れ回る"
         }
     }
 }

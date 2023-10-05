@@ -8,7 +8,6 @@ import { ReactTerminal, TerminalContext } from "react-terminal-es";
 
 function Server() {
   const { t } = useTranslation();
-
   const Content = () => {
     const {
       setBufferedContent,
@@ -93,7 +92,7 @@ function Server() {
   
     const welcomeMessage = (
       <span>
-        Type "help" for all available commands. <br />
+        {t("terminal.helpMessage")} <br />
       </span>
     );
   
