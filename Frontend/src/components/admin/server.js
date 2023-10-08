@@ -1,138 +1,180 @@
-import React, {useContext} from 'react';
+import React, { useState, useEffect } from 'react';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box'; // Import Box component from Mui
-import RconApi from '../../services/rcon';
 import { useTranslation } from 'react-i18next';
-import { TerminalContextProvider } from "react-terminal-es";
-import { ReactTerminal, TerminalContext } from "react-terminal-es";
+import Stack from '@mui/material/Stack';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
+import StopCircleIcon from '@mui/icons-material/StopCircle';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import SocketClient from '../../socketConnection'
+import Swal from 'sweetalert2'
+import LoadingButton from '@mui/lab/LoadingButton';
 
-function Server() {
-  const { t } = useTranslation();
-  const Content = () => {
-    const {
-      setBufferedContent,
-      setCurrentText,
-      setProcessCurrentLine,
-      setCaretPosition,
-      setBeforeCaretText,
-      setAfterCaretText,
-    } = useContext(TerminalContext)
-    const [theme, setTheme] = React.useState("matrix");
-    const [controlBar, setControlBar] = React.useState(true);
-    const [controlButtons, setControlButtons] = React.useState(true);
-    const [prompt, setPrompt] = React.useState(">>>");
-  
-    const commands = {
-      help: (
-        <span>
-          <strong>clear</strong> - {t("terminal.clearMessage")}<br />
-          <strong>change_prompt &lt;{t("terminal.prompt")}&gt;</strong> - {t("terminal.promptMessage")}<br />
-          <strong>change_theme &lt;{t("terminal.theme")}&gt;</strong> - {t("terminal.themeMessage")} - light, dark, material-light, material-dark,
-          material-ocean, matrix and dracula. <br />
-          <strong>toggle_control_bar</strong> - {t("terminal.toggleControlBarMessage")}<br />
-          <strong>toggle_control_buttons</strong> - {t("terminal.buttonsControlBarMessage")}<br />
-          <strong>evaluate_math_expression &lt;EXPR&gt;</strong> - {t("terminal.mathExpressionMessage")} (eg, <strong>4*4</strong>)
-          <strong>mine_help</strong> - {t("terminal.minecraftHelpMessage")} <br />
-          <strong>m &lt;PROMPT&gt;</strong> {t("terminal.runMinecraftCommandMessage")}<br />
-        </span>
-      ),
-  
-      change_prompt: (prompt) => {
-        setPrompt(prompt);
-      },
-  
-      change_theme: (theme) => {
-        const validThemes = [
-          "light",
-          "dark",
-          "material-light",
-          "material-dark",
-          "material-ocean",
-          "matrix",
-          "dracula",
-        ];
-        if (!validThemes.includes(theme)) {
-          return `Theme ${theme} not valid. Try one of ${validThemes.join(", ")}`;
-        }
-        setTheme(theme);
-      },
-  
-      toggle_control_bar: () => {
-        setControlBar(!controlBar);
-      },
-  
-      toggle_control_buttons: () => {
-        setControlButtons(!controlButtons);
-      },
-  
-      evaluate_math_expression: async (expr) => {
-        const response = await fetch(
-          `https://api.mathjs.org/v4/?expr=${encodeURIComponent(expr)}`
-        );
-        return await response.text();
-      },
-      clear: () => {
-        setBufferedContent("");
-        setCurrentText("");
-        setProcessCurrentLine(true);
-        setCaretPosition(0);
-        setBeforeCaretText("");
-        setAfterCaretText("");
-        return '';
-      },
-      mine_help: async () => {
-        const response = await RconApi.runCommand("help");
-        return response.data.message
-      },
-      m: async (expr) => {
-        const response = await RconApi.runCommand(expr);
-        return response.data.message
-      },
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-right',
+    iconColor: 'white',
+    customClass: {
+        popup: 'colored-toast'
+    },
+    showConfirmButton: false,
+    timer: 1500,
+    timerProgressBar: true
+})
+
+export default function BackupList() {
+    const { t } = useTranslation();
+    const [socket, setSocket] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const serverName = "arequipet.server.vasitos.org";
+    const initializeSocket = () => {
+        const newSocket = SocketClient;
+        setSocket(newSocket);
     };
-  
-    const welcomeMessage = (
-      <span>
-        {t("terminal.helpMessage")} <br />
-      </span>
-    );
-  
-  
+
+    useEffect(() => {
+        initializeSocket();
+
+        return () => {
+            if (socket) {
+                socket.disconnect();
+                setSocket(null);
+            }
+        };
+    }, []);
+
+    useEffect(() => {
+        if (!socket) {
+            return;
+        }
+
+        socket.on('authentication-error', () => {
+            Swal.fire({
+                icon: 'error',
+                title: `${t("commons.errors.oops")}...`,
+                text: t("commons.errors.authentication"),
+            });
+        });
+
+        socket.on('c-command', (data) => {
+            if (data?.isCompleted) {
+                setIsLoading(false);
+                let message = "";
+                switch (data.type) {
+                    case 0:
+                      message = t("server.serverStarted")
+                      break;
+                    case 1:
+                        message = t("server.serverStopped")
+                        break;
+                    case 2:
+                        message = t("server.serverRestarted")
+                        break;
+                    case 3:
+                        message = t("server.serverDeleted")
+                        break;
+                    default:
+                      message = t("commons.complete")
+                  }
+                Swal.fire({
+                    icon: 'success',
+                    title: `Accion completada de forma exitosa`,
+                    text: message,
+                });
+            }
+        });
+
+        return () => {
+            socket.off('authentication-error');
+            socket.off('c-command');
+        };
+    }, [socket]);
+
+    const handleButtonClick = (action) => {
+        if(action===1 || action===3){
+            Swal.fire({
+                title: t("server.confirmAlert.title"),
+                text: t("server.confirmAlert.message"),
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: t("commons.yes"),
+                denyButtonText: t("commons.no"),
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    setIsLoading(true);
+                    let json = {"type": action}
+                    socket.emit('run-c-command',json);
+                }
+            });
+        }else{
+            setIsLoading(true);
+            let json = {"type": action}
+            socket.emit('run-c-command',json);
+        }
+    };
+
     return (
-      <div style={{ height: '70vh',width: '80vw'}}>
-      <ReactTerminal
-        prompt={prompt}
-        theme={theme}
-        showControlBar={controlBar}
-        showControlButtons={controlButtons}
-        welcomeMessage={welcomeMessage}
-        commands={commands}
-        defaultHandler={(command, commandArguments) => {
-          return `${command} passed on to default handler with arguments ${commandArguments}`;
-        }}
-      />
-      </div>
-    )
-  }
+        <div>
+            <Box sx={{ mb: 10 }}>
+                <Grid item xs={12} md={6}>
+                    <Typography sx={{ mb: 2 }} variant="h2" component="div">
+                        {t("server.title", {name: serverName})}
+                    </Typography>
+                </Grid>
+            </Box>
+            <Stack direction="column">
+                <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="center" alignItems="center" spacing={5}>
+                    <LoadingButton
+                        loading = {isLoading}
+                        loadingPosition="start"
+                        startIcon={<PlayCircleOutlineIcon />}
+                        variant="contained"
+                        color="primary"
+                        sx={{ width: 'auto' }}
+                        onClick={() => handleButtonClick(0)}
+                    >
+                        {t("server.start")}
+                    </LoadingButton>
 
-  return (
-    <Box style={{ height: '100vh' }}>
-      <Typography margin={3} variant="h2" gutterBottom>
-        {t("commands.title")}
-      </Typography>
-      <Box
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          overflow: 'hidden',
-        }}
-      >
-        <TerminalContextProvider>
-          <Content />
-        </TerminalContextProvider>
-      </Box>
-    </Box>
-  );
+                    <LoadingButton
+                        loading = {isLoading}
+                        loadingPosition="start"
+                        startIcon={<RestartAltIcon />}
+                        variant="contained"
+                        color="primary"
+                        sx={{ width: 'auto' }}
+                        onClick={() => handleButtonClick(2)}
+                    >
+                        {t("server.restart")}
+                    </LoadingButton>
+
+                    <LoadingButton
+                        loading = {isLoading}
+                        loadingPosition="start"
+                        startIcon={<StopCircleIcon />}
+                        variant="contained"
+                        color="primary"
+                        sx={{ width: 'auto' }}
+                        onClick={() => handleButtonClick(1)}
+                    >
+                        {t("server.stop")}
+                    </LoadingButton>
+
+                    <LoadingButton
+                        loading = {isLoading}
+                        loadingPosition="start"
+                        startIcon={<DeleteForeverIcon />}
+                        variant="contained"
+                        color="primary"
+                        sx={{ width: 'auto' }}
+                        onClick={() => handleButtonClick(3)}
+                    >
+                        {t("server.delete")}
+                    </LoadingButton>
+                </Stack>
+            </Stack>
+        </div>
+    );
 }
-
-export default Server;

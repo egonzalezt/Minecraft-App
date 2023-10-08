@@ -18,6 +18,7 @@ import CodeEditor from './pages/codeEditor';
 import ModsSettingsView from './pages/modsSettings';
 import ModSettingsView from './pages/modSettings';
 import DashboardLayout from './components/Layout/dashboardLayout';
+import Server from './pages/server'
 import Test from './pages/test'
 export default function Router({ user, setIsRoutesReady, isRoutesReady }) {
     const isSuperAdmin = user && user.roles.includes('super_admin');
@@ -29,7 +30,8 @@ export default function Router({ user, setIsRoutesReady, isRoutesReady }) {
         { path: 'mods', element: <User /> },
         { path: 'upload', element: <AdminUpload /> },
         { path: 'upload/multiple', element: <AdminUploadMultiple /> },
-        { path: 'server', element: <RunCommand /> },
+        { path: 'server', element: <Server /> },
+        { path: 'server/terminal', element: <RunCommand /> },
         { path: 'backups', element: <Backups /> },
         { path: 'edit/server', element: <CodeEditor /> },
         { path: 'edit/mods', element: <ModsSettingsView /> },
@@ -39,7 +41,7 @@ export default function Router({ user, setIsRoutesReady, isRoutesReady }) {
     const adminRoutes = [
         { element: <Navigate to="/dashboard/mods" />, index: true },
         { path: 'mods', element: <User /> },
-        { path: 'server', element: <RunCommand /> },
+        { path: 'server/terminal', element: <RunCommand /> },
     ];
 
     const userRoutes = [

@@ -13,7 +13,7 @@ async function verifySocketsToken(token) {
         const user = await findUser(decoded._id);
 
         if (user) {
-            return {isValid:true, hasToken: true, error: false, message:"Authentication failed. No token provided.", id: decoded._id}
+            return {isValid:true, hasToken: true, error: false, message:"User found", nickName: user.nickName, id: decoded._id}
         } else {
             return {isValid:false, hasToken: true, error: false, message:"User not found with token provided"}
         }

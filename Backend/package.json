@@ -15,6 +15,7 @@
     "atob": "^2.1.2",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.1",
+    "child_process": "^1.0.2",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "dot-env": "^0.0.1",

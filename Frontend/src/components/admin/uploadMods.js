@@ -332,7 +332,7 @@ function UploadMod() {
                 </Stack>
                 <Stack maxWidth="20%">
                     <Typography variant="p">
-                        {t("commons.defaultVariable", { variable: t("uploadMultiple.table.version") })}
+                        {t("uploadMultiple.table.version", { variable: t("uploadMultiple.table.version") })}
                     </Typography>
                     <TextField
                         value={defaultVersion}

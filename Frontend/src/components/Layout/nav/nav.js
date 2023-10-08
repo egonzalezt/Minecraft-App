@@ -29,6 +29,8 @@ import TerminalIcon from '@mui/icons-material/Terminal';
 import BackupIcon from '@mui/icons-material/Backup';
 import SettingsIcon from '@mui/icons-material/Settings';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
+import ServerIcon from '@mui/icons-material/Dns';
+
 import stoneBackground from '../../../img/stones.jpg'
 // I28S
 import { useTranslation } from 'react-i18next';
@@ -186,10 +188,18 @@ export default function Nav({ openNav, onCloseNav }) {
           }
         ],
       },
+
       {
-        title: t("navBar.terminal"),
+        title: t("navBar.server.mainTitle"),
         path: '/dashboard/server',
-        icon: <TerminalIcon />,
+        icon: <ServerIcon />,
+        subItems: [
+          {
+            title: t("navBar.server.terminal"),
+            path: '/dashboard/server/terminal',
+            icon: <TerminalIcon />,
+          },
+        ],
       },
       {
         title: t("navBar.backups"),
@@ -209,7 +219,7 @@ export default function Nav({ openNav, onCloseNav }) {
       },
       {
         title: t("navBar.terminal"),
-        path: '/dashboard/server',
+        path: '/dashboard/server/terminal',
         icon: <TerminalIcon />,
       }
     ];

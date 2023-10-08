@@ -6,6 +6,21 @@
         "downloadModsButton": "Скачать моды",
         "downloadFabric": "Скачать Fabric"
     },
+    "server": {
+        "title": "Сервер {{name}}",
+        "start": "Запустить сервер",
+        "stop": "Остановить сервер",
+        "restart": "Перезапустить сервер",
+        "delete": "Удалить сервер",
+        "confirmAlert": {
+            "title": "Вы уверены в этом действии?",
+            "message": "После запуска его нельзя отменить."
+        },
+        "serverStarted": "Сервер запущен",
+        "serverStopped": "Сервер остановлен",
+        "serverRestarted": "Сервер перезапущен",
+        "serverDeleted": "Сервер удален"
+    },    
     "404": {
         "title": "Ошибка: 404 Страница не найдена",
         "message": "Веб-страница, которую вы ищете, могла быть удалена, переименована или временно недоступна."
@@ -149,7 +164,10 @@
             "serverProperties": "Свойства сервера",
             "modsProperties": "Свойства модов"
         },
-        "terminal": "Терминал",
+        "server":{
+            "terminal": "Терминал",
+            "mainTitle": "Сервер"
+        },   
         "backups": "Резервные копии",
         "readyToPlay": "Готовы к игре?",
         "serverStatus": "Статус сервера"
@@ -168,6 +186,7 @@
         "runMinecraftCommandMessage": "Выполнить команду Minecraft сервера"
     },
     "commons": {
+        "defaultVariable": "{{variable}} по умолчанию",
         "help": "Помощь",
         "yes": "Да",
         "no": "Нет",
