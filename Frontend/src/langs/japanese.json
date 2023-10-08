@@ -7,6 +7,9 @@
         "downloadFabric": "Fabricをダウンロード"
     },
     "server": {
+        "actionPerformed": "アクションが成功裏に完了しました",
+        "ping": "ピング",
+        "uploadMod": "プレイヤーの最大数",
         "title": "サーバー {{name}}",
         "start": "サーバーを開始",
         "stop": "サーバーを停止",

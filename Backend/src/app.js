@@ -28,7 +28,7 @@ const adminRouter = require('./routes/adminRouter');
 const userRouter = require('./routes/userRouter');
 const rconRouter = require('./routes/rconRouter');
 const backupRouter = require('./routes/backupRouter')
-const serverRouter = require('./routes/commandsRouter')
+const serverRouter = require('./routes/serverRouter')
 
 const app = express();
 app.use(express.json({ limit: '1024mb' }))
@@ -45,7 +45,6 @@ var corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
-
 
 app.use('/api/v1/mods', modsRouter);
 

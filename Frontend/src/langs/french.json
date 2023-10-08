@@ -7,6 +7,9 @@
         "downloadFabric": "Télécharger Fabric"
     },
     "server": {
+        "actionPerformed": "Action accomplie avec succès",
+        "ping": "Ping",
+        "uploadMod": "Nombre maximum de joueurs",
         "title": "Serveur {{name}}",
         "start": "Démarrer le serveur",
         "stop": "Arrêter le serveur",

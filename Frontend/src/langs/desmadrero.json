@@ -7,6 +7,9 @@
         "downloadFabric": "Descarga favri"
     },
     "server": {
+        "actionPerformed": "Acción completada de forma exitosa",
+        "ping": "Ping",
+        "uploadMod": "Maximo de jugadores",
         "title": "Servidor {{name}}",
         "start": "Iniciar servidor",
         "stop": "Detener servidor",

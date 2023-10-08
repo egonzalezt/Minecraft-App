@@ -7,6 +7,9 @@
     "downloadFabric": "Download Fabric"
   },
   "server": {
+    "actionPerformed": "Action completed successfully",
+    "ping": "Ping",
+    "uploadMod": "Maximum number of players",
     "title": "Server {{name}}",
     "start": "Start server",
     "stop": "Stop server",

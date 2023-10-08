@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
 import Stack from '@mui/material/Stack';
@@ -11,28 +9,58 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import SocketClient from '../../socketConnection'
 import Swal from 'sweetalert2'
 import LoadingButton from '@mui/lab/LoadingButton';
+import server from '../../services/server';
+import Skeleton from '@mui/material/Skeleton';
+import Grid from '@mui/material/Unstable_Grid2';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
-const Toast = Swal.mixin({
-    toast: true,
-    position: 'top-right',
-    iconColor: 'white',
-    customClass: {
-        popup: 'colored-toast'
-    },
-    showConfirmButton: false,
-    timer: 1500,
-    timerProgressBar: true
-})
+
+
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import Divider from '@mui/material/Divider';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
+const avatars = ["alex", "cave-spider", "cow", "creeper", "enderman", "pig", "sheep",
+    "skeleton", "spider", "steve", "villager", "wolf", "zombie"]
 
 export default function BackupList() {
     const { t } = useTranslation();
     const [socket, setSocket] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [serverDataLoading, setServerDataLoading] = useState(true);
+    const [serverData, setServerData] = useState({
+        "name": "",
+        "maxplayers": 0,
+        "players": [],
+        "bots": [],
+        "connect": "",
+        "ping": 0
+    });
     const serverName = "arequipet.server.vasitos.org";
+    const matches = useMediaQuery('(min-width:700px)');
+
     const initializeSocket = () => {
         const newSocket = SocketClient;
         setSocket(newSocket);
     };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await server.getServerInfo();
+                console.log(response)
+                setServerData(response.data.information);
+                setServerDataLoading(false);
+            } catch (error) {
+                // Handle error
+                setServerDataLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     useEffect(() => {
         initializeSocket();
@@ -64,8 +92,8 @@ export default function BackupList() {
                 let message = "";
                 switch (data.type) {
                     case 0:
-                      message = t("server.serverStarted")
-                      break;
+                        message = t("server.serverStarted")
+                        break;
                     case 1:
                         message = t("server.serverStopped")
                         break;
@@ -76,11 +104,11 @@ export default function BackupList() {
                         message = t("server.serverDeleted")
                         break;
                     default:
-                      message = t("commons.complete")
-                  }
+                        message = t("commons.complete")
+                }
                 Swal.fire({
                     icon: 'success',
-                    title: `Accion completada de forma exitosa`,
+                    title: t("server.actionPerformed"),
                     text: message,
                 });
             }
@@ -93,7 +121,7 @@ export default function BackupList() {
     }, [socket]);
 
     const handleButtonClick = (action) => {
-        if(action===1 || action===3){
+        if (action === 1 || action === 3) {
             Swal.fire({
                 title: t("server.confirmAlert.title"),
                 text: t("server.confirmAlert.message"),
@@ -104,30 +132,51 @@ export default function BackupList() {
             }).then((result) => {
                 if (result.isConfirmed) {
                     setIsLoading(true);
-                    let json = {"type": action}
-                    socket.emit('run-c-command',json);
+                    let json = { "type": action }
+                    socket.emit('run-c-command', json);
                 }
             });
-        }else{
+        } else {
             setIsLoading(true);
-            let json = {"type": action}
-            socket.emit('run-c-command',json);
+            let json = { "type": action }
+            socket.emit('run-c-command', json);
         }
     };
 
     return (
         <div>
-            <Box sx={{ mb: 10 }}>
-                <Grid item xs={12} md={6}>
-                    <Typography sx={{ mb: 2 }} variant="h2" component="div">
-                        {t("server.title", {name: serverName})}
-                    </Typography>
-                </Grid>
-            </Box>
-            <Stack direction="column">
+            <Stack spacing={4} direction="column" justifyContent="center" alignItems="center" >
+                <Typography sx={{ mb: 2 }} variant="h2">
+                    {t("server.title", { name: serverName })}
+                </Typography>
+                {
+                    serverDataLoading ?
+                        <>
+                            <Grid xs={12} sx={{ marginBottom: "2%" }} container justifyContent="center" >
+                                <Skeleton variant="rounded" width={matches ? '50%' : '100%'} height={50} />
+                            </Grid>
+                        </>
+                        :
+                        <>
+                            <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="center" alignItems="center" spacing={5}>
+                                <Typography sx={{ mb: 2 }} variant="h3">
+                                    {serverData.name}
+                                </Typography>
+                                <Typography sx={{ mb: 2 }} variant="h3">
+                                    {t("server.uploadMod")}: {serverData.maxplayers}
+                                </Typography>
+                            </Stack>
+
+                            <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="center" alignItems="center" spacing={5}>
+                                <Typography sx={{ mb: 2 }} variant="h3">
+                                    {t("server.ping")} {serverData.ping}
+                                </Typography>
+                            </Stack>
+                        </>
+                }
                 <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="center" alignItems="center" spacing={5}>
                     <LoadingButton
-                        loading = {isLoading}
+                        loading={isLoading}
                         loadingPosition="start"
                         startIcon={<PlayCircleOutlineIcon />}
                         variant="contained"
@@ -139,7 +188,7 @@ export default function BackupList() {
                     </LoadingButton>
 
                     <LoadingButton
-                        loading = {isLoading}
+                        loading={isLoading}
                         loadingPosition="start"
                         startIcon={<RestartAltIcon />}
                         variant="contained"
@@ -151,7 +200,7 @@ export default function BackupList() {
                     </LoadingButton>
 
                     <LoadingButton
-                        loading = {isLoading}
+                        loading={isLoading}
                         loadingPosition="start"
                         startIcon={<StopCircleIcon />}
                         variant="contained"
@@ -163,7 +212,7 @@ export default function BackupList() {
                     </LoadingButton>
 
                     <LoadingButton
-                        loading = {isLoading}
+                        loading={isLoading}
                         loadingPosition="start"
                         startIcon={<DeleteForeverIcon />}
                         variant="contained"
@@ -174,6 +223,56 @@ export default function BackupList() {
                         {t("server.delete")}
                     </LoadingButton>
                 </Stack>
+
+                <Typography sx={{ mb: 2 }} variant="h2">
+                    {t("commons.players")}
+                </Typography>
+
+                {
+                    serverDataLoading ?
+                        <>
+                            <Grid container spacing={2}>
+                                <Grid item>
+                                    <Skeleton variant="circular" width={50} height={50} animation="wave" />
+                                </Grid>
+                                <Grid item>
+                                    <Skeleton variant="rectangular" width={200} height={50} animation="wave" />
+                                </Grid>
+                            </Grid>
+                            <Grid container spacing={2}>
+                                <Grid item>
+                                    <Skeleton variant="circular" width={50} height={50} animation="wave" />
+                                </Grid>
+                                <Grid item>
+                                    <Skeleton variant="rectangular" width={200} height={50} animation="wave" />
+                                </Grid>
+                            </Grid>
+                        </>
+                        :
+                        <>
+                            {serverData.players.length === 0 ?
+                                <Typography sx={{ mb: 2 }} variant="h3">
+                                    Sin Jugadores
+                                </Typography>
+                                :
+                                <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+                                    {serverData.players.map(((player) =>
+                                        <>
+                                            <ListItem id={player.raw.id} alignItems="center">
+                                                <ListItemAvatar>
+                                                    <Avatar src={`/assets/images/maincra-icons/${avatars[Math.floor(Math.random() * avatars.length)]}.svg`} alt="photoURL" />                        </ListItemAvatar>
+                                                <ListItemText
+                                                    primary={player.name}
+                                                />
+                                            </ListItem>
+                                            <Divider variant="inset" component="li" />
+                                        </>
+                                    ))}
+                                </List>
+                            }
+
+                        </>
+                }
             </Stack>
         </div>
     );
