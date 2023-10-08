@@ -6,6 +6,21 @@
         "downloadModsButton": "Descargar mods",
         "downloadFabric": "Descargar Fabric"
     },
+    "server": {
+        "title": "Servidor {{name}}",
+        "start": "Iniciar servidor",
+        "stop": "Detener servidor",
+        "restart": "Reiniciar servidor",
+        "delete": "Eliminar servidor",
+        "confirmAlert": {
+            "title": "¿Estás seguro de esta acción?",
+            "message": "Una vez iniciado, no podrá ser cancelado."
+        },
+        "serverStarted": "Servidor iniciado",
+        "serverStopped": "Servidor detenido",
+        "serverRestarted": "Servidor reiniciado",
+        "serverDeleted": "Servidor eliminado"
+    },    
     "404": {
         "title": "Error: 404 No Encontrado",
         "message": "La página web que estás buscando podría haber sido eliminada, haber cambiado de nombre o estar temporalmente no disponible."
@@ -149,7 +164,10 @@
             "serverProperties": "Propiedades del servidor",
             "modsProperties": "Propiedades de los mods"
         },
-        "terminal": "Terminal",
+        "server":{
+            "terminal": "Terminal",
+            "mainTitle": "Servidor"
+        },
         "backups": "Respaldos",
         "readyToPlay": "¿Listo Para Jugar?",
         "serverStatus": "Estado del servidor"
@@ -168,6 +186,7 @@
         "runMinecraftCommandMessage": "Ejecutar un comando de servidor de Minecraft"
     },
     "commons": {
+        "defaultVariable": "{{variable}} por defecto",
         "help": "ayuda",
         "yes": "Sí",
         "no": "No",

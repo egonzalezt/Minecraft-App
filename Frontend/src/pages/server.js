@@ -1,19 +1,18 @@
 import React, { useEffect } from 'react';
-import RunRcon from "../components/admin/terminal";
 import { storeSkin } from "../states/skinStore.js";
-
-function RunCommand() {
+import ServerComponent from '../components/admin/server.js'
+function Server() {
     const setAnimation = storeSkin((state) => state.setAnimation);
 
     useEffect(() => {
-        setAnimation(0)
+        setAnimation(1)
     }, []);
 
     return (
         <div>
-            <RunRcon />
+            <ServerComponent />
         </div>
     );
 }
 
-export default RunCommand;
+export default Server;

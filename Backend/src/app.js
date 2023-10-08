@@ -7,9 +7,9 @@ require('express-async-errors');
 require('dotenv').config();
 require('./config/database');
 global.isModsFileAvailable = true;
+const { exec } = require('child_process');
 
-if(process.env.ENABLEAPM==1)
-{
+if (process.env.ENABLEAPM == 1) {
     var apm = require('elastic-apm-node').start()
 }
 
@@ -28,6 +28,8 @@ const adminRouter = require('./routes/adminRouter');
 const userRouter = require('./routes/userRouter');
 const rconRouter = require('./routes/rconRouter');
 const backupRouter = require('./routes/backupRouter')
+const serverRouter = require('./routes/commandsRouter')
+
 const app = express();
 app.use(express.json({ limit: '1024mb' }))
 
@@ -54,6 +56,24 @@ app.use('/api/v1/user', userRouter);
 app.use('/api/v1/commands', rconRouter);
 
 app.use('/api/v1/backups', backupRouter)
+
+app.use('/api/v1/server', serverRouter)
+
+app.get('/docker-ps', (req, res) => {
+    exec('docker logs my-nginx', (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error executing 'docker ps': ${error.message}`);
+            return res.status(500).send('Error running docker ps');
+        }
+
+        if (stderr) {
+            console.error(`stderr: ${stderr}`);
+            return res.status(500).send('Error running docker ps');
+        }
+
+        res.send(`<pre>${stdout}</pre>`);
+    });
+});
 
 app.use((err, req, res, next) => {
     console.error(err.stack)

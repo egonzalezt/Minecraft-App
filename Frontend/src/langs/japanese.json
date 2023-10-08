@@ -6,6 +6,21 @@
         "downloadModsButton": "モッズをダウンロード",
         "downloadFabric": "Fabricをダウンロード"
     },
+    "server": {
+        "title": "サーバー {{name}}",
+        "start": "サーバーを開始",
+        "stop": "サーバーを停止",
+        "restart": "サーバーを再起動",
+        "delete": "サーバーを削除",
+        "confirmAlert": {
+            "title": "このアクションを本当に行いますか？",
+            "message": "一度開始すると、キャンセルできません。"
+        },
+        "serverStarted": "サーバーが開始されました",
+        "serverStopped": "サーバーが停止しました",
+        "serverRestarted": "サーバーが再起動しました",
+        "serverDeleted": "サーバーが削除されました"
+    },
     "404": {
         "title": "エラー：404 見つかりません",
         "message": "お探しのウェブページは削除されたか、名前が変更されたか、一時的に利用できない可能性があります。"
@@ -149,7 +164,10 @@
             "serverProperties": "サーバー設定",
             "modsProperties": "Mod設定"
         },
-        "terminal": "ターミナル",
+        "server":{
+            "terminal": "ターミナル",
+            "mainTitle": "サーバー"
+        },
         "backups": "バックアップ",
         "readyToPlay": "プレイの準備ができましたか？",
         "serverStatus": "サーバーステータス"
@@ -168,6 +186,7 @@
         "runMinecraftCommandMessage": "Minecraftサーバーコマンドを実行"
     },
     "commons": {
+        "defaultVariable": "{{variable}} デフォルトで",
         "help": "ヘルプ",
         "yes": "はい",
         "no": "いいえ",
